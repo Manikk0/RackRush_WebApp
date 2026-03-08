@@ -1,0 +1,178 @@
+:root {
+    --prussian-blue: #0b132b;
+    --space-indigo: #1c2541;
+    --dusk-blue: #3a506b;
+    --tropical-teal: #5bc0be;
+    --neon-ice: #6fffe9;
+}
+
+header {
+    background-color: var(--prussian-blue);
+    border-bottom: 2px solid var(--dusk-blue);
+    transition: all 0.2s ease-in-out;
+}
+
+.logo-placeholder {
+    width: 45px;
+    height: 45px;
+    background: #444;
+    display: block;
+}
+
+/* --- NEW ADDRESS CARD STYLING --- */
+.address-card {
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    background-color: transparent;
+}
+
+.address-card-link:hover .address-card {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.address-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.label-text {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.action-text {
+    color: var(--tropical-teal);
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.address-card-link:hover .action-text {
+    color: var(--neon-ice);
+}
+/* -------------------------------- */
+
+.icon-white {
+    filter: invert(1) brightness(2);
+}
+
+.icon-xs { width: 12px; height: 12px; filter: invert(1); }
+.icon-sm { width: 18px; height: 18px; }
+.icon-md { width: 26px; height: 26px; }
+
+.btn-teal {
+    background-color: var(--tropical-teal);
+    color: var(--prussian-blue);
+    font-weight: 600;
+    border: none;
+}
+
+.btn-teal:hover {
+    background-color: var(--neon-ice);
+    color: var(--prussian-blue);
+}
+
+.btn-outline-custom {
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--space-indigo);
+    color: var(--neon-ice);
+    border-color: var(--neon-ice);
+}
+
+/* --- SEARCH BAR STYLING --- */
+.search-container {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+    background: #fff;
+}
+
+.search-container .input-group-text {
+    background-color: #fff;
+    border: none;
+    padding-right: 0;
+}
+
+.search-container .form-control {
+    border: none;
+    padding-left: 10px;
+    height: 40px;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 0 0 3px var(--neon-ice);
+}
+
+#sticky-search-container {
+    flex-grow: 1;
+}
+
+header.scrolled {
+    padding: 5px 0;
+}
+
+.d-none {
+    display: none !important;
+}
+
+/* --- FOOTER STYLING --- */
+.footer-section {
+    background-color: var(--prussian-blue);
+    border-top: 1px solid var(--dusk-blue);
+    color: #ffffff;
+    margin-top: 50px;
+}
+
+.footer-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-list li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-list a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-list a:hover {
+    color: var(--neon-ice);
+}
+
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.social-links a:hover .social-icon {
+    transform: translateY(-3px);
+    filter: invert(85%) sepia(35%) saturate(800%) hue-rotate(110deg) brightness(105%) contrast(105%);
+}
+
+@media (max-width: 768px) {
+    .footer-section .col-md-3 {
+        margin-bottom: 2rem;
+    }
+}

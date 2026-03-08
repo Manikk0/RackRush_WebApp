@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RackRush</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+
+    <header id="main-header" class="fixed-top shadow-sm">
+        <div class="container-fluid px-4">
+            
+            <div id="top-row" class="row align-items-center py-2">
+                <div class="col-3 d-flex align-items-center">
+                    <a href="index.html" class="d-inline-block me-3">
+                        <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
+                    </a>
+                    
+                    <a href="#" class="address-card-link text-decoration-none">
+                        <div class="address-card d-flex align-items-center">
+                            <img src="assets/gps.png" alt="" class="icon-sm icon-white me-2">
+                            <div class="address-text">
+                                <span class="label-text">Nabídka pro: Praha 7</span>
+                                <span class="action-text">Přidat dodací adresu</span>
+                            </div>
+                            <img src="assets/chevron-right.png" alt="" class="icon-xs ms-2 opacity-50">
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6">
+                    <div class="input-group search-container">
+                        <span class="input-group-text">
+                            <img src="assets/search.png" class="icon-sm">
+                        </span>
+                        <input type="text" class="form-control" placeholder="Hľadať produkty...">
+                    </div>
+                </div>
+
+                <div class="col-3 d-flex justify-content-end gap-4">
+                    <a href="#"><img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white"></a>
+                    <a href="#"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                    <a href="#"><img src="assets/user.png" alt="Profil" class="icon-md icon-white"></a>
+                </div>
+            </div>
+
+            <div id="bottom-row" class="row align-items-center py-2">
+                <div class="col-auto d-flex gap-2">
+                    <div class="dropdown">
+                        <button class="btn btn-teal dropdown-toggle" type="button">Kategórie</button>
+                    </div>
+                    <button class="btn btn-outline-custom">Obľúbené</button>
+                    <button class="btn btn-outline-custom">Cenové hity</button>
+                </div>
+
+                <div class="col d-none" id="sticky-search-container">
+                    <div class="input-group search-container ms-3">
+                        <span class="input-group-text">
+                            <img src="assets/search.png" class="icon-sm">
+                        </span>
+                        <input type="text" class="form-control" placeholder="Hľadať...">
+                    </div>
+                </div>
+
+                <div class="col-auto ms-auto d-flex align-items-center">
+                    <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
+                    <div id="sticky-cart" class="d-none ms-3">
+                         <a href="#"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <div style="margin-top: 160px; height: 2000px; background: #0b132b05;" class="p-5">
+    </div>
+
+    <footer class="footer-section">
+        <div class="container-fluid px-4 py-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Sledujte nás</h5>
+                    <div class="social-links d-flex gap-3 mt-3">
+                        <a href="#"><img src="assets/twitter.png" alt="X" class="social-icon"></a>
+                        <a href="#"><img src="assets/instagram.png" alt="IG" class="social-icon"></a>
+                        <a href="#"><img src="assets/youtube.png" alt="YT" class="social-icon"></a>
+                        <a href="#"><img src="assets/facebook.png" alt="IN" class="social-icon"></a>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Dokumenty</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Všeobecné obchodné podmienky</a></li>
+                        <li><a href="#">Reklamačný poriadok</a></li>
+                        <li><a href="#">Dodatok o prístupnosti</a></li>
+                        <li><a href="#">Podmienky zberu údajov</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Rýchly nákup</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Ako nás nájdeš</a></li>
+                        <li><a href="#">Zoznam skladov</a></li>
+                        <li><a href="#">Potrebujem poradiť</a></li>
+                        <li><a href="#">Často kladené otázky</a></li>
+                        <li><a href="#">Aplikácia do mobilu</a></li>
+                        <li><a href="#">Darčekový poukaz</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h5 class="footer-heading">O nás</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Kto sme</a></li>
+                        <li><a href="#">História</a></li>
+                        <li><a href="#">Čo nás čaká</a></li>
+                        <li><a href="#">Dlhopisy</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const header = document.getElementById("main-header");
+        const topRow = document.getElementById("top-row");
+        const stickySearch = document.getElementById("sticky-search-container");
+        const stickyCart = document.getElementById("sticky-cart");
+        const btnLists = document.getElementById("btn-lists");
+
+        window.onscroll = function() {
+            if (window.scrollY > 40) {
+                header.classList.add("scrolled");
+                topRow.classList.add("d-none");
+                stickySearch.classList.remove("d-none");
+                stickyCart.classList.remove("d-none");
+                btnLists.classList.add("d-none");
+            } else {
+                header.classList.remove("scrolled");
+                topRow.classList.remove("d-none");
+                stickySearch.classList.add("d-none");
+                stickyCart.classList.add("d-none");
+                btnLists.classList.remove("d-none");
+            }
+        };
+    </script>
+</body>
+</html>
