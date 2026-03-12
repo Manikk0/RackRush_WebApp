@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RackRush - Kategória</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/category.css">
+</head>
+<body class="category-page">
+    <header id="main-header" class="fixed-top shadow-sm">
+        <div class="container-fluid px-4">
+            
+            <div id="desktop-nav" class="d-none d-md-block">
+                <div id="top-row" class="row align-items-center py-2">
+                    <div class="col-3 d-flex align-items-center">
+                        <a href="index.html" class="d-inline-block me-3">
+                            <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
+                        </a>
+                        
+                        <a href="#" class="address-card-link text-decoration-none">
+                            <div class="address-card d-flex align-items-center">
+                                <img src="assets/gps.png" alt="" class="icon-sm icon-white">
+                                <div class="address-text ms-2 d-none d-xl-flex">
+                                    <span class="label-text">Ponuka pre: Košice 2</span>
+                                    <span class="action-text">Pridať adresu doručenia</span>
+                                </div>
+                                <img src="assets/chevron_right.png" alt="" class="icon-xs ms-2 opacity-50 d-none d-xl-block">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="input-group search-container">
+                            <span class="input-group-text">
+                                <img src="assets/search.png" class="icon-sm">
+                            </span>
+                            <input type="text" class="form-control" placeholder="Hľadať produkty...">
+                        </div>
+                    </div>
+
+                    <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <a href="#"><img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white"></a>
+                        <a href="#"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                        
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <a class="dropdown-item" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
+                                    </div>
+                                    
+                                    <div class="v-divider"></div>
+
+                                    <div style="min-width: 180px;">
+                                        <div class="d-flex align-items-center gap-3 mb-4">
+                                            <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                            <div style="font-size: 0.85rem; line-height: 1.2;">
+                                                <strong class="d-block text-nowrap" style="color: var(--prussian-blue);">Name Username</strong>
+                                                <span class="text-muted small">example@gmail.com</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="small fw-bold mb-2" style="color: var(--dusk-blue);">Zmeniť jazyk</p>
+                                            <div class="d-flex flex-column gap-1">
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png" width="20"> DE</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4" style="opacity: 0.1;">
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="#" class="logout-pill">
+                                        <img src="assets/logout.png" class="icon-sm icon-theme"> 
+                                        <strong>Odhlásiť sa</strong>
+                                    </a>
+                                    <div class="promo-bubble">
+                                        Pri použití našej Aplikácie získate 25% zľavu k prvému nákupu
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bottom-row" class="row align-items-center py-2">
+                    <div class="col-auto d-flex gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-teal dropdown-toggle" type="button" data-bs-toggle="dropdown">Kategórie</button>
+                        </div>
+                        <button class="btn btn-outline-custom">Obľúbené</button>
+                        <button class="btn btn-outline-custom">Cenové hity</button>
+                    </div>
+
+                    <div class="col d-none" id="sticky-search-container">
+                        <div class="input-group search-container ms-3">
+                            <span class="input-group-text"><img src="assets/search.png" class="icon-sm"></span>
+                            <input type="text" class="form-control" placeholder="Hľadať...">
+                        </div>
+                    </div>
+
+                    <div class="col-auto ms-auto d-flex align-items-center">
+                        <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
+                        <div id="sticky-cart" class="d-none ms-3">
+                             <a href="#"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
+                <div class="col-auto">
+                    <button class="btn p-0 border-0"><img src="assets/burger-menu.png" alt="Menu" class="icon-md icon-white"></button>
+                </div>
+                <div class="col px-1">
+                    <div class="input-group search-container">
+                        <span class="input-group-text pe-1"><img src="assets/search.png" class="icon-sm"></span>
+                        <input type="text" class="form-control" placeholder="Hľadať...">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a href="#"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid px-4" style="margin-top: 140px; margin-bottom: 50px;">
+        <div class="row pt-4">
+            
+            <div class="col-lg-3 col-xl-2 mb-4 mb-lg-0">
+                <div class="d-lg-none mb-3">
+                    <button class="btn btn-teal w-100 fw-bold d-flex justify-content-between align-items-center py-2 rounded-3 shadow-sm mobile-filter-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filters-container" aria-expanded="false">
+                        <span>Filtrovať produkty</span>
+                        <img src="assets/chevron_right.png" class="icon-xs mobile-filter-chevron">
+                    </button>
+                </div>
+                
+                <div class="collapse d-lg-block" id="filters-container">
+                    <aside class="filters-sidebar">
+                        
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filter-origin" aria-expanded="true">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Zem pôvodu</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75" style="color: #adb5bd !important;">12 možností</span>
+                                </div>
+                                <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse show mt-3 filter-content" id="filter-origin">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin1">
+                                    <label class="form-check-label small" for="origin1">Argentína (7)</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin2">
+                                    <label class="form-check-label small" for="origin2">Belgicko (5)</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin3">
+                                    <label class="form-check-label small" for="origin3">Čína (1)</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin4">
+                                    <label class="form-check-label small" for="origin4">Taliansko (14)</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin5">
+                                    <label class="form-check-label small" for="origin5">Francúzsko (3)</label>
+                                </div>
+                                <div class="collapse" id="more-origins">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input custom-checkbox" type="checkbox" id="origin6">
+                                        <label class="form-check-label small" for="origin6">Slovensko (12)</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input custom-checkbox" type="checkbox" id="origin7">
+                                        <label class="form-check-label small" for="origin7">Španielsko (8)</label>
+                                    </div>
+                                </div>
+                                <a href="#more-origins" data-bs-toggle="collapse" id="show-more-origins-btn" aria-expanded="false" class="d-block mt-2 small text-decoration-none d-flex align-items-center gap-1" style="color: var(--neon-ice);">
+                                    <span class="show-more-text">Zobraziť viac</span> <img src="assets/chevron_right.png" class="icon-xs more-origins-chevron" style="filter: invert(82%) sepia(35%) saturate(718%) hue-rotate(113deg) brightness(101%) contrast(104%); width: 10px;">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-weight" aria-expanded="false">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Hmotnosť</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75" style="color: #adb5bd !important;">6 možností</span>
+                                </div>
+                                <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse mt-3 filter-content" id="filter-weight">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="weight1">
+                                    <label class="form-check-label small" for="weight1">100g (2)</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="weight2">
+                                    <label class="form-check-label small" for="weight2">250g (4)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-bio" aria-expanded="false">
+                                <div>
+                                    <span class="d-block fw-bold text-start">BIO</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75" style="color: #adb5bd !important;">2 možnosti</span>
+                                </div>
+                                <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse mt-3 filter-content" id="filter-bio">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="bio1">
+                                    <label class="form-check-label small" for="bio1">Áno (12)</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="bio2">
+                                    <label class="form-check-label small" for="bio2">Nie (3)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-plastic" aria-expanded="false">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Plastový obal</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75" style="color: #adb5bd !important;">2 možnosti</span>
+                                </div>
+                                <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse mt-3 filter-content" id="filter-plastic">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="plas1">
+                                    <label class="form-check-label small" for="plas1">Bez plastu (8)</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-allergens" aria-expanded="false">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Alergény</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75" style="color: #adb5bd !important;">9 možností</span>
+                                </div>
+                                <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse mt-3 filter-content" id="filter-allergens">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="aler1">
+                                    <label class="form-check-label small" for="aler1">Mlieko</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" id="aler2">
+                                    <label class="form-check-label small" for="aler2">Orechy</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-xl-10 position-relative">
+                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb category-breadcrumb d-flex align-items-center mb-4">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:-3px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="#">Ovocie a Zelenina</a></li>
+                        <li class="breadcrumb-item"><a href="#">Ovocie</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Jablká a Hrušky</li>
+                    </ol>
+                </nav>
+
+                <div class="sort-pills-container">
+                    <div class="sort-pills">
+                        <button class="sort-pill active">Odporúčané</button>
+                        <button class="sort-pill">Od najlacnejších</button>
+                        <button class="sort-pill">Od najdrahších</button>
+                    </div>
+                </div>
+
+                <div class="product-row" id="category-products">
+                </div>
+
+                <div class="text-center mt-5 mb-5">
+                    <button class="product-section__more px-4 py-2" style="font-size: 0.95rem;">Načítať ďalšie</button>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer-section">
+        <div class="container-fluid px-4 py-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Sledujte nás</h5>
+                    <div class="social-links d-flex gap-3 mt-3">
+                        <a href="#"><img src="assets/twitter.png" alt="X" class="social-icon"></a>
+                        <a href="#"><img src="assets/instagram.png" alt="IG" class="social-icon"></a>
+                        <a href="#"><img src="assets/youtube.png" alt="YT" class="social-icon"></a>
+                        <a href="#"><img src="assets/facebook.png" alt="FB" class="social-icon"></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Dokumenty</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Všeobecné obchodné podmienky</a></li>
+                        <li><a href="#">Reklamačný poriadok</a></li>
+                        <li><a href="#">Dodatok o prístupnosti</a></li>
+                        <li><a href="#">Podmienky zberu údajov</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Rýchly nákup</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Ako nás nájdeš</a></li>
+                        <li><a href="#">Zoznam skladov</a></li>
+                        <li><a href="#">Potrebujem poradiť</a></li>
+                        <li><a href="#">Často kladené otázky</a></li>
+                        <li><a href="#">Aplikácia do mobilu</a></li>
+                        <li><a href="#">Darčekový poukaz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">O nás</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Kto sme</a></li>
+                        <li><a href="#">História</a></li>
+                        <li><a href="#">Čo nás čaká</a></li>
+                        <li><a href="#">Dlhopisy</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const header = document.getElementById("main-header");
+        const topRow = document.getElementById("top-row");
+        const stickySearch = document.getElementById("sticky-search-container");
+        const stickyCart = document.getElementById("sticky-cart");
+        const btnLists = document.getElementById("btn-lists");
+        
+        document.getElementById('userMenu').addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        window.onscroll = function() {
+            if (window.innerWidth >= 768) {
+                if (window.scrollY > 40) {
+                    header.classList.add("scrolled");
+                    topRow.classList.add("d-none");
+                    stickySearch.classList.remove("d-none");
+                    stickyCart.classList.remove("d-none");
+                    btnLists.classList.add("d-none");
+                } else {
+                    header.classList.remove("scrolled");
+                    topRow.classList.remove("d-none");
+                    stickySearch.classList.add("d-none");
+                    stickyCart.classList.add("d-none");
+                    btnLists.classList.remove("d-none");
+                }
+            }
+        };
+
+        const card = `
+        <div class="product-card">
+          <div class="product-card__image-wrap">
+            <img src="https://placehold.co/200x160" alt="Rajo Kyslá smotana" class="product-card__image">
+            <button class="product-card__wishlist" aria-label="Wishlist"><img src="assets/heart.png" class="wishlist-icon"></button>
+            <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
+          </div>
+          <p class="product-card__name">Rajo Kyslá smotana</p>
+          <p class="product-card__price">0.65€</p>
+          <p class="product-card__meta"><span>250g</span><span>2.60€/kg</span></p>
+        </div>`;
+        
+        document.getElementById("category-products").innerHTML = card.repeat(16);
+
+        const pills = document.querySelectorAll('.sort-pill');
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+            });
+        });
+
+        const moreBtn = document.getElementById('show-more-origins-btn');
+        if (moreBtn) {
+            moreBtn.addEventListener('click', function() {
+                const textSpan = this.querySelector('.show-more-text');
+                setTimeout(() => {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    textSpan.textContent = isExpanded ? 'Zobraziť menej' : 'Zobraziť viac';
+                }, 10);
+            });
+        }
+    </script>
+</body>
+</html>
