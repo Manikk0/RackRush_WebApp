@@ -50,8 +50,8 @@
                             <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <a class="dropdown-item" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
                                         <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
                                         <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
                                     </div>
@@ -59,15 +59,32 @@
                                     <div class="v-divider"></div>
 
                                     <div style="min-width: 180px;">
-                                        <div class="d-flex align-items-center gap-3 mb-4">
-                                            <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
-                                            <div style="font-size: 0.85rem; line-height: 1.2;">
-                                                <strong class="d-block text-nowrap" style="color: var(--prussian-blue);">Name Username</strong>
-                                                <span class="text-muted small">example@gmail.com</span>
+                                        <!-- LOGGED IN STATE -->
+                                        <div id="dropdown-logged-in">
+                                            <div class="d-flex align-items-center gap-3 mb-4">
+                                                <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                                <div class="user-info-text">
+                                                    <strong class="d-block text-nowrap user-name">Name Username</strong>
+                                                    <span class="text-muted small user-email">example@gmail.com</span>
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <!-- LOGGED OUT STATE -->
+                                        <div id="dropdown-logged-out" class="d-none">
+                                            <div class="d-flex align-items-center gap-2 mb-3">
+                                                <img src="assets/user.png" class="icon-md logged-out-user-icon">
+                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo výhod</strong>
+                                            </div>
+                                            <div class="d-flex flex-column gap-2 mb-4">
+                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#registerModal">Zaregistrovať sa</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- COMMON -->
                                         <div>
-                                            <p class="small fw-bold mb-2" style="color: var(--dusk-blue);">Zmeniť jazyk</p>
+                                            <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
                                                 <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
                                                 <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
@@ -79,12 +96,12 @@
 
                                 <hr class="my-4" style="opacity: 0.1;">
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a href="#" class="logout-pill">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <a href="#" class="logout-pill" id="logout-btn">
                                         <img src="assets/logout.png" class="icon-sm icon-theme"> 
                                         <strong>Odhlásiť sa</strong>
                                     </a>
-                                    <div class="promo-bubble">
+                                    <div class="promo-bubble ms-auto">
                                         Pri použití našej Aplikácie získate 25% zľavu k prvému nákupu
                                     </div>
                                 </div>
@@ -339,59 +356,97 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-        const header = document.getElementById("main-header");
-        const topRow = document.getElementById("top-row");
-        const stickySearch = document.getElementById("sticky-search-container");
-        const stickyCart = document.getElementById("sticky-cart");
-        const btnLists = document.getElementById("btn-lists");
-        const card = `
-        <div class="product-card">
-          <div class="product-card__image-wrap">
-            <img src="https://placehold.co/200x160" alt="Rajo Kyslá smotana" class="product-card__image">
-            <button class="product-card__wishlist" aria-label="Wishlist"><img src="assets/heart.png" class="wishlist-icon"></button>
-            <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
-          </div>
-          <p class="product-card__name">Rajo Kyslá smotana</p>
-          <p class="product-card__price">0.65€</p>
-          <p class="product-card__meta"><span>250g</span><span>2.60€/kg</span></p>
-        </div>`;
-        
-        document.getElementById('userMenu').addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-
-        window.onscroll = function() {
-            if (window.innerWidth >= 768) {
-
-            if (window.scrollY > 40) {
-                header.classList.add("scrolled");
-                topRow.classList.add("d-none");
-                stickySearch.classList.remove("d-none");
-                stickyCart.classList.remove("d-none");
-                btnLists.classList.add("d-none");
-            } else {
-                header.classList.remove("scrolled");
-                topRow.classList.remove("d-none");
-                stickySearch.classList.add("d-none");
-                stickyCart.classList.add("d-none");
-                btnLists.classList.remove("d-none");
-            }
-            }
-        };
-        const createSection = (title) => `
-            <section class="product-section">
-            <h2 class="product-section__title">${title}</h2>
-            <div class="product-row">${card.repeat(12)}</div>
-            <div class="product-section__footer">
-                <button class="product-section__more">Zobraziť viac</button>
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="d-flex flex-column align-items-center w-100">
+                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h4 class="modal-title m-0">Prihlásenie</h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-decoration-none auth-modal-link">TU</a></p>
+                    
+                    <form id="login-form">
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label small mb-1">Heslo</label>
+                                <a href="#" class="small text-decoration-none forgot-password-link">Zabudnuté heslo?</a>
+                            </div>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p class="small mb-3 auth-modal-footer-text">Alebo sa prihlásiť pomocou</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </section>`;
+        </div>
+    </div>
 
-        document.getElementById("products-top-1").innerHTML = createSection("Pre vás");
-        document.getElementById("products-top-2").innerHTML = createSection("Najpredávanejšie");
-        document.getElementById("products-bottom").innerHTML = createSection("Aktuálne v zľave");
-    </script>
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="d-flex flex-column align-items-center w-100">
+                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <h4 class="modal-title m-0">Registrácia</h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <form id="register-form">
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">Meno</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <label class="form-label small mb-1">Heslo</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p class="small mb-3 auth-modal-footer-text">Alebo sa registrovať pomocou</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Boli ste úspešne odhlásený.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
