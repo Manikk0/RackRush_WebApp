@@ -568,7 +568,7 @@ body {
     background-color: var(--prussian-blue);
     border: 1px solid var(--dusk-blue);
     border-radius: 8px;
-    padding: 0;
+    padding: 2rem;
 }
 
 .comparison-table th, .comparison-table td {
