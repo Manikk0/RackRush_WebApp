@@ -556,17 +556,19 @@ body {
     max-width: 800px;
     margin: 0 auto;
     overflow-x: auto;
+    padding: 0 1rem; 
 }
 
 .comparison-table {
     width: 100%;
+    min-width: 400px;
     border-collapse: separate; /* Important for border-radius on columns */
     border-spacing: 0;
     color: #e0e0e0;
     background-color: var(--prussian-blue);
     border: 1px solid var(--dusk-blue);
     border-radius: 8px;
-    padding: 2rem;
+    padding: 0;
 }
 
 .comparison-table th, .comparison-table td {
