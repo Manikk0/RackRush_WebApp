@@ -108,3 +108,38 @@ document.getElementById('register-form')?.addEventListener('submit', function(e)
         if(registerModal) registerModal.hide();
     }
 });
+
+(function () {
+    var BREAKPOINT = 768;
+    var trigger = document.getElementById('cart-trigger');
+    var drawer  = document.getElementById('cart-drawer');
+    var overlay = document.getElementById('cart-overlay');
+    var closeBtn = document.getElementById('cart-close');
+
+    function openDrawer() {
+        drawer.classList.add('cart-drawer--open');
+        overlay.classList.add('cart-overlay--visible');
+        document.body.classList.add('cart-open');
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('cart-drawer--open');
+        overlay.classList.remove('cart-overlay--visible');
+        document.body.classList.remove('cart-open');
+    }
+
+    trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.innerWidth <= BREAKPOINT) {
+            window.location.href = 'cart.html';
+        } else {
+            drawer.classList.contains('cart-drawer--open') ? closeDrawer() : openDrawer();
+        }
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    // qty buttons
+    
+})();
