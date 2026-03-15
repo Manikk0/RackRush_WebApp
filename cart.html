@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Košík – RackRush</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/cart.css">
+</head>
+<body>
+    <!-- ═══ HEADER (identical to index.html) ═══ -->
+    <header id="main-header" class="fixed-top shadow-sm">
+        <div class="container-fluid px-4">
+ 
+            <div id="desktop-nav" class="d-none d-md-block">
+                <div id="top-row" class="row align-items-center py-2">
+                    <div class="col-3 d-flex align-items-center">
+                        <a href="index.html" class="d-inline-block me-3">
+                            <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
+                        </a>
+                        <a href="#" class="address-card-link text-decoration-none">
+                            <div class="address-card d-flex align-items-center">
+                                <img src="assets/gps.png" alt="" class="icon-sm icon-white">
+                                <div class="address-text ms-2 d-none d-xl-flex">
+                                    <span class="label-text">Ponuka pre: Košice 2</span>
+                                    <span class="action-text">Pridať adresu doručenia</span>
+                                </div>
+                                <img src="assets/chevron_right.png" alt="" class="icon-xs ms-2 opacity-50 d-none d-xl-block">
+                            </div>
+                        </a>
+                    </div>
+ 
+                    <div class="col-6">
+                        <div class="input-group search-container">
+                            <span class="input-group-text">
+                                <img src="assets/search.png" class="icon-sm">
+                            </span>
+                            <input type="text" class="form-control" placeholder="Hľadať produkty...">
+                        </div>
+                    </div>
+ 
+                    <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <a href="#"><img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white"></a>
+                        <a href="cart.html" class="cart-trigger-btn position-relative">
+                            <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
+                        </a>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
+                                    </div>
+                                    <div class="v-divider"></div>
+                                    <div style="min-width: 180px;">
+                                        <div id="dropdown-logged-in">
+                                            <div class="d-flex align-items-center gap-3 mb-4">
+                                                <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                                <div class="user-info-text">
+                                                    <strong class="d-block text-nowrap user-name">Name Username</strong>
+                                                    <span class="text-muted small user-email">example@gmail.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="dropdown-logged-out" class="d-none">
+                                            <div class="d-flex align-items-center gap-2 mb-3">
+                                                <img src="assets/user.png" class="icon-md logged-out-user-icon">
+                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo výhod</strong>
+                                            </div>
+                                            <div class="d-flex flex-column gap-2 mb-4">
+                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#registerModal">Zaregistrovať sa</a>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
+                                            <div class="d-flex flex-column gap-1">
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png" width="20"> DE</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" style="opacity: 0.1;">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <a href="#" class="logout-pill" id="logout-btn">
+                                        <img src="assets/logout.png" class="icon-sm icon-theme">
+                                        <strong>Odhlásiť sa</strong>
+                                    </a>
+                                    <div class="promo-bubble ms-auto">
+                                        Pri použití našej Aplikácie získate 25% zľavu k prvému nákupu
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+                <div id="bottom-row" class="row align-items-center py-2">
+                    <div class="col-auto d-flex gap-2">
+                        <div class="dropdown">
+                            <button class="btn btn-teal dropdown-toggle" type="button" data-bs-toggle="dropdown">Kategórie</button>
+                        </div>
+                        <button class="btn btn-outline-custom">Obľúbené</button>
+                        <button class="btn btn-outline-custom">Cenové hity</button>
+                    </div>
+                    <div class="col d-none" id="sticky-search-container">
+                        <div class="input-group search-container ms-3">
+                            <span class="input-group-text"><img src="assets/search.png" class="icon-sm"></span>
+                            <input type="text" class="form-control" placeholder="Hľadať...">
+                        </div>
+                    </div>
+                    <div class="col-auto ms-auto d-flex align-items-center">
+                        <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
+                        <div id="sticky-cart" class="d-none ms-3">
+                            <a href="cart.html"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Mobile nav -->
+            <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
+                <div class="col-auto">
+                    <button class="btn p-0 border-0"><img src="assets/burger-menu.png" alt="Menu" class="icon-md icon-white"></button>
+                </div>
+                <div class="col px-1">
+                    <div class="input-group search-container">
+                        <span class="input-group-text pe-1"><img src="assets/search.png" class="icon-sm"></span>
+                        <input type="text" class="form-control" placeholder="Hľadať...">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a href="cart.html"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+ 
+    <!-- ═══ MAIN ═══ -->
+    <main class="container-fluid px-4 mt-4">
+ 
+        <h1 class="cart-page-title" id="cart-page-title">Prehľad objednávky (0)</h1>
+ 
+        <div class="row g-4">
+ 
+            <!-- LEFT: cart items -->
+            <div class="col-lg-8">
+                <div id="cart-items-container">
+                    <!-- Items injected by JS -->
+                    <div class="cart-empty-state" id="cart-empty-state">
+                        Váš košík je prázdny.
+                    </div>
+                </div>
+ 
+                <div class="cart-actions">
+                    <button class="btn-discount" id="btn-discount">
+                        <img src="assets/tag.png" class="icon-sm icon-white">
+                        Vložiť zľavový kód
+                    </button>
+                    <button class="btn-clear" id="btn-clear">
+                        <img src="assets/trash.png" class="icon-sm icon-white">
+                        Vyprázdniť košík
+                    </button>
+                </div>
+ 
+                <div class="discount-input-wrap" id="discount-input-wrap">
+                    <input type="text" placeholder="Zadajte kód...">
+                    <button>Uplatniť</button>
+                </div>
+            </div>
+ 
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <p class="cart-summary__title">Zhrnutie objednávky</p>
+ 
+                    <div class="cart-summary__row">
+                        <span>Medzisúčet</span>
+                        <span id="summary-subtotal">0,00 €</span>
+                    </div>
+                    <div class="cart-summary__row">
+                        <span>Doprava</span>
+                        <span id="summary-shipping">Zdarma</span>
+                    </div>
+                    <div class="cart-summary__row">
+                        <span>Zľava</span>
+                        <span id="summary-discount">–0,00 €</span>
+                    </div>
+ 
+                    <div class="cart-summary__row cart-summary__row--total">
+                        <span>Spolu</span>
+                        <span id="summary-total">0,00 €</span>
+                    </div>
+ 
+                    <p class="cart-summary__savings">Ušetrené: <span id="summary-savings">0 €</span></p>
+ 
+                    <a href="#" class="btn-proceed">Pokračovať k platbe a doprave</a>
+                </div>
+            </div>
+        </div>
+ 
+        <section class="recommendations-section">
+            <h2 class="recommendations-section__title">Mohlo by sa vám páčiť</h2>
+            <div class="product-row" id="recommendations"></div>
+        </section>
+ 
+    </main>
+ 
+    <footer class="footer-section">
+        <div class="container-fluid px-4 py-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Sledujte nás</h5>
+                    <div class="social-links d-flex gap-3 mt-3">
+                        <a href="#"><img src="assets/twitter.png" alt="X" class="social-icon"></a>
+                        <a href="#"><img src="assets/instagram.png" alt="IG" class="social-icon"></a>
+                        <a href="#"><img src="assets/youtube.png" alt="YT" class="social-icon"></a>
+                        <a href="#"><img src="assets/facebook.png" alt="FB" class="social-icon"></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Dokumenty</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Všeobecné obchodné podmienky</a></li>
+                        <li><a href="#">Reklamačný poriadok</a></li>
+                        <li><a href="#">Dodatok o prístupnosti</a></li>
+                        <li><a href="#">Podmienky zberu údajov</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Rýchly nákup</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Ako nás nájdeš</a></li>
+                        <li><a href="#">Zoznam skladov</a></li>
+                        <li><a href="#">Potrebujem poradiť</a></li>
+                        <li><a href="#">Často kladené otázky</a></li>
+                        <li><a href="#">Aplikácia do mobilu</a></li>
+                        <li><a href="#">Darčekový poukaz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">O nás</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Kto sme</a></li>
+                        <li><a href="#">História</a></li>
+                        <li><a href="#">Čo nás čaká</a></li>
+                        <li><a href="#">Dlhopisy</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+ 
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="d-flex flex-column align-items-center w-100">
+                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h4 class="modal-title m-0">Prihlásenie</h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-decoration-none auth-modal-link">TU</a></p>
+                    <form id="login-form">
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label small mb-1">Heslo</label>
+                                <a href="#" class="small text-decoration-none forgot-password-link">Zabudnuté heslo?</a>
+                            </div>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
+                    </form>
+                    <div class="text-center">
+                        <p class="small mb-3 auth-modal-footer-text">Alebo sa prihlásiť pomocou</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="d-flex flex-column align-items-center w-100">
+                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <h4 class="modal-title m-0">Registrácia</h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="register-form">
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">Meno</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <label class="form-label small mb-1">Heslo</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
+                    </form>
+                    <div class="text-center">
+                        <p class="small mb-3 auth-modal-footer-text">Alebo sa registrovať pomocou</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Logout Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">Boli ste úspešne odhlásený.</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
