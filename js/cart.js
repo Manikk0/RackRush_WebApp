@@ -143,20 +143,51 @@ function toggleAuthState(isLoggedIn) {
     const loggedOutEl = document.getElementById('dropdown-logged-out');
     const logoutBtn = document.getElementById('logout-btn');
     const restrictedLinks = document.querySelectorAll('.auth-restricted');
+
+    // Mobile elements
+    const mobileLoggedInEl = document.getElementById('mobile-logged-in');
+    const mobileLoggedOutEl = document.getElementById('mobile-logged-out');
+    const mobileLogoutSection = document.getElementById('mobile-logout-section');
+
     if (isLoggedIn) {
-        loggedInEl?.classList.remove('d-none');
-        loggedOutEl?.classList.add('d-none');
-        logoutBtn?.classList.remove('d-none');
+        if(loggedInEl) loggedInEl.classList.remove('d-none');
+        if(loggedOutEl) loggedOutEl.classList.add('d-none');
+        if(logoutBtn) logoutBtn.classList.remove('d-none');
+        
+        if(mobileLoggedInEl) mobileLoggedInEl.classList.remove('d-none');
+        if(mobileLoggedOutEl) mobileLoggedOutEl.classList.add('d-none');
+        if(mobileLogoutSection) mobileLogoutSection.classList.remove('d-none');
+
         restrictedLinks.forEach(l => l.classList.remove('link-greyed'));
     } else {
-        loggedInEl?.classList.add('d-none');
-        loggedOutEl?.classList.remove('d-none');
-        logoutBtn?.classList.add('d-none');
+        if(loggedInEl) loggedInEl.classList.add('d-none');
+        if(loggedOutEl) loggedOutEl.classList.remove('d-none');
+        if(logoutBtn) logoutBtn.classList.add('d-none');
+
+        if(mobileLoggedInEl) mobileLoggedInEl.classList.add('d-none');
+        if(mobileLoggedOutEl) mobileLoggedOutEl.classList.remove('d-none');
+        if(mobileLogoutSection) mobileLogoutSection.classList.add('d-none');
+
         restrictedLinks.forEach(l => l.classList.add('link-greyed'));
     }
 }
 
 toggleAuthState(true);
+
+document.getElementById('logout-btn-mobile')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    toggleAuthState(false);
+    
+    // Close offcanvas if it's open
+    const mobileMenuEl = document.getElementById('mobileMenu');
+    if (mobileMenuEl) {
+        const offcanvas = bootstrap.Offcanvas.getInstance(mobileMenuEl);
+        if (offcanvas) offcanvas.hide();
+    }
+
+    const toastEl = document.getElementById('logoutToast');
+    if (toastEl) new bootstrap.Toast(toastEl).show();
+});
 
 document.getElementById('logout-btn')?.addEventListener('click', function (e) {
     e.preventDefault();

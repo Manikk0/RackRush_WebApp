@@ -69,21 +69,54 @@ function toggleAuthState(isLoggedIn) {
     const logoutBtn = document.getElementById('logout-btn');
     const restrictedLinks = document.querySelectorAll('.auth-restricted');
 
+    // Mobile elements
+    const mobileLoggedInEl = document.getElementById('mobile-logged-in');
+    const mobileLoggedOutEl = document.getElementById('mobile-logged-out');
+    const mobileLogoutSection = document.getElementById('mobile-logout-section');
+
     if (isLoggedIn) {
         if(loggedInEl) loggedInEl.classList.remove('d-none');
         if(loggedOutEl) loggedOutEl.classList.add('d-none');
         if(logoutBtn) logoutBtn.classList.remove('d-none');
+        
+        if(mobileLoggedInEl) mobileLoggedInEl.classList.remove('d-none');
+        if(mobileLoggedOutEl) mobileLoggedOutEl.classList.add('d-none');
+        if(mobileLogoutSection) mobileLogoutSection.classList.remove('d-none');
+
         restrictedLinks.forEach(link => link.classList.remove('link-greyed'));
     } else {
         if(loggedInEl) loggedInEl.classList.add('d-none');
         if(loggedOutEl) loggedOutEl.classList.remove('d-none');
         if(logoutBtn) logoutBtn.classList.add('d-none');
+
+        if(mobileLoggedInEl) mobileLoggedInEl.classList.add('d-none');
+        if(mobileLoggedOutEl) mobileLoggedOutEl.classList.remove('d-none');
+        if(mobileLogoutSection) mobileLogoutSection.classList.add('d-none');
+
         restrictedLinks.forEach(link => link.classList.add('link-greyed'));
     }
 }
 
 // Initialize state
 toggleAuthState(true);
+
+document.getElementById('logout-btn-mobile')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    toggleAuthState(false);
+    
+    // Close offcanvas if it's open
+    const mobileMenuEl = document.getElementById('mobileMenu');
+    if (mobileMenuEl) {
+        const offcanvas = bootstrap.Offcanvas.getInstance(mobileMenuEl);
+        if (offcanvas) offcanvas.hide();
+    }
+
+    const toastEl = document.getElementById('logoutToast');
+    if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+});
 
 document.getElementById('logout-btn')?.addEventListener('click', function(e) {
     e.preventDefault();

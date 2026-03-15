@@ -129,7 +129,9 @@
             <!-- Mobile nav -->
             <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
                 <div class="col-auto">
-                    <button class="btn p-0 border-0"><img src="assets/burger-menu.png" alt="Menu" class="icon-md icon-white"></button>
+                    <button class="btn p-0 border-0" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                        <img src="assets/burger-menu.png" alt="Menu" class="icon-md icon-white">
+                    </button>
                 </div>
                 <div class="col px-1">
                     <div class="input-group search-container">
@@ -143,6 +145,84 @@
             </div>
         </div>
     </header>
+
+    <!-- Mobile Offcanvas -->
+    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="mobileMenuLabel">
+                <a href="index.html">
+                    <img src="assets/logo.png" alt="RackRush" class="mobile-logo">
+                </a>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- User Section -->
+            <div class="mobile-menu-section">
+                <div id="mobile-logged-in" class="d-none">
+                    <div class="mobile-user-card d-flex align-items-center gap-3">
+                        <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                        <div>
+                            <div class="mobile-user-name">Name Username</div>
+                            <div class="mobile-user-email">example@gmail.com</div>
+                        </div>
+                    </div>
+                    <a href="#" class="mobile-nav-link"><img src="assets/user.png" class="icon-sm"> Môj účet</a>
+                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Objednávky</a>
+                </div>
+                <div id="mobile-logged-out">
+                    <div class="mobile-auth-btns">
+                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</button>
+                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal" data-bs-target="#registerModal">Registrácia</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address Card -->
+            <div class="mobile-menu-section">
+                <p class="mobile-menu-title">Doručenie</p>
+                <div class="mobile-address-btn">
+                    <img src="assets/gps.png" class="icon-sm icon-white">
+                    <div class="address-text">
+                        <span class="label-text">Doručiť na: Košice 2</span>
+                        <span class="action-text">Pridať adresu doručenia</span>
+                    </div>
+                    <img src="assets/chevron_right.png" class="icon-xs ms-auto opacity-50">
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            <div class="mobile-menu-section">
+                <p class="mobile-menu-title">Menu</p>
+                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm"> Kategórie</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/tag.png" class="icon-sm"> Cenové hity</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/bell.png" class="icon-sm"> Upozornenia</a>
+            </div>
+
+            <!-- Language & Help -->
+            <div class="mobile-menu-section">
+                <p class="mobile-menu-title">Ostatné</p>
+                <div class="mobile-lang-selector mb-3 px-1">
+                    <a href="#" class="mobile-lang-link active">SK</a>
+                    <a href="#" class="mobile-lang-link">EN</a>
+                    <a href="#" class="mobile-lang-link">CZ</a>
+                    <a href="#" class="mobile-lang-link">DE</a>
+                </div>
+                <a href="#" class="mobile-nav-link"><img src="assets/question_mark.png" class="icon-sm"> Ako nakúpiť</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem poradiť</a>
+            </div>
+
+            <!-- Logout -->
+            <div class="mobile-menu-section d-none" id="mobile-logout-section">
+                <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
+                    <img src="assets/logout.png" class="icon-sm" style="filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(0deg);"> 
+                    <strong>Odhlásiť sa</strong>
+                </a>
+            </div>
+        </div>
+    </div>
  
     <!-- ═══ MAIN ═══ -->
     <main class="container-fluid px-4 mt-4">
