@@ -471,6 +471,16 @@ body {
     color: inherit;
 }
 
+.category-card--placeholder {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+.category-card--placeholder .category-card__image-wrap img {
+    filter: invert(1) brightness(1.5);
+}
+
 .category-card__image-wrap {
     width: 100%;
     aspect-ratio: 1;
@@ -480,8 +490,13 @@ body {
 }
 
 .category-card__image-wrap img {
-    max-width: 100%;
+    max-width: 60%;
     object-fit: contain;
+    filter: invert(1) brightness(2);
+}
+
+.category-card:hover .category-card__image-wrap img {
+    filter: invert(85%) sepia(20%) saturate(1000%) hue-rotate(120deg) brightness(1.1);
 }
 
 .category-card__name {
