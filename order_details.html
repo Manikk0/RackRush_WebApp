@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detaily objednávky – RackRush</title>
+    <meta name="description" content="Zadajte detaily objednávky – doručenie, kontaktné informácie a spôsob platby.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/order_details.css">
+</head>
+<body>
+    <header id="main-header" class="fixed-top shadow-sm">
+        <div class="container-fluid px-4">
+
+            <div id="desktop-nav" class="d-none d-md-block">
+                <div id="top-row" class="row align-items-center py-2">
+                    <div class="col-3 d-flex align-items-center">
+                        <a href="index.html" class="d-inline-block me-3">
+                            <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
+                        </a>
+                    </div>
+
+                    <div class="col-6 d-flex justify-content-center">
+                        <span class="order-header-title">Detaily objednávky</span>
+                    </div>
+
+                    <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
+                                    </div>
+                                    <div class="v-divider"></div>
+                                    <div style="min-width: 180px;">
+                                        <div id="dropdown-logged-in">
+                                            <div class="d-flex align-items-center gap-3 mb-4">
+                                                <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                                <div class="user-info-text">
+                                                    <strong class="d-block text-nowrap user-name">Name Username</strong>
+                                                    <span class="text-muted small user-email">example@gmail.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="dropdown-logged-out" class="d-none">
+                                            <div class="d-flex align-items-center gap-2 mb-3">
+                                                <img src="assets/user.png" class="icon-md logged-out-user-icon">
+                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo výhod</strong>
+                                            </div>
+                                            <div class="d-flex flex-column gap-2 mb-4">
+                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#registerModal">Zaregistrovať sa</a>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
+                                            <div class="d-flex flex-column gap-1">
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png" width="20"> DE</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4" style="opacity: 0.1;">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <a href="#" class="logout-pill" id="logout-btn">
+                                        <img src="assets/logout.png" class="icon-sm icon-theme">
+                                        <strong>Odhlásiť sa</strong>
+                                    </a>
+                                    <div class="promo-bubble ms-auto">
+                                        Pri použití našej Aplikácie získate 25% zľavu k prvému nákupu
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
+                <div class="col-auto">
+                    <a href="cart.html" class="btn p-0 border-0 od-back-link">
+                        <img src="assets/chevron_left.png" class="icon-sm icon-white">
+                        <span>Späť do košíka</span>
+                    </a>
+                </div>
+                <div class="col d-flex justify-content-end">
+                    <a href="#" data-bs-toggle="dropdown">
+                        <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="od-main container-fluid px-4">
+
+        <div class="d-none d-md-flex align-items-center mb-4">
+            <a href="cart.html" class="od-back-link">
+                <img src="assets/chevron_left.png" class="icon-sm icon-white">
+                <span>Späť do košíka</span>
+            </a>
+        </div>
+
+        <h1 class="od-page-title d-none d-md-block">Detaily objednávky</h1>
+
+        <div class="row g-4">
+
+            <div class="col-lg-7 col-xl-6">
+                <div class="od-accordion" id="orderAccordion">
+
+                    <!-- Section 1: Kam?  -->
+                    <div class="od-section" id="section-delivery">
+                        <button class="od-section__header" id="btn-delivery" aria-expanded="false" aria-controls="body-delivery">
+                            <div class="od-section__icon-wrap">
+                                <img src="assets/gps.png" class="icon-sm icon-white">
+                            </div>
+                            <div class="od-section__title-wrap">
+                                <span class="od-section__title">Kam?</span>
+                                <span class="od-section__subtitle" id="subtitle-delivery">Vyberte doručenie</span>
+                            </div>
+                            <div class="od-section__chevron">
+                                <img src="assets/chevron_down.png" class="icon-sm icon-white">
+                            </div>
+                        </button>
+                        <div class="od-section__body" id="body-delivery">
+                            <form class="od-form" id="form-delivery">
+                                <div class="od-form__field">
+                                    <label for="delivery-city">Mesto</label>
+                                    <input type="text" id="delivery-city" placeholder="">
+                                </div>
+                                <div class="od-form__field">
+                                    <label for="delivery-address">Adresa</label>
+                                    <input type="text" id="delivery-address" placeholder="">
+                                </div>
+                                <div class="od-form__field od-form__field--half">
+                                    <label for="delivery-floor">Poschodie</label>
+                                    <input type="text" id="delivery-floor" placeholder="">
+                                </div>
+                                <button type="button" class="od-btn-save" id="save-delivery">Uložiť</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="od-section__divider"></div>
+
+                    <!-- Section 2: Kto?  -->
+                    <div class="od-section" id="section-who">
+                        <button class="od-section__header" id="btn-who" aria-expanded="false" aria-controls="body-who">
+                            <div class="od-section__icon-wrap">
+                                <img src="assets/user.png" class="icon-sm icon-white">
+                            </div>
+                            <div class="od-section__title-wrap">
+                                <span class="od-section__title">Kto?</span>
+                                <span class="od-section__subtitle" id="subtitle-who">Vyplnte informácie</span>
+                            </div>
+                            <div class="od-section__chevron">
+                                <img src="assets/chevron_down.png" class="icon-sm icon-white">
+                            </div>
+                        </button>
+                        <div class="od-section__body" id="body-who">
+                            <form class="od-form" id="form-who">
+                                <div class="od-form__field">
+                                    <label for="who-name">Meno a priezvisko</label>
+                                    <input type="text" id="who-name" placeholder="">
+                                </div>
+                                <div class="od-form__field">
+                                    <label for="who-phone">Telefón</label>
+                                    <input type="tel" id="who-phone" placeholder="">
+                                </div>
+                                <div class="od-form__field">
+                                    <label for="who-email">E-mail</label>
+                                    <input type="email" id="who-email" placeholder="">
+                                </div>
+                                <div class="od-form__checkbox">
+                                    <input type="checkbox" id="who-company">
+                                    <label for="who-company">Nakúpiť na firmu</label>
+                                </div>
+                                <button type="button" class="od-btn-save" id="save-who">Uložiť</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="od-section__divider"></div>
+
+                    <!-- Section 3: Informácie pre kuriéra -->
+                    <div class="od-section" id="section-courier">
+                        <button class="od-section__header" id="btn-courier" aria-expanded="false" aria-controls="body-courier">
+                            <div class="od-section__icon-wrap">
+                                <img src="assets/speech-bubble.png" class="icon-sm icon-white">
+                            </div>
+                            <div class="od-section__title-wrap">
+                                <span class="od-section__title">Informácie pre kuriéra</span>
+                            </div>
+                            <div class="od-section__chevron">
+                                <img src="assets/chevron_down.png" class="icon-sm icon-white">
+                            </div>
+                        </button>
+                        <div class="od-section__body" id="body-courier">
+                            <form class="od-form" id="form-courier">
+                                <div class="od-form__field">
+                                    <label for="courier-notes">Informácie pre kuriéra</label>
+                                    <textarea id="courier-notes" rows="4" placeholder=""></textarea>
+                                </div>
+                                <button type="button" class="od-btn-save" id="save-courier">Uložiť</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="od-section__divider"></div>
+
+                    <!-- Section 4: Spôsob platby -->
+                    <div class="od-section" id="section-payment">
+                        <button class="od-section__header" id="btn-payment" aria-expanded="false" aria-controls="body-payment">
+                            <div class="od-section__icon-wrap">
+                                <img src="assets/credit-card.png" class="icon-sm icon-white">
+                            </div>
+                            <div class="od-section__title-wrap">
+                                <span class="od-section__title">Spôsob platby</span>
+                            </div>
+                            <div class="od-section__chevron">
+                                <img src="assets/chevron_down.png" class="icon-sm icon-white">
+                            </div>
+                        </button>
+                        <div class="od-section__body" id="body-payment">
+                            <form class="od-form" id="form-payment">
+                                <div class="od-payment-options">
+                                    <label class="od-payment-option">
+                                        <input type="radio" name="payment" value="card">
+                                        <span class="od-payment-option__box">
+                                            <img src="assets/credit-card.png" class="icon-sm icon-white">
+                                            Platobná karta
+                                        </span>
+                                    </label>
+                                    <label class="od-payment-option">
+                                        <input type="radio" name="payment" value="cash">
+                                        <span class="od-payment-option__box">
+                                            <img src="assets/tag.png" class="icon-sm icon-white">
+                                            Dobierka
+                                        </span>
+                                    </label>
+                                    <label class="od-payment-option">
+                                        <input type="radio" name="payment" value="transfer">
+                                        <span class="od-payment-option__box">
+                                            <img src="assets/offer_tag.png" class="icon-sm icon-white">
+                                            Bankový prevod
+                                        </span>
+                                    </label>
+                                </div>
+                                <button type="button" class="od-btn-save" id="save-payment">Uložiť</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="od-section__divider"></div>
+
+                </div>
+
+                <div class="d-lg-none mt-4">
+                    <button class="od-btn-order w-100" id="btn-order-mobile">Objednať</button>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-xl-4 offset-xl-1">
+                <div class="od-summary">
+
+                    <button class="od-voucher-btn" id="btn-voucher">
+                        <img src="assets/plus.png" class="icon-sm icon-white">
+                        Vložiť kód
+                    </button>
+                    <div class="od-voucher-input" id="voucher-input-wrap">
+                        <input type="text" placeholder="Zľavový kód..." id="voucher-code">
+                        <button id="btn-apply-voucher">Uplatniť</button>
+                    </div>
+
+                    <div class="od-summary__divider"></div>
+
+                    <div class="od-summary__row">
+                        <span>Hodnota košíku</span>
+                        <span id="od-subtotal">0€</span>
+                    </div>
+                    <div class="od-summary__row">
+                        <span>Poplatok za doručenie</span>
+                        <span id="od-shipping">0€</span>
+                    </div>
+                    <div class="od-summary__row">
+                        <span>Ušetrené peniaze</span>
+                        <span id="od-savings">0€</span>
+                    </div>
+
+                    <div class="od-summary__divider"></div>
+
+                    <div class="od-summary__total">
+                        <span>Celková cena</span>
+                        <strong id="od-total">0€</strong>
+                    </div>
+
+                    <button class="od-btn-order mt-4 d-none d-lg-block w-100" id="btn-order-desktop">Objednať</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer-section">
+        <div class="container-fluid px-4 py-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Sledujte nás</h5>
+                    <div class="social-links d-flex gap-3 mt-3">
+                        <a href="#"><img src="assets/twitter.png" alt="X" class="social-icon"></a>
+                        <a href="#"><img src="assets/instagram.png" alt="IG" class="social-icon"></a>
+                        <a href="#"><img src="assets/youtube.png" alt="YT" class="social-icon"></a>
+                        <a href="#"><img src="assets/facebook.png" alt="FB" class="social-icon"></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Dokumenty</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Všeobecné obchodné podmienky</a></li>
+                        <li><a href="#">Reklamačný poriadok</a></li>
+                        <li><a href="#">Dodatok o prístupnosti</a></li>
+                        <li><a href="#">Podmienky zberu údajov</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">Rýchly nákup</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Ako nás nájdeš</a></li>
+                        <li><a href="#">Zoznam skladov</a></li>
+                        <li><a href="#">Potrebujem poradiť</a></li>
+                        <li><a href="#">Často kladené otázky</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="footer-heading">O nás</h5>
+                    <ul class="footer-list">
+                        <li><a href="#">Kto sme</a></li>
+                        <li><a href="#">História</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="d-flex flex-column align-items-center w-100">
+                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h4 class="modal-title m-0">Prihlásenie</h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-decoration-none auth-modal-link">TU</a></p>
+                    <form id="login-form">
+                        <div class="mb-3 text-start">
+                            <label class="form-label small mb-1">E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label small mb-1">Heslo</label>
+                                <a href="#" class="small text-decoration-none forgot-password-link">Zabudnuté heslo?</a>
+                            </div>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">Boli ste úspešne odhlásený.</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/order_details.js"></script>
+</body>
+</html>

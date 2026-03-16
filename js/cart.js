@@ -67,9 +67,12 @@ function renderCart() {
 // ── Update summary box ──
 function updateSummary() {
     const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
-    document.getElementById('summary-subtotal').textContent = subtotal.toFixed(2).replace('.', ',') + ' €';
-    document.getElementById('summary-total').textContent = subtotal.toFixed(2).replace('.', ',') + ' €';
-    document.getElementById('summary-savings').textContent = '0 €';
+    const subtotalEl = document.getElementById('summary-subtotal');
+    const totalEl = document.getElementById('summary-total');
+    const savingsEl = document.getElementById('summary-savings');
+    if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(2).replace('.', ',') + ' €';
+    if (totalEl) totalEl.textContent = subtotal.toFixed(2).replace('.', ',') + ' €';
+    if (savingsEl) savingsEl.textContent = '0 €';
 }
 
 // ── Bind qty / remove buttons ──
@@ -101,15 +104,15 @@ function bindCartEvents() {
 }
 
 // ── Clear cart ──
-document.getElementById('btn-clear').addEventListener('click', function () {
+document.getElementById('btn-clear')?.addEventListener('click', function () {
     cartItems = [];
     renderCart();
 });
 
 // ── Discount code toggle ──
-document.getElementById('btn-discount').addEventListener('click', function () {
+document.getElementById('btn-discount')?.addEventListener('click', function () {
     const wrap = document.getElementById('discount-input-wrap');
-    wrap.classList.toggle('visible');
+    wrap?.classList.toggle('visible');
 });
 
 // ── Sticky scroll (same as index) ──
@@ -219,4 +222,6 @@ if (recContainer) {
 }
 
 // ── Init ──
-renderCart();
+if (document.getElementById('cart-items-container')) {
+    renderCart();
+}
