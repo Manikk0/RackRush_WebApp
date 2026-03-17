@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RackRush - Dostupné kategórie</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/categories.css">
 </head>
@@ -71,7 +72,7 @@
 
                                     <div class="v-divider"></div>
 
-                                    <div style="min-width: 180px;">
+                                    <div class="user-dropdown-info">
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
                                                 <img src="assets/user_placeholder_profile.png"
@@ -95,7 +96,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="my-4" style="opacity: 0.1;">
+                                <hr class="my-4 dropdown-divider-dim">
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <a href="#" class="logout-pill" id="logout-btn">
                                         <img src="assets/logout.png" class="icon-sm icon-theme">
@@ -224,7 +225,7 @@
             <!-- Logout -->
             <div class="mobile-menu-section d-none" id="mobile-logout-section">
                 <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
-                    <img src="assets/logout.png" class="icon-sm" style="filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(0deg);"> 
+                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile"> 
                     <strong>Odhlásiť sa</strong>
                 </a>
             </div>

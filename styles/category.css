@@ -204,3 +204,35 @@
 .pagination-chevron.left {
     transform: rotate(180deg);
 }
+
+/* Category Page Cleanups */
+.category-main {
+    margin-top: 140px;
+    margin-bottom: 50px;
+}
+
+.filter-options-count {
+    color: #adb5bd !important;
+}
+
+.show-more-origins {
+    color: var(--neon-ice) !important;
+    text-decoration: none;
+}
+
+.show-more-origins-icon {
+    filter: invert(82%) sepia(35%) saturate(718%) hue-rotate(113deg) brightness(101%) contrast(104%);
+    width: 10px !important;
+}
+
+.breadcrumb-home-icon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    filter: invert(85%) sepia(10%) saturate(100%) hue-rotate(180deg) brightness(1);
+    transition: filter 0.2s;
+}
+
+.category-breadcrumb .breadcrumb-item a:hover .breadcrumb-home-icon {
+    filter: invert(82%) sepia(35%) saturate(718%) hue-rotate(113deg) brightness(101%) contrast(104%);
+}

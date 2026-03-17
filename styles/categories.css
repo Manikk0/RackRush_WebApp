@@ -115,3 +115,16 @@
         margin-top: 80px;
     }
 }
+
+/* User Dropdown Refactor */
+.user-dropdown-info {
+    min-width: 180px;
+}
+
+.dropdown-divider-dim {
+    opacity: 0.1 !important;
+}
+
+.logout-icon-mobile {
+    filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(0deg);
+}

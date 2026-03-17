@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detaily objednávky – RackRush</title>
     <meta name="description" content="Zadajte detaily objednávky – doručenie, kontaktné informácie a spôsob platby.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/order_details.css">
 </head>
+
 <body>
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
@@ -28,19 +31,26 @@
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
+                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg"
+                                id="userMenu">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
-                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img
+                                                src="assets/task_complete.png" class="icon-sm icon-theme">
+                                            Objednávky</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png"
+                                                class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png"
+                                                class="icon-sm icon-theme"> Ako nakúpiť</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png"
+                                                class="icon-sm icon-theme"> Potrebujem poradiť</a>
                                     </div>
                                     <div class="v-divider"></div>
                                     <div style="min-width: 180px;">
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
-                                                <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                                <img src="assets/user_placeholder_profile.png"
+                                                    class="icon-md icon-theme">
                                                 <div class="user-info-text">
                                                     <strong class="d-block text-nowrap user-name">Name Username</strong>
                                                     <span class="text-muted small user-email">example@gmail.com</span>
@@ -50,19 +60,25 @@
                                         <div id="dropdown-logged-out" class="d-none">
                                             <div class="d-flex align-items-center gap-2 mb-3">
                                                 <img src="assets/user.png" class="icon-md logged-out-user-icon">
-                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo výhod</strong>
+                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo
+                                                    výhod</strong>
                                             </div>
                                             <div class="d-flex flex-column gap-2 mb-4">
-                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</a>
-                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#registerModal">Zaregistrovať sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal"
+                                                    data-bs-target="#loginModal">Prihlásiť sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal"
+                                                    data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png" width="20"> DE</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png"
+                                                        width="20"> EN</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png"
+                                                        width="20"> CZ</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png"
+                                                        width="20"> DE</a>
                                             </div>
                                         </div>
                                     </div>
@@ -116,7 +132,8 @@
 
                     <!-- Section 1: Kam?  -->
                     <div class="od-section" id="section-delivery">
-                        <button class="od-section__header" id="btn-delivery" aria-expanded="false" aria-controls="body-delivery">
+                        <button class="od-section__header" id="btn-delivery" aria-expanded="false"
+                            aria-controls="body-delivery">
                             <div class="od-section__icon-wrap">
                                 <img src="assets/gps.png" class="icon-sm icon-white">
                             </div>
@@ -188,7 +205,8 @@
 
                     <!-- Section 3: Informácie pre kuriéra -->
                     <div class="od-section" id="section-courier">
-                        <button class="od-section__header" id="btn-courier" aria-expanded="false" aria-controls="body-courier">
+                        <button class="od-section__header" id="btn-courier" aria-expanded="false"
+                            aria-controls="body-courier">
                             <div class="od-section__icon-wrap">
                                 <img src="assets/speech-bubble.png" class="icon-sm icon-white">
                             </div>
@@ -213,7 +231,8 @@
 
                     <!-- Section 4: Spôsob platby -->
                     <div class="od-section" id="section-payment">
-                        <button class="od-section__header" id="btn-payment" aria-expanded="false" aria-controls="body-payment">
+                        <button class="od-section__header" id="btn-payment" aria-expanded="false"
+                            aria-controls="body-payment">
                             <div class="od-section__icon-wrap">
                                 <img src="assets/credit-card.png" class="icon-sm icon-white">
                             </div>
@@ -354,7 +373,9 @@
                         <h4 class="modal-title m-0">Prihlásenie</h4>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
-                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-decoration-none auth-modal-link">TU</a></p>
+                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#"
+                            data-bs-toggle="modal" data-bs-target="#registerModal"
+                            class="text-decoration-none auth-modal-link">TU</a></p>
                     <form id="login-form">
                         <div class="mb-3 text-start">
                             <label class="form-label small mb-1">E-mail</label>
@@ -387,4 +408,5 @@
     <script src="js/cart.js"></script>
     <script src="js/order_details.js"></script>
 </body>
+
 </html>
