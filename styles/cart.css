@@ -311,3 +311,15 @@ main {
         padding: 3px 8px;
     }
 }
+
+.cart-header-dropdown {
+    min-width: 180px;
+}
+
+.cart-divider-light {
+    opacity: 0.1;
+}
+
+.cart-logout-icon {
+    filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(0deg);
+}

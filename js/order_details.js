@@ -74,11 +74,4 @@
 
     document.getElementById('save-courier')?.addEventListener('click', () => closeAll(null));
     document.getElementById('save-payment')?.addEventListener('click', () => closeAll(null));
-
-    ['btn-order-desktop', 'btn-order-mobile'].forEach(id => {
-        document.getElementById(id)?.addEventListener('click', () => {
-            alert('Objednávka bola odoslaná! Ďakujeme.');
-        });
-    });
-
 })();

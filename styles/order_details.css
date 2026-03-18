@@ -453,3 +453,11 @@
         padding: 0 1.25rem 1.25rem;
     }
 }
+
+.od-header-dropdown {
+    min-width: 180px;
+}
+
+.od-divider-light {
+    opacity: 0.1;
+}
