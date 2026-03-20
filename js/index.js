@@ -6,11 +6,13 @@ const btnLists = document.getElementById("btn-lists");
 const card = `
 <div class="product-card">
     <div class="product-card__image-wrap">
-    <img src="https://placehold.co/200x160" alt="Rajo Kyslá smotana" class="product-card__image">
+    <a href="product-detail.html">
+        <img src="https://placehold.co/200x160" alt="Rajo Kyslá smotana" class="product-card__image">
+    </a>
     <button class="product-card__wishlist" aria-label="Wishlist"><img src="assets/heart.png" class="wishlist-icon"></button>
     <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
     </div>
-    <p class="product-card__name">Rajo Kyslá smotana</p>
+    <a href="product-detail.html" class="text-decoration-none"><p class="product-card__name">Rajo Kyslá smotana</p></a>
     <p class="product-card__price">0.65€</p>
     <p class="product-card__meta"><span>250g</span><span>2.60€/kg</span></p>
 </div>`;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +10,18 @@
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/category.css">
 </head>
+
 <body class="category-page">
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
-            
+
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
                     <div class="col-3 d-flex align-items-center">
                         <a href="index.html" class="d-inline-block me-3">
                             <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
                         </a>
-                        
+
                         <a href="#" class="address-card-link text-decoration-none">
                             <div class="address-card d-flex align-items-center">
                                 <img src="assets/gps.png" alt="" class="icon-sm icon-white">
@@ -27,7 +29,8 @@
                                     <span class="label-text">Ponuka pre: Košice 2</span>
                                     <span class="action-text">Pridať adresu doručenia</span>
                                 </div>
-                                <img src="assets/chevron_right.png" alt="" class="icon-xs ms-2 opacity-50 d-none d-xl-block">
+                                <img src="assets/chevron_right.png" alt=""
+                                    class="icon-xs ms-2 opacity-50 d-none d-xl-block">
                             </div>
                         </a>
                     </div>
@@ -42,32 +45,77 @@
                     </div>
 
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
-                        <a href="#"><img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white"></a>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle position-relative" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside">
+                                <img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white">
+                                <span class="notification-badge">5</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notifications-dropdown mt-3 shadow-lg">
+                                <div class="notifications-body">
+                                    <a href="#" class="notification-item unread">
+                                        <span class="notification-title">Vybavenie objednávky</span>
+                                        <span class="notification-text">Vaša objednávka č. 123456 bola úspešne
+                                            odoslaná.</span>
+                                        <span class="notification-time">12:40</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Zľavový kód</span>
+                                        <span class="notification-text">Pridali sme vám 10% zľavu na ďalší nákup!</span>
+                                        <span class="notification-time">10:15</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Zmena v sortimente</span>
+                                        <span class="notification-text">Nový tovar v kategórii Ovocie a zelenina.</span>
+                                        <span class="notification-time">Včera</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Vernostný program</span>
+                                        <span class="notification-text">Získali ste 50 nových bodov za váš posledný
+                                            nákup.</span>
+                                        <span class="notification-time">Predvčerom</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Dostupnosť tovaru</span>
+                                        <span class="notification-text">Hrušky, ktoré ste sledovali, sú opäť na
+                                            sklade.</span>
+                                        <span class="notification-time">15. Mar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <a href="cart.html" class="cart-trigger-btn position-relative">
                             <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
                             <span class="cart-badge d-none" id="cart-badge">0</span>
                         </a>
-                        
+
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
+                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg"
+                                id="userMenu">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
-                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img
+                                                src="assets/task_complete.png" class="icon-sm icon-theme">
+                                            Objednávky</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png"
+                                                class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png"
+                                                class="icon-sm icon-theme"> Ako nakúpiť</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png"
+                                                class="icon-sm icon-theme"> Potrebujem poradiť</a>
                                     </div>
-                                    
+
                                     <div class="v-divider"></div>
 
                                     <div class="user-dropdown-info">
                                         <!-- LOGGED IN STATE -->
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
-                                                <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                                <img src="assets/user_placeholder_profile.png"
+                                                    class="icon-md icon-theme">
                                                 <div class="user-info-text">
                                                     <strong class="d-block text-nowrap user-name">Name Username</strong>
                                                     <span class="text-muted small user-email">example@gmail.com</span>
@@ -79,11 +127,14 @@
                                         <div id="dropdown-logged-out" class="d-none">
                                             <div class="d-flex align-items-center gap-2 mb-3">
                                                 <img src="assets/user.png" class="icon-md logged-out-user-icon">
-                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo výhod</strong>
+                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo
+                                                    výhod</strong>
                                             </div>
                                             <div class="d-flex flex-column gap-2 mb-4">
-                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</a>
-                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#registerModal">Zaregistrovať sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal"
+                                                    data-bs-target="#loginModal">Prihlásiť sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal"
+                                                    data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
 
@@ -91,9 +142,12 @@
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png" width="20"> DE</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png"
+                                                        width="20"> EN</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png"
+                                                        width="20"> CZ</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png"
+                                                        width="20"> DE</a>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +157,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <a href="#" class="logout-pill" id="logout-btn">
-                                        <img src="assets/logout.png" class="icon-sm icon-theme"> 
+                                        <img src="assets/logout.png" class="icon-sm icon-theme">
                                         <strong>Odhlásiť sa</strong>
                                     </a>
                                     <div class="promo-bubble ms-auto">
@@ -134,7 +188,8 @@
                     <div class="col-auto ms-auto d-flex align-items-center">
                         <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
                         <div id="sticky-cart" class="d-none ms-3">
-                             <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                            <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
+                                    class="icon-md icon-white"></a>
                         </div>
                     </div>
                 </div>
@@ -153,14 +208,16 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
+                            class="icon-md icon-white"></a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Mobile Offcanvas -->
-    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu"
+        aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="mobileMenuLabel">
                 <a href="index.html">
@@ -181,12 +238,15 @@
                         </div>
                     </div>
                     <a href="#" class="mobile-nav-link"><img src="assets/user.png" class="icon-sm"> Môj účet</a>
-                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Objednávky</a>
+                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm">
+                        Objednávky</a>
                 </div>
                 <div id="mobile-logged-out">
                     <div class="mobile-auth-btns">
-                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</button>
-                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal" data-bs-target="#registerModal">Registrácia</button>
+                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Prihlásiť sa</button>
+                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal"
+                            data-bs-target="#registerModal">Registrácia</button>
                     </div>
                 </div>
             </div>
@@ -207,11 +267,46 @@
             <!-- Main Navigation -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Menu</p>
-                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm"> Kategórie</a>
+                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm">
+                    Kategórie</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/tag.png" class="icon-sm"> Cenové hity</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/bell.png" class="icon-sm"> Upozornenia</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné
+                    zoznamy</a>
+            </div>
+
+            <div class="mobile-menu-section">
+                <p class="mobile-menu-title d-flex justify-content-between align-items-center">
+                    Upozornenia
+                    <span class="badge rounded-pill bg-danger" style="font-size: 0.65rem;">5</span>
+                </p>
+                <div class="mobile-notifications-list mt-3">
+                    <a href="#" class="mobile-notification-item unread">
+                        <span class="mobile-notification-title">Vybavenie objednávky</span>
+                        <span class="mobile-notification-text">Vaša objednávka č. 123456 bola úspešne odoslaná.</span>
+                        <span class="mobile-notification-time">12:40</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Zľavový kód</span>
+                        <span class="mobile-notification-text">Pridali sme vám 10% zľavu na ďalší nákup!</span>
+                        <span class="mobile-notification-time">10:15</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Zmena v sortimente</span>
+                        <span class="mobile-notification-text">Nový tovar v kategórii Ovocie a zelenina.</span>
+                        <span class="mobile-notification-time">Včera</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Vernostný program</span>
+                        <span class="mobile-notification-text">Získali ste 50 nových bodov za váš posledný nákup.</span>
+                        <span class="mobile-notification-time">Predvčerom</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Dostupnosť tovaru</span>
+                        <span class="mobile-notification-text">Hrušky, ktoré ste sledovali, sú opäť na sklade.</span>
+                        <span class="mobile-notification-time">15. Mar</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Language & Help -->
@@ -224,13 +319,14 @@
                     <a href="#" class="mobile-lang-link">DE</a>
                 </div>
                 <a href="#" class="mobile-nav-link"><img src="assets/question_mark.png" class="icon-sm"> Ako nakúpiť</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem poradiť</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem
+                    poradiť</a>
             </div>
 
             <!-- Logout -->
             <div class="mobile-menu-section d-none" id="mobile-logout-section">
                 <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
-                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile"> 
+                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile">
                     <strong>Odhlásiť sa</strong>
                 </a>
             </div>
@@ -239,23 +335,30 @@
 
     <main class="container-fluid px-4 category-main">
         <div class="row pt-4">
-            
+
             <div class="col-lg-3 col-xl-2 mb-4 mb-lg-0">
                 <div class="d-lg-none mb-3">
-                    <button class="btn btn-teal w-100 fw-bold d-flex justify-content-between align-items-center py-2 rounded-3 shadow-sm mobile-filter-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filters-container" aria-expanded="false">
+                    <button
+                        class="btn btn-teal w-100 fw-bold d-flex justify-content-between align-items-center py-2 rounded-3 shadow-sm mobile-filter-btn"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#filters-container"
+                        aria-expanded="false">
                         <span>Filtrovať produkty</span>
                         <img src="assets/chevron_right.png" class="icon-xs mobile-filter-chevron">
                     </button>
                 </div>
-                
+
                 <div class="collapse d-lg-block" id="filters-container">
                     <aside class="filters-sidebar">
-                        
+
                         <div class="filter-group">
-                            <button class="filter-btn d-flex justify-content-between align-items-center w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filter-origin" aria-expanded="true">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-origin"
+                                aria-expanded="true">
                                 <div>
                                     <span class="d-block fw-bold text-start">Zem pôvodu</span>
-                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">12 možností</span>
+                                    <span
+                                        class="d-block text-start small text-muted text-opacity-75 filter-options-count">12
+                                        možností</span>
                                 </div>
                                 <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
                             </button>
@@ -290,17 +393,25 @@
                                         <label class="form-check-label small" for="origin7">Španielsko (8)</label>
                                     </div>
                                 </div>
-                                <a href="#more-origins" data-bs-toggle="collapse" id="show-more-origins-btn" aria-expanded="false" class="d-block mt-2 small text-decoration-none d-flex align-items-center gap-1 show-more-origins">
-                                    <span class="show-more-text">Zobraziť viac</span> <img src="assets/chevron_right.png" class="icon-xs more-origins-chevron show-more-origins-icon">
+                                <a href="#more-origins" data-bs-toggle="collapse" id="show-more-origins-btn"
+                                    aria-expanded="false"
+                                    class="d-block mt-2 small text-decoration-none d-flex align-items-center gap-1 show-more-origins">
+                                    <span class="show-more-text">Zobraziť viac</span> <img
+                                        src="assets/chevron_right.png"
+                                        class="icon-xs more-origins-chevron show-more-origins-icon">
                                 </a>
                             </div>
                         </div>
 
                         <div class="filter-group">
-                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-weight" aria-expanded="false">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-weight"
+                                aria-expanded="false">
                                 <div>
                                     <span class="d-block fw-bold text-start">Hmotnosť</span>
-                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">6 možností</span>
+                                    <span
+                                        class="d-block text-start small text-muted text-opacity-75 filter-options-count">6
+                                        možností</span>
                                 </div>
                                 <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
                             </button>
@@ -317,10 +428,14 @@
                         </div>
 
                         <div class="filter-group">
-                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-bio" aria-expanded="false">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-bio"
+                                aria-expanded="false">
                                 <div>
                                     <span class="d-block fw-bold text-start">BIO</span>
-                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">2 možnosti</span>
+                                    <span
+                                        class="d-block text-start small text-muted text-opacity-75 filter-options-count">2
+                                        možnosti</span>
                                 </div>
                                 <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
                             </button>
@@ -337,10 +452,14 @@
                         </div>
 
                         <div class="filter-group">
-                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-plastic" aria-expanded="false">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-plastic"
+                                aria-expanded="false">
                                 <div>
                                     <span class="d-block fw-bold text-start">Plastový obal</span>
-                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">2 možnosti</span>
+                                    <span
+                                        class="d-block text-start small text-muted text-opacity-75 filter-options-count">2
+                                        možnosti</span>
                                 </div>
                                 <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
                             </button>
@@ -351,12 +470,16 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="filter-group">
-                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-allergens" aria-expanded="false">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-allergens"
+                                aria-expanded="false">
                                 <div>
                                     <span class="d-block fw-bold text-start">Alergény</span>
-                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">9 možností</span>
+                                    <span
+                                        class="d-block text-start small text-muted text-opacity-75 filter-options-count">9
+                                        možností</span>
                                 </div>
                                 <img src="assets/chevron_right.png" class="icon-xs filter-chevron">
                             </button>
@@ -377,7 +500,7 @@
             </div>
 
             <div class="col-lg-9 col-xl-10 position-relative">
-                
+
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb category-breadcrumb d-flex align-items-center mb-4">
                         <li class="breadcrumb-item">
@@ -402,10 +525,10 @@
                 <div class="product-row" id="category-products">
                 </div>
 
-                <!-- Stránkovanie / Načítať ďalšie -->
+                <!-- Load next -->
                 <div class="d-flex flex-column align-items-center mt-5 mb-5 gap-4">
                     <button class="product-section__more product-more-btn px-4 py-2">Načítať ďalšie</button>
-                    
+
                     <nav aria-label="Stránkovanie kategórie">
                         <ul class="pagination custom-pagination mb-0 align-items-center">
                             <li class="page-item disabled">
@@ -485,10 +608,13 @@
                 <div class="modal-content auth-modal p-4 w-100 shadow-lg">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <h4 class="modal-title m-0">Prihlásenie</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-decoration-none auth-modal-link">TU</a></p>
-                    
+                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#"
+                            data-bs-toggle="modal" data-bs-target="#registerModal"
+                            class="text-decoration-none auth-modal-link">TU</a></p>
+
                     <form id="login-form">
                         <div class="mb-3 text-start">
                             <label class="form-label small mb-1">E-mail</label>
@@ -503,13 +629,16 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
                     </form>
-                    
+
                     <div class="text-center">
                         <p class="small mb-3 auth-modal-footer-text">Alebo sa prihlásiť pomocou</p>
                         <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google"
+                                    class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook"
+                                    class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple"
+                                    class="social-icon-img icon-white"></a>
                         </div>
                     </div>
                 </div>
@@ -524,9 +653,10 @@
                 <div class="modal-content auth-modal p-4 w-100 shadow-lg">
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <h4 class="modal-title m-0">Registrácia</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                    
+
                     <form id="register-form">
                         <div class="mb-3 text-start">
                             <label class="form-label small mb-1">Meno</label>
@@ -542,13 +672,16 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
                     </form>
-                    
+
                     <div class="text-center">
                         <p class="small mb-3 auth-modal-footer-text">Alebo sa registrovať pomocou</p>
                         <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google"
+                                    class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook"
+                                    class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple"
+                                    class="social-icon-img icon-white"></a>
                         </div>
                     </div>
                 </div>
@@ -558,12 +691,14 @@
 
     <!-- Logout Toast -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
                     Boli ste úspešne odhlásený.
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -592,4 +727,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/category.js"></script>
 </body>
+
 </html>

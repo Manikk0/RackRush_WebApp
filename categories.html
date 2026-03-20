@@ -45,7 +45,42 @@
                     </div>
 
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
-                        <a href="#"><img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white"></a>
+                        <div class="dropdown">
+                            <a href="#" class="position-relative notification-trigger" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside">
+                                <img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white">
+                                <span class="notification-badge">5</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notifications-dropdown mt-3 shadow-lg">
+                                <div class="notifications-body">
+                                    <a href="#" class="notification-item unread">
+                                        <span class="notification-title">Vybavenie objednávky</span>
+                                        <span class="notification-text">Vaša objednávka č. 123456 bola úspešne odoslaná.</span>
+                                        <span class="notification-time">12:40</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Zľavový kód</span>
+                                        <span class="notification-text">Pridali sme vám 10% zľavu na ďalší nákup!</span>
+                                        <span class="notification-time">10:15</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Zmena v sortimente</span>
+                                        <span class="notification-text">Nový tovar v kategórii Ovocie a zelenina.</span>
+                                        <span class="notification-time">Včera</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Vernostný program</span>
+                                        <span class="notification-text">Získali ste 50 nových bodov za váš posledný nákup.</span>
+                                        <span class="notification-time">Predvčerom</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Dostupnosť tovaru</span>
+                                        <span class="notification-text">Hrušky, ktoré ste sledovali, sú opäť na sklade.</span>
+                                        <span class="notification-time">15. Mar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <a href="#" id="cart-trigger" class="cart-trigger-btn position-relative">
                             <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
                             <span class="cart-badge d-none" id="cart-badge">0</span>
@@ -206,7 +241,40 @@
                 <a href="#" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/tag.png" class="icon-sm"> Cenové hity</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/bell.png" class="icon-sm"> Upozornenia</a>
+            </div>
+
+            <div class="mobile-menu-section">
+                <p class="mobile-menu-title d-flex justify-content-between align-items-center">
+                    Upozornenia 
+                    <span class="badge rounded-pill bg-danger" style="font-size: 0.65rem;">5</span>
+                </p>
+                <div class="mobile-notifications-list mt-3">
+                    <a href="#" class="mobile-notification-item unread">
+                        <span class="mobile-notification-title">Vybavenie objednávky</span>
+                        <span class="mobile-notification-text">Vaša objednávka č. 123456 bola úspešne odoslaná.</span>
+                        <span class="mobile-notification-time">12:40</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Zľavový kód</span>
+                        <span class="mobile-notification-text">Pridali sme vám 10% zľavu na ďalší nákup!</span>
+                        <span class="mobile-notification-time">10:15</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Zmena v sortimente</span>
+                        <span class="mobile-notification-text">Nový tovar v kategórii Ovocie a zelenina.</span>
+                        <span class="mobile-notification-time">Včera</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Vernostný program</span>
+                        <span class="mobile-notification-text">Získali ste 50 nových bodov za váš posledný nákup.</span>
+                        <span class="mobile-notification-time">Predvčerom</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Dostupnosť tovaru</span>
+                        <span class="mobile-notification-text">Hrušky, ktoré ste sledovali, sú opäť na sklade.</span>
+                        <span class="mobile-notification-time">15. Mar</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Language & Help -->
@@ -239,7 +307,6 @@
         </div>
 
         <div class="row g-4 px-md-5">
-            <!-- Category Tile 1 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -248,7 +315,6 @@
                     <span class="category-tile__name">Ovocie a zelenina</span>
                 </a>
             </div>
-            <!-- Category Tile 2 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -257,7 +323,6 @@
                     <span class="category-tile__name">Mliečne a chladené</span>
                 </a>
             </div>
-            <!-- Category Tile 3 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -266,7 +331,6 @@
                     <span class="category-tile__name">Mäso a ryby</span>
                 </a>
             </div>
-            <!-- Category Tile 4 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -275,7 +339,6 @@
                     <span class="category-tile__name">Pečivo</span>
                 </a>
             </div>
-            <!-- Category Tile 5 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -284,7 +347,6 @@
                     <span class="category-tile__name">Trvanlivé potraviny</span>
                 </a>
             </div>
-            <!-- Category Tile 6 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -293,7 +355,6 @@
                     <span class="category-tile__name">Nápoje</span>
                 </a>
             </div>
-            <!-- Category Tile 7 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -302,7 +363,6 @@
                     <span class="category-tile__name">Sladké a slané</span>
                 </a>
             </div>
-            <!-- Category Tile 8 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -311,7 +371,6 @@
                     <span class="category-tile__name">Mrazené produkty</span>
                 </a>
             </div>
-            <!-- Category Tile 9 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -320,7 +379,6 @@
                     <span class="category-tile__name">Pre deti</span>
                 </a>
             </div>
-            <!-- Category Tile 10 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -329,7 +387,6 @@
                     <span class="category-tile__name">Kozmetika a drogéria</span>
                 </a>
             </div>
-            <!-- Category Tile 11 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -338,7 +395,6 @@
                     <span class="category-tile__name">Domácnosť</span>
                 </a>
             </div>
-            <!-- Category Tile 12 -->
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
                     <div class="category-tile__icon-wrap">
@@ -362,7 +418,6 @@
                         <a href="#"><img src="assets/facebook.png" alt="FB" class="social-icon"></a>
                     </div>
                 </div>
-                <!-- ... other footer cols same as index ... -->
                 <div class="col-md-3">
                     <h5 class="footer-heading">Dokumenty</h5>
                     <ul class="footer-list">
@@ -397,7 +452,6 @@
         </div>
     </footer>
 
-    <!-- MODALS & TOASTS (from index.html) -->
     <!-- Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

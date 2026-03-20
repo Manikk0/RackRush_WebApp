@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Košík – RackRush</title>
+    <title>RackRush - Hrozno biele, bezsemenné</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="styles/cart.css">
+    <link rel="stylesheet" href="styles/product_detail.css">
 </head>
 
-<body>
-    <!--  HEADER  -->
+<body class="product-detail-page">
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
 
@@ -22,6 +21,7 @@
                         <a href="index.html" class="d-inline-block me-3">
                             <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
                         </a>
+
                         <a href="#" class="address-card-link text-decoration-none">
                             <div class="address-card d-flex align-items-center">
                                 <img src="assets/gps.png" alt="" class="icon-sm icon-white">
@@ -84,9 +84,11 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="cart.html" class="cart-trigger-btn position-relative">
+                        <a href="#" id="cart-trigger" class="cart-trigger-btn position-relative">
                             <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
+                            <span class="cart-badge d-none" id="cart-badge">0</span>
                         </a>
+
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
@@ -105,8 +107,10 @@
                                         <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png"
                                                 class="icon-sm icon-theme"> Potrebujem poradiť</a>
                                     </div>
+
                                     <div class="v-divider"></div>
-                                    <div class="cart-header-dropdown">
+
+                                    <div class="user-dropdown-info">
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
                                                 <img src="assets/user_placeholder_profile.png"
@@ -115,19 +119,6 @@
                                                     <strong class="d-block text-nowrap user-name">Name Username</strong>
                                                     <span class="text-muted small user-email">example@gmail.com</span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div id="dropdown-logged-out" class="d-none">
-                                            <div class="d-flex align-items-center gap-2 mb-3">
-                                                <img src="assets/user.png" class="icon-md logged-out-user-icon">
-                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo
-                                                    výhod</strong>
-                                            </div>
-                                            <div class="d-flex flex-column gap-2 mb-4">
-                                                <a href="#" class="auth-link" data-bs-toggle="modal"
-                                                    data-bs-target="#loginModal">Prihlásiť sa</a>
-                                                <a href="#" class="auth-link" data-bs-toggle="modal"
-                                                    data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
                                         <div>
@@ -143,15 +134,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="my-4 cart-divider-light">
+                                <hr class="my-4 dropdown-divider-dim">
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <a href="#" class="logout-pill" id="logout-btn">
                                         <img src="assets/logout.png" class="icon-sm icon-theme">
                                         <strong>Odhlásiť sa</strong>
                                     </a>
-                                    <div class="promo-bubble ms-auto">
-                                        Pri použití našej Aplikácie získate 25% zľavu k prvému nákupu
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -166,16 +154,18 @@
                         <button class="btn btn-outline-custom">Obľúbené</button>
                         <button class="btn btn-outline-custom">Cenové hity</button>
                     </div>
+
                     <div class="col d-none" id="sticky-search-container">
                         <div class="input-group search-container ms-3">
                             <span class="input-group-text"><img src="assets/search.png" class="icon-sm"></span>
                             <input type="text" class="form-control" placeholder="Hľadať...">
                         </div>
                     </div>
+
                     <div class="col-auto ms-auto d-flex align-items-center">
                         <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
                         <div id="sticky-cart" class="d-none ms-3">
-                            <a href="cart.html"><img src="assets/shopping-cart.png" alt="Košík"
+                            <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
                                     class="icon-md icon-white"></a>
                         </div>
                     </div>
@@ -196,7 +186,8 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="cart.html"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
+                            class="icon-md icon-white"></a>
                 </div>
             </div>
         </div>
@@ -214,7 +205,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <!-- User Section -->
+            <!-- Mobile User Section -->
             <div class="mobile-menu-section">
                 <div id="mobile-logged-in" class="d-none">
                     <div class="mobile-user-card d-flex align-items-center gap-3">
@@ -238,20 +229,6 @@
                 </div>
             </div>
 
-            <!-- Address Card -->
-            <div class="mobile-menu-section">
-                <p class="mobile-menu-title">Doručenie</p>
-                <div class="mobile-address-btn">
-                    <img src="assets/gps.png" class="icon-sm icon-white">
-                    <div class="address-text">
-                        <span class="label-text">Doručiť na: Košice 2</span>
-                        <span class="action-text">Pridať adresu doručenia</span>
-                    </div>
-                    <img src="assets/chevron_right.png" class="icon-xs ms-auto opacity-50">
-                </div>
-            </div>
-
-            <!-- Main Navigation -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Menu</p>
                 <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm">
@@ -295,96 +272,125 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Language & Help -->
-            <div class="mobile-menu-section">
-                <p class="mobile-menu-title">Ostatné</p>
-                <div class="mobile-lang-selector mb-3 px-1">
-                    <a href="#" class="mobile-lang-link active">SK</a>
-                    <a href="#" class="mobile-lang-link">EN</a>
-                    <a href="#" class="mobile-lang-link">CZ</a>
-                    <a href="#" class="mobile-lang-link">DE</a>
-                </div>
-                <a href="#" class="mobile-nav-link"><img src="assets/question_mark.png" class="icon-sm"> Ako nakúpiť</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem
-                    poradiť</a>
-            </div>
-
-            <!-- Logout -->
-            <div class="mobile-menu-section d-none" id="mobile-logout-section">
-                <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
-                    <img src="assets/logout.png" class="icon-sm cart-logout-icon">
-                    <strong>Odhlásiť sa</strong>
-                </a>
-            </div>
         </div>
     </div>
 
-    <!-- ═══ MAIN ═══ -->
-    <main class="container-fluid px-4 mt-4">
+    <!-- Main Content -->
+    <main class="container product-detail-container">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="breadcrumb-section category-breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="index.html"><img src="assets/home.png" alt="Domov"
+                            class="breadcrumb-home-icon"></a></li>
+                <li class="breadcrumb-item"><a href="category.html">Ovocie a zelenina</a></li>
+                <li class="breadcrumb-item"><a href="category.html">Ovocie</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Hrozno a Melóny</li>
+            </ol>
+        </nav>
 
-        <h1 class="cart-page-title" id="cart-page-title">Prehľad objednávky (0)</h1>
+        <!-- Product Header Section -->
+        <div class="product-main">
+            <div class="row">
+                <!-- Gallery -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="product-gallery shadow-sm">
+                        <button class="gallery-wishlist-btn" title="Pridať do obľúbených">
+                            <img src="assets/heart.png" alt="heart" class="wishlist-icon">
+                        </button>
 
-        <div class="row g-4">
+                        <button class="gallery-nav-btn prev" id="gallery-prev">
+                            <img src="assets/chevron_right.png" alt="prev" class="icon-rotate-180">
+                        </button>
 
-            <div class="col-lg-8">
-                <div id="cart-items-container">
-                    <div class="cart-empty-state" id="cart-empty-state">
-                        Váš košík je prázdny.
+                        <div class="gallery-track-container" id="gallery-container">
+                            <div class="gallery-track" id="gallery-track">
+                                <img src="assets/grapes_white_tray.png" class="gallery-slide-img" alt="Hrozno biele 1">
+                                <img src="assets/grapes_white_tray.png" class="gallery-slide-img" alt="Hrozno biele 2">
+                                <img src="assets/grapes_white_tray.png" class="gallery-slide-img" alt="Hrozno biele 3">
+                            </div>
+                        </div>
+
+                        <button class="gallery-nav-btn next" id="gallery-next">
+                            <img src="assets/chevron_right.png" alt="next">
+                        </button>
+
+                        <button class="gallery-zoom-btn" id="gallery-zoom">
+                            <img src="assets/zoom-in.png" alt="zoom" class="icon-zoom">
+                        </button>
                     </div>
                 </div>
 
-                <div class="cart-actions">
-                    <button class="btn-discount" id="btn-discount">
-                        <img src="assets/tag.png" class="icon-sm icon-white">
-                        Vložiť zľavový kód
-                    </button>
-                    <button class="btn-clear" id="btn-clear">
-                        <img src="assets/trash.png" class="icon-sm icon-white">
-                        Vyprázdniť košík
-                    </button>
-                </div>
+                <!-- Basic Info -->
+                <div class="col-lg-6">
+                    <div class="product-info">
+                        <h1 class="product-title">Hrozno biele, bezsemenné</h1>
+                        <div class="product-weight-section">
+                            <p class="product-weight">500g</p>
+                            <p class="product-unit-price">6.38€/kg</p>
+                        </div>
 
-                <div class="discount-input-wrap" id="discount-input-wrap">
-                    <input type="text" placeholder="Zadajte kód...">
-                    <button>Uplatniť</button>
-                </div>
-            </div>
+                        <div class="product-price">3.19€</div>
 
-            <div class="col-lg-4">
-                <div class="cart-summary">
-                    <p class="cart-summary__title">Zhrnutie objednávky</p>
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+                            <button class="btn add-to-cart-btn">
+                                <img src="assets/shopping-cart.png" alt="cart">
+                                Do košíka
+                            </button>
+                            <button class="btn add-to-list-btn">
+                                <img src="assets/task_complete.png" alt="list">
+                                Pridať do nákupného
+                            </button>
+                        </div>
 
-                    <div class="cart-summary__row">
-                        <span>Medzisúčet</span>
-                        <span id="summary-subtotal">0,00 €</span>
+                        <div class="product-attributes">
+                            <div class="attr-item">
+                                <img src="assets/check.png" alt="check" class="icon-sm icon-white">
+                                <span>Zaručene čerstvé</span>
+                            </div>
+                            <div class="attr-item">
+                                <img src="assets/gps.png" alt="origin" class="icon-sm icon-white">
+                                <span>Zem pôvodu: Peru, JAR</span>
+                            </div>
+                            <div class="attr-item">
+                                <img src="assets/product-code.png" alt="code" class="icon-sm icon-white">
+                                <span>Kód produktu: 123456</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="cart-summary__row">
-                        <span>Doprava</span>
-                        <span id="summary-shipping">Zdarma</span>
-                    </div>
-                    <div class="cart-summary__row">
-                        <span>Zľava</span>
-                        <span id="summary-discount">–0,00 €</span>
-                    </div>
-
-                    <div class="cart-summary__row cart-summary__row--total">
-                        <span>Spolu</span>
-                        <span id="summary-total">0,00 €</span>
-                    </div>
-
-                    <p class="cart-summary__savings">Ušetrené: <span id="summary-savings">0 €</span></p>
-
-                    <a href="order_details.html" class="btn-proceed">Pokračovať k platbe a doprave</a>
                 </div>
             </div>
         </div>
 
-        <section class="recommendations-section">
-            <h2 class="recommendations-section__title">Mohlo by sa vám páčiť</h2>
-            <div class="product-row" id="recommendations"></div>
-        </section>
+        <!-- Description Section -->
+        <div class="product-details-content shadow-sm">
+            <h2 class="section-title">Popis</h2>
 
+            <div class="content-block">
+                <p>Sladké biele hrozno bez kôstok.</p>
+                <p>Upozorňujeme, že niektoré bobule môžu mať v priebehu roka tmavožltú až takmer karamelovú farbu. Táto
+                    farba je spôsobená odrodou v závislosti od intenzity slnečného žiarenia a zvýšeného obsahu cukru v
+                    jednotlivých bobuliach. Táto farba nie je vadou. Naopak, hrozno má sladšiu chuť.</p>
+            </div>
+
+            <div class="content-block">
+                <h3>Použitie</h3>
+                <p>Hrozno sa používa hlavne na priamu konzumáciu. Môže sa použiť na zdobenie kanapiek, ako prísada do
+                    rôznych nátierok alebo ako ľahká a zdravá desiata.</p>
+                <p><strong>Tip!</strong> Pridajte sa k nám a pripravte si lahodný hroznový koláč.</p>
+            </div>
+
+            <div class="content-block">
+                <div class="recipe-card">
+                    <h3>Recept na hroznový koláč</h3>
+                    <p>2 bielka vyšľahajte do tuha, žĺtka vymiešajte s 90 g práškového cukru, jedným vanilkovým cukrom a
+                        120 g zmäknutého masla do peny. Pridajte 1/4 kg mäkkého tvarohu, 120 g polohrubej múky s práškom
+                        do pečiva a tuhé bielka. Cesto rozotrite do vymasteného a múkou vysypaného okrúhleho plechu s
+                        vyšším okrajom, navrch položte umyté a osušené hrozno a posypte mandľami. Pečte v predhriatej
+                        rúre pri 170 °C asi 40 minút.</p>
+                    <p class="mt-3 fw-bold">Dobrú chuť!</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer-section">
@@ -415,8 +421,6 @@
                         <li><a href="#">Zoznam skladov</a></li>
                         <li><a href="#">Potrebujem poradiť</a></li>
                         <li><a href="#">Často kladené otázky</a></li>
-                        <li><a href="#">Aplikácia do mobilu</a></li>
-                        <li><a href="#">Darčekový poukaz</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -425,7 +429,6 @@
                         <li><a href="#">Kto sme</a></li>
                         <li><a href="#">História</a></li>
                         <li><a href="#">Čo nás čaká</a></li>
-                        <li><a href="#">Dlhopisy</a></li>
                         <li><a href="#">Kontakt</a></li>
                     </ul>
                 </div>
@@ -433,100 +436,18 @@
         </div>
     </footer>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="d-flex flex-column align-items-center w-100">
-                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
-                    <div class="d-flex justify-content-between align-items-start mb-1">
-                        <h4 class="modal-title m-0">Prihlásenie</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#"
-                            data-bs-toggle="modal" data-bs-target="#registerModal"
-                            class="text-decoration-none auth-modal-link">TU</a></p>
-                    <form id="login-form">
-                        <div class="mb-3 text-start">
-                            <label class="form-label small mb-1">E-mail</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        <div class="mb-4 text-start">
-                            <div class="d-flex justify-content-between">
-                                <label class="form-label small mb-1">Heslo</label>
-                                <a href="#" class="small text-decoration-none forgot-password-link">Zabudnuté heslo?</a>
-                            </div>
-                            <input type="password" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
-                    </form>
-                    <div class="text-center">
-                        <p class="small mb-3 auth-modal-footer-text">Alebo sa prihlásiť pomocou</p>
-                        <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google"
-                                    class="social-icon-img"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook"
-                                    class="social-icon-img icon-white"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple"
-                                    class="social-icon-img icon-white"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Zoom Modal -->
+    <div id="zoom-modal" class="zoom-modal">
+        <div class="zoom-modal-content">
+            <button class="zoom-modal-close-simple" id="zoom-modal-close">&times;</button>
+            <img id="zoom-modal-img" src="" alt="Zoomed view">
         </div>
     </div>
 
-    <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="d-flex flex-column align-items-center w-100">
-                <div class="modal-content auth-modal p-4 w-100 shadow-lg">
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <h4 class="modal-title m-0">Registrácia</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <form id="register-form">
-                        <div class="mb-3 text-start">
-                            <label class="form-label small mb-1">Meno</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                        <div class="mb-3 text-start">
-                            <label class="form-label small mb-1">E-mail</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        <div class="mb-4 text-start">
-                            <label class="form-label small mb-1">Heslo</label>
-                            <input type="password" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
-                    </form>
-                    <div class="text-center">
-                        <p class="small mb-3 auth-modal-footer-text">Alebo sa registrovať pomocou</p>
-                        <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google"
-                                    class="social-icon-img"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook"
-                                    class="social-icon-img icon-white"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple"
-                                    class="social-icon-img icon-white"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Logout Toast -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
-            aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">Boli ste úspešne odhlásený.</div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/cart.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/product-detail.js"></script>
 </body>
 
 </html>

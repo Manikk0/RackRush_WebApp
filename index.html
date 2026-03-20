@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,18 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/index.css">
 </head>
+
 <body>
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
-            
+
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
                     <div class="col-3 d-flex align-items-center">
                         <a href="index.html" class="d-inline-block me-3">
                             <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
                         </a>
-                        
+
                         <a href="#" class="address-card-link text-decoration-none">
                             <div class="address-card d-flex align-items-center">
                                 <img src="assets/gps.png" alt="" class="icon-sm icon-white">
@@ -26,7 +28,8 @@
                                     <span class="label-text">Ponuka pre: Košice 2</span>
                                     <span class="action-text">Pridať adresu doručenia</span>
                                 </div>
-                                <img src="assets/chevron_right.png" alt="" class="icon-xs ms-2 opacity-50 d-none d-xl-block">
+                                <img src="assets/chevron_right.png" alt=""
+                                    class="icon-xs ms-2 opacity-50 d-none d-xl-block">
                             </div>
                         </a>
                     </div>
@@ -41,32 +44,77 @@
                     </div>
 
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
-                        <a href="#"><img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white"></a>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle position-relative" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside">
+                                <img src="assets/bell.png" alt="Upozornenia" class="icon-md icon-white">
+                                <span class="notification-badge">5</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notifications-dropdown mt-3 shadow-lg">
+                                <div class="notifications-body">
+                                    <a href="#" class="notification-item unread">
+                                        <span class="notification-title">Vybavenie objednávky</span>
+                                        <span class="notification-text">Vaša objednávka č. 123456 bola úspešne
+                                            odoslaná.</span>
+                                        <span class="notification-time">12:40</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Zľavový kód</span>
+                                        <span class="notification-text">Pridali sme vám 10% zľavu na ďalší nákup!</span>
+                                        <span class="notification-time">10:15</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Zmena v sortimente</span>
+                                        <span class="notification-text">Nový tovar v kategórii Ovocie a zelenina.</span>
+                                        <span class="notification-time">Včera</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Vernostný program</span>
+                                        <span class="notification-text">Získali ste 50 nových bodov za váš posledný
+                                            nákup.</span>
+                                        <span class="notification-time">Predvčerom</span>
+                                    </a>
+                                    <a href="#" class="notification-item">
+                                        <span class="notification-title">Dostupnosť tovaru</span>
+                                        <span class="notification-text">Hrušky, ktoré ste sledovali, sú opäť na
+                                            sklade.</span>
+                                        <span class="notification-time">15. Mar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <a href="#" id="cart-trigger" class="cart-trigger-btn position-relative">
                             <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
                             <span class="cart-badge d-none" id="cart-badge">0</span>
                         </a>
-                        
+
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
+                            <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg"
+                                id="userMenu">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/task_complete.png" class="icon-sm icon-theme"> Objednávky</a>
-                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png" class="icon-sm icon-theme"> Môj účet</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png" class="icon-sm icon-theme"> Ako nakúpiť</a>
-                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png" class="icon-sm icon-theme"> Potrebujem poradiť</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img
+                                                src="assets/task_complete.png" class="icon-sm icon-theme">
+                                            Objednávky</a>
+                                        <a class="dropdown-item auth-restricted" href="#"><img src="assets/user.png"
+                                                class="icon-sm icon-theme"> Môj účet</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/question_mark.png"
+                                                class="icon-sm icon-theme"> Ako nakúpiť</a>
+                                        <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png"
+                                                class="icon-sm icon-theme"> Potrebujem poradiť</a>
                                     </div>
-                                    
+
                                     <div class="v-divider"></div>
 
                                     <div class="user-dropdown-info">
                                         <!-- LOGGED IN STATE -->
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
-                                                <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
+                                                <img src="assets/user_placeholder_profile.png"
+                                                    class="icon-md icon-theme">
                                                 <div class="user-info-text">
                                                     <strong class="d-block text-nowrap user-name">Name Username</strong>
                                                     <span class="text-muted small user-email">example@gmail.com</span>
@@ -78,11 +126,14 @@
                                         <div id="dropdown-logged-out" class="d-none">
                                             <div class="d-flex align-items-center gap-2 mb-3">
                                                 <img src="assets/user.png" class="icon-md logged-out-user-icon">
-                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo výhod</strong>
+                                                <strong class="logged-out-text">Prihláste sa a získate<br>množstvo
+                                                    výhod</strong>
                                             </div>
                                             <div class="d-flex flex-column gap-2 mb-4">
-                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</a>
-                                                <a href="#" class="auth-link" data-bs-toggle="modal" data-bs-target="#registerModal">Zaregistrovať sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal"
+                                                    data-bs-target="#loginModal">Prihlásiť sa</a>
+                                                <a href="#" class="auth-link" data-bs-toggle="modal"
+                                                    data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
 
@@ -90,9 +141,12 @@
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png" width="20"> EN</a>
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png" width="20"> CZ</a>
-                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png" width="20"> DE</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/gb.png"
+                                                        width="20"> EN</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/cz.png"
+                                                        width="20"> CZ</a>
+                                                <a href="#" class="lang-link"><img src="https://flagcdn.com/w20/de.png"
+                                                        width="20"> DE</a>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +156,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <a href="#" class="logout-pill" id="logout-btn">
-                                        <img src="assets/logout.png" class="icon-sm icon-theme"> 
+                                        <img src="assets/logout.png" class="icon-sm icon-theme">
                                         <strong>Odhlásiť sa</strong>
                                     </a>
                                     <div class="promo-bubble ms-auto">
@@ -133,7 +187,8 @@
                     <div class="col-auto ms-auto d-flex align-items-center">
                         <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
                         <div id="sticky-cart" class="d-none ms-3">
-                             <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                            <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
+                                    class="icon-md icon-white"></a>
                         </div>
                     </div>
                 </div>
@@ -152,14 +207,16 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
+                            class="icon-md icon-white"></a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Mobile Offcanvas -->
-    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu"
+        aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="mobileMenuLabel">
                 <a href="index.html">
@@ -180,12 +237,15 @@
                         </div>
                     </div>
                     <a href="#" class="mobile-nav-link"><img src="assets/user.png" class="icon-sm"> Môj účet</a>
-                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Objednávky</a>
+                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm">
+                        Objednávky</a>
                 </div>
                 <div id="mobile-logged-out">
                     <div class="mobile-auth-btns">
-                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</button>
-                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal" data-bs-target="#registerModal">Registrácia</button>
+                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Prihlásiť sa</button>
+                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal"
+                            data-bs-target="#registerModal">Registrácia</button>
                     </div>
                 </div>
             </div>
@@ -206,11 +266,46 @@
             <!-- Main Navigation -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Menu</p>
-                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm"> Kategórie</a>
+                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm">
+                    Kategórie</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/tag.png" class="icon-sm"> Cenové hity</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/bell.png" class="icon-sm"> Upozornenia</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné
+                    zoznamy</a>
+            </div>
+
+            <div class="mobile-menu-section">
+                <p class="mobile-menu-title d-flex justify-content-between align-items-center">
+                    Upozornenia
+                    <span class="badge rounded-pill bg-danger" style="font-size: 0.65rem;">5</span>
+                </p>
+                <div class="mobile-notifications-list mt-3">
+                    <a href="#" class="mobile-notification-item unread">
+                        <span class="mobile-notification-title">Vybavenie objednávky</span>
+                        <span class="mobile-notification-text">Vaša objednávka č. 123456 bola úspešne odoslaná.</span>
+                        <span class="mobile-notification-time">12:40</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Zľavový kód</span>
+                        <span class="mobile-notification-text">Pridali sme vám 10% zľavu na ďalší nákup!</span>
+                        <span class="mobile-notification-time">10:15</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Zmena v sortimente</span>
+                        <span class="mobile-notification-text">Nový tovar v kategórii Ovocie a zelenina.</span>
+                        <span class="mobile-notification-time">Včera</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Vernostný program</span>
+                        <span class="mobile-notification-text">Získali ste 50 nových bodov za váš posledný nákup.</span>
+                        <span class="mobile-notification-time">Predvčerom</span>
+                    </a>
+                    <a href="#" class="mobile-notification-item">
+                        <span class="mobile-notification-title">Dostupnosť tovaru</span>
+                        <span class="mobile-notification-text">Hrušky, ktoré ste sledovali, sú opäť na sklade.</span>
+                        <span class="mobile-notification-time">15. Mar</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Language & Help -->
@@ -223,63 +318,114 @@
                     <a href="#" class="mobile-lang-link">DE</a>
                 </div>
                 <a href="#" class="mobile-nav-link"><img src="assets/question_mark.png" class="icon-sm"> Ako nakúpiť</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem poradiť</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem
+                    poradiť</a>
             </div>
 
             <!-- Logout -->
             <div class="mobile-menu-section d-none" id="mobile-logout-section">
                 <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
-                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile"> 
+                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile">
                     <strong>Odhlásiť sa</strong>
                 </a>
             </div>
         </div>
     </div>
-        <main class="container-fluid px-4 mt-4">
-            <div id="categories-container" class="mb-5 position-relative">
-                <button class="categories-nav categories-nav--prev" aria-label="Scroll left" onclick="document.querySelector('.categories-scroll-wrapper').scrollBy({left: -300, behavior: 'smooth'})">
-                    <img src="assets/chevron_right.png" class="icon-sm icon-theme icon-flip" alt="">
-                </button>
-                <div class="categories-scroll-wrapper">
-                    <div class="categories-slider">
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/vegetable&amp;fruit.png" alt="Ovocie a zelenina"></div><span class="category-card__name">Ovocie a<br>zelenina</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/dairy.png" alt="Mliečne a chladené"></div><span class="category-card__name">Mliečne a<br>chladené</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/meat.png" alt="Mäso a ryby"></div><span class="category-card__name">Mäso a<br>ryby</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/breads.png" alt="Pečivo"></div><span class="category-card__name">Pečivo</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/durable_food.png" alt="Trvanlivé potraviny"></div><span class="category-card__name">Trvanlivé<br>potraviny</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/drinks.png" alt="Nápoje"></div><span class="category-card__name">Nápoje</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/sweet&amp;snacks.png" alt="Sladké a slané"></div><span class="category-card__name">Sladké a<br>slané</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/frozen-food.png" alt="Mrazené produkty"></div><span class="category-card__name">Mrazené<br>produkty</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/baby.png" alt="Pre deti"></div><span class="category-card__name">Pre deti</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/cosmetics.png" alt="Kozmetika a drogéria"></div><span class="category-card__name">Kozmetika a<br>drogéria</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/household.png" alt="Domácnosť"></div><span class="category-card__name">Domácnosť</span></a>
-                        <a href="category.html" class="category-card"><div class="category-card__image-wrap"><img src="assets/pet-food.png" alt="Pre zvieratá"></div><span class="category-card__name">Pre<br>zvieratá</span></a>
-                        <!-- Placeholders -->
-                        <div class="category-card category-card--placeholder"><div class="category-card__image-wrap"><img src="assets/plus.png" alt="Coming soon"></div><span class="category-card__name">Pripravujeme...</span></div>
-                        <div class="category-card category-card--placeholder"><div class="category-card__image-wrap"><img src="assets/plus.png" alt="Coming soon"></div><span class="category-card__name">Pripravujeme...</span></div>
-                        <div class="category-card category-card--placeholder"><div class="category-card__image-wrap"><img src="assets/plus.png" alt="Coming soon"></div><span class="category-card__name">Pripravujeme...</span></div>
+    <main class="container-fluid px-4 mt-4">
+        <div id="categories-container" class="mb-5 position-relative">
+            <button class="categories-nav categories-nav--prev" aria-label="Scroll left"
+                onclick="document.querySelector('.categories-scroll-wrapper').scrollBy({left: -300, behavior: 'smooth'})">
+                <img src="assets/chevron_right.png" class="icon-sm icon-theme icon-flip" alt="">
+            </button>
+            <div class="categories-scroll-wrapper">
+                <div class="categories-slider">
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/vegetable&amp;fruit.png"
+                                alt="Ovocie a zelenina"></div><span class="category-card__name">Ovocie
+                            a<br>zelenina</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/dairy.png" alt="Mliečne a chladené">
+                        </div><span class="category-card__name">Mliečne a<br>chladené</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/meat.png" alt="Mäso a ryby"></div><span
+                            class="category-card__name">Mäso a<br>ryby</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/breads.png" alt="Pečivo"></div><span
+                            class="category-card__name">Pečivo</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/durable_food.png"
+                                alt="Trvanlivé potraviny"></div><span
+                            class="category-card__name">Trvanlivé<br>potraviny</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/drinks.png" alt="Nápoje"></div><span
+                            class="category-card__name">Nápoje</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/sweet&amp;snacks.png"
+                                alt="Sladké a slané"></div><span class="category-card__name">Sladké a<br>slané</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/frozen-food.png" alt="Mrazené produkty">
+                        </div><span class="category-card__name">Mrazené<br>produkty</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/baby.png" alt="Pre deti"></div><span
+                            class="category-card__name">Pre deti</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/cosmetics.png"
+                                alt="Kozmetika a drogéria"></div><span class="category-card__name">Kozmetika
+                            a<br>drogéria</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/household.png" alt="Domácnosť"></div>
+                        <span class="category-card__name">Domácnosť</span>
+                    </a>
+                    <a href="category.html" class="category-card">
+                        <div class="category-card__image-wrap"><img src="assets/pet-food.png" alt="Pre zvieratá"></div>
+                        <span class="category-card__name">Pre<br>zvieratá</span>
+                    </a>
+                    <!-- Placeholders -->
+                    <div class="category-card category-card--placeholder">
+                        <div class="category-card__image-wrap"><img src="assets/plus.png" alt="Coming soon"></div><span
+                            class="category-card__name">Pripravujeme...</span>
+                    </div>
+                    <div class="category-card category-card--placeholder">
+                        <div class="category-card__image-wrap"><img src="assets/plus.png" alt="Coming soon"></div><span
+                            class="category-card__name">Pripravujeme...</span>
+                    </div>
+                    <div class="category-card category-card--placeholder">
+                        <div class="category-card__image-wrap"><img src="assets/plus.png" alt="Coming soon"></div><span
+                            class="category-card__name">Pripravujeme...</span>
                     </div>
                 </div>
-                <button class="categories-nav categories-nav--next" aria-label="Scroll right" onclick="document.querySelector('.categories-scroll-wrapper').scrollBy({left: 300, behavior: 'smooth'})">
-                    <img src="assets/chevron_right.png" class="icon-sm icon-theme" alt="">
-                </button>
             </div>
-            <div id="products-top-1"></div>
-                <section class="comparison-section mt-5 mb-5">
-                <h2 class="comparison-section__title mb-4">
-                    Staňte sa členom
-                    <span class="comparison-section__subtitle">Čo všetko získate?</span>
-                </h2>
-                <div class="comparison-table-wrapper">
-                    <table class="comparison-table">
-                        <thead>
+            <button class="categories-nav categories-nav--next" aria-label="Scroll right"
+                onclick="document.querySelector('.categories-scroll-wrapper').scrollBy({left: 300, behavior: 'smooth'})">
+                <img src="assets/chevron_right.png" class="icon-sm icon-theme" alt="">
+            </button>
+        </div>
+        <div id="products-top-1"></div>
+        <section class="comparison-section mt-5 mb-5">
+            <h2 class="comparison-section__title mb-4">
+                Staňte sa členom
+                <span class="comparison-section__subtitle">Čo všetko získate?</span>
+            </h2>
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
                         <tr>
                             <th class="feature-col"></th>
                             <th class="basic-col">Základ</th>
                             <th class="premium-col">Premium</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td>Lorem ipsum dolor sit amet</td>
                             <td><img src="assets/check.png" class="icon-sm icon-theme"></td>
@@ -315,21 +461,21 @@
                             <td>&ndash;</td>
                             <td><img src="assets/check.png" class="icon-sm icon-theme"></td>
                         </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-center mt-5">
-                    <button class="btn comparison-section__btn">Aktivujte 30 dní zdarma</button>
-                </div>
-            </section>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-5">
+                <button class="btn comparison-section__btn">Aktivujte 30 dní zdarma</button>
+            </div>
+        </section>
 
-            <div id="products-top-2"></div>        
-            <section class="faq-section mt-5 mb-5">
-                <h2 class="faq-section__title text-center mb-4">Často kladené otázky</h2>
-                <div class="accordion" id="faqAccordion">
+        <div id="products-top-2"></div>
+        <section class="faq-section mt-5 mb-5">
+            <h2 class="faq-section__title text-center mb-4">Často kladené otázky</h2>
+            <div class="accordion" id="faqAccordion">
 
-                    <div class="accordion-item">
-                        <h3 class="accordion-header">
+                <div class="accordion-item">
+                    <h3 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#faq1">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit?
@@ -445,10 +591,13 @@
                 <div class="modal-content auth-modal p-4 w-100 shadow-lg">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <h4 class="modal-title m-0">Prihlásenie</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-decoration-none auth-modal-link">TU</a></p>
-                    
+                    <p class="small mb-4 auth-modal-subtitle">Ak ešte nemáte účet, kliknite <a href="#"
+                            data-bs-toggle="modal" data-bs-target="#registerModal"
+                            class="text-decoration-none auth-modal-link">TU</a></p>
+
                     <form id="login-form">
                         <div class="mb-3 text-start">
                             <label class="form-label small mb-1">E-mail</label>
@@ -463,13 +612,16 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
                     </form>
-                    
+
                     <div class="text-center">
                         <p class="small mb-3 auth-modal-footer-text">Alebo sa prihlásiť pomocou</p>
                         <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google"
+                                    class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook"
+                                    class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple"
+                                    class="social-icon-img icon-white"></a>
                         </div>
                     </div>
                 </div>
@@ -484,9 +636,10 @@
                 <div class="modal-content auth-modal p-4 w-100 shadow-lg">
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <h4 class="modal-title m-0">Registrácia</h4>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                    
+
                     <form id="register-form">
                         <div class="mb-3 text-start">
                             <label class="form-label small mb-1">Meno</label>
@@ -502,13 +655,16 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
                     </form>
-                    
+
                     <div class="text-center">
                         <p class="small mb-3 auth-modal-footer-text">Alebo sa registrovať pomocou</p>
                         <div class="d-flex justify-content-center gap-3">
-                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google" class="social-icon-img"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook" class="social-icon-img icon-white"></a>
-                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple" class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/google.png" alt="Google"
+                                    class="social-icon-img"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/facebook.png" alt="Facebook"
+                                    class="social-icon-img icon-white"></a>
+                            <a href="#" class="social-login-btn"><img src="assets/apple.png" alt="Apple"
+                                    class="social-icon-img icon-white"></a>
                         </div>
                     </div>
                 </div>
@@ -518,12 +674,14 @@
 
     <!-- Logout Toast -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
                     Boli ste úspešne odhlásený.
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -555,4 +713,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/index.js"></script>
 </body>
+
 </html>
