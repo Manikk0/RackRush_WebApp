@@ -17,19 +17,9 @@
         <div class="container-fluid px-4">
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
-                    <div class="col-3 d-flex align-items-center">
-                        <a href="index.html" class="d-inline-block me-3">
-                            <img src="assets/logo.png" alt="Domov" class="logo-placeholder">
-                        </a>
-                        <a href="#" class="address-card-link text-decoration-none">
-                            <div class="address-card d-flex align-items-center">
-                                <img src="assets/gps.png" alt="" class="icon-sm icon-white">
-                                <div class="address-text ms-2 d-none d-xl-flex">
-                                    <span class="label-text">Ponuka pre: Košice 2</span>
-                                    <span class="action-text">Pridať adresu doručenia</span>
-                                </div>
-                                <img src="assets/chevron_right.png" alt="" class="icon-xs ms-2 opacity-50 d-none d-xl-block">
-                            </div>
+                    <div class="col-3">
+                        <a href="index.html" class="d-inline-block">
+                            <img src="assets/logo.png" alt="RackRush" class="logo-placeholder">
                         </a>
                     </div>
                     <div class="col-6">
@@ -127,7 +117,7 @@
                     <div class="col-auto d-flex gap-2">
                         <a href="categories.html" class="btn btn-teal">Kategórie</a>
                         <a href="favorites.html" class="btn btn-outline-custom">Obľúbené</a>
-                        <button class="btn btn-outline-custom">Cenové hity</button>
+                        <button class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#appModal">Naša aplikácia</button>
                     </div>
                     <div class="col d-none" id="sticky-search-container">
                         <div class="input-group search-container ms-3">
@@ -196,7 +186,7 @@
                 <p class="mobile-menu-title">Menu</p>
                 <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm"> Kategórie</a>
                 <a href="favorites.html" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/tag.png" class="icon-sm"> Cenové hity</a>
+                <a href="#" class="mobile-nav-link" data-bs-toggle="modal" data-bs-target="#appModal"><img src="assets/tag.png" class="icon-sm"> Naša aplikácia</a>
                 <a href="shopping-lists.html" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
             </div>
             <div class="mobile-menu-section">
@@ -222,15 +212,7 @@
     <!-- ═══ MAIN ═══ -->
     <main class="container-fluid px-4 sl-main">
 
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb category-breadcrumb d-flex align-items-center mb-3">
-                <li class="breadcrumb-item">
-                    <a href="index.html"><img src="assets/home.png" class="breadcrumb-home-icon" alt="Domov"></a>
-                </li>
-                <li class="breadcrumb-item active">Nákupné zoznamy</li>
-            </ol>
-        </nav>
+
 
 
 
@@ -363,6 +345,7 @@
                     </div>
                     <form id="register-form">
                         <div class="mb-3 text-start"><label class="form-label small mb-1">Meno</label><input type="text" class="form-control" required></div>
+                        <div class="mb-3 text-start"><label class="form-label small mb-1">Priezvisko</label><input type="text" class="form-control" required></div>
                         <div class="mb-3 text-start"><label class="form-label small mb-1">E-mail</label><input type="email" class="form-control" required></div>
                         <div class="mb-4 text-start"><label class="form-label small mb-1">Heslo</label><input type="password" class="form-control" required></div>
                         <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
@@ -404,6 +387,28 @@
         <div class="cart-drawer__footer">
             <div class="cart-total"><span>Spolu</span><span id="cart-total-price">0,00 €</span></div>
             <a href="cart.html" class="btn-checkout">Prejsť na objednávku</a>
+        </div>
+    </div>
+
+    <!-- ═══ APP MODAL ═══ -->
+    <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content app-modal shadow-lg">
+                <div class="modal-body app-modal-body text-center">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img src="assets/logo.png" class="app-icon-large" alt="App Icon">
+                    <h2 class="app-modal-title">Stiahnite si našu aplikáciu</h2>
+                    <p class="app-modal-text">Nakupujte ešte rýchlejšie a pohodlnejšie s mobilnou aplikáciou RackRush. Majte svoje nákupné zoznamy a obľúbené produkty vždy po ruke (aj bez pripojenia k sieti).</p>
+                    <div class="app-store-container">
+                        <a href="https://play.google.com/store" target="_blank">
+                            <img src="assets/google-play.png" alt="Google Play" class="app-store-badge">
+                        </a>
+                        <a href="https://www.apple.com/app-store/" target="_blank">
+                            <img src="assets/app-store.png" alt="App Store" class="app-store-badge">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

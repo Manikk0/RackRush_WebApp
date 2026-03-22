@@ -138,11 +138,11 @@ function renderLists() {
         });
     });
     document.querySelectorAll('.sl-list-card').forEach(function (card) {
-    card.addEventListener('click', function (e) {
-        if (e.target.closest('.sl-list-card__delete')) return;
-        const name = this.querySelector('.sl-list-card__name').textContent;
-        window.location.href = 'shopping-list-detail.html?name=' + encodeURIComponent(name);
-    });
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('.sl-list-card__delete')) return;
+            const name = this.querySelector('.sl-list-card__name').textContent;
+            window.location.href = 'shopping-list-detail.html?name=' + encodeURIComponent(name);
+        });
     });
 }
 

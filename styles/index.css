@@ -436,7 +436,7 @@
 }
 
 .comparison-section__btn:hover {
-    background-color: #8edc94;
+    background-color: #a4e5a9;
+    color: var(--prussian-blue);
     transform: translateY(-2px);
 }
-

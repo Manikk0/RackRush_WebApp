@@ -18,38 +18,54 @@ header {
     display: block;
 }
 
-/* --- NEW ADDRESS CARD STYLING --- */
-.address-card {
-    padding: 6px 12px;
-    border-radius: 8px;
-    transition: background-color 0.2s ease;
-    background-color: transparent;
-}
-
-.address-card-link:hover .address-card {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.address-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.label-text {
+/* --- APP MODAL STYLING --- */
+.app-modal {
+    background-color: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 16px;
     color: #fff;
-    font-size: 0.85rem;
-    font-weight: 700;
 }
 
-.action-text {
-    color: var(--tropical-teal);
-    font-size: 0.75rem;
-    font-weight: 400;
+.app-modal-body {
+    padding: 2.5rem 2rem;
 }
 
-.address-card-link:hover .action-text {
+.app-modal-title {
     color: var(--neon-ice);
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
+
+.app-modal-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.app-store-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.app-store-badge {
+    height: 45px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.app-store-badge:hover {
+    transform: scale(1.05);
+}
+
+.app-icon-large {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1.5rem;
+}
+
 
 /* -------------------------------- */
 
@@ -319,7 +335,8 @@ body {
 }
 
 .notifications-body {
-    max-height: 280px; /* Approximately 3 items */
+    max-height: 280px;
+    /* Approximately 3 items */
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--dusk-blue) #f0f0f0;
@@ -338,7 +355,8 @@ body {
 }
 
 .notification-item.unread {
-    background-color: rgba(91, 192, 190, 0.08); /* Transparent version of tropical teal */
+    background-color: rgba(91, 192, 190, 0.08);
+    /* Transparent version of tropical teal */
 }
 
 .notification-title {
@@ -637,17 +655,7 @@ body {
     font-weight: 700;
 }
 
-.mobile-address-btn {
-    background: var(--space-indigo);
-    border: 1px solid var(--dusk-blue);
-    border-radius: 8px;
-    padding: 10px;
-    width: 100%;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+
 
 .mobile-logo {
     width: 35px;

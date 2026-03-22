@@ -103,7 +103,7 @@ cartTrigger?.addEventListener('click', function (e) {
 });
 
 cartClose?.addEventListener('click', closeCart);
-cartOverlay?.addEventListener('click', closeCart);  
+cartOverlay?.addEventListener('click', closeCart);
 document.querySelectorAll('.fav-dropdown').forEach(function (dropdown) {
     var btn = dropdown.querySelector('.fav-dropdown__btn');
     var items = dropdown.querySelectorAll('.fav-dropdown__item');

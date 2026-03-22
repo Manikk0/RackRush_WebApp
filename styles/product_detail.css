@@ -30,7 +30,7 @@
 .category-breadcrumb .breadcrumb-item+.breadcrumb-item::before {
     content: ">";
     color: #e0e0e0;
-    margin-top: 2px;
+    margin-top: 0;
 }
 
 .breadcrumb-home-icon {
