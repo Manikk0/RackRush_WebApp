@@ -1,4 +1,3 @@
-// ── Sticky header (same as index) ──
 const header = document.getElementById('main-header');
 const topRow = document.getElementById('top-row');
 const stickySearch = document.getElementById('sticky-search-container');
@@ -77,7 +76,6 @@ document.getElementById('userMenu')?.addEventListener('click', function (e) {
     e.stopPropagation();
 });
 
-// ── Cart drawer ──
 const cartTrigger = document.getElementById('cart-trigger');
 const cartDrawer = document.getElementById('cart-drawer');
 const cartOverlay = document.getElementById('cart-overlay');
@@ -106,3 +104,31 @@ cartTrigger?.addEventListener('click', function (e) {
 
 cartClose?.addEventListener('click', closeCart);
 cartOverlay?.addEventListener('click', closeCart);  
+document.querySelectorAll('.fav-dropdown').forEach(function (dropdown) {
+    var btn = dropdown.querySelector('.fav-dropdown__btn');
+    var items = dropdown.querySelectorAll('.fav-dropdown__item');
+    var label = dropdown.querySelector('span[id]');
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        document.querySelectorAll('.fav-dropdown.open').forEach(function (d) {
+            if (d !== dropdown) d.classList.remove('open');
+        });
+        dropdown.classList.toggle('open');
+    });
+
+    items.forEach(function (item) {
+        item.addEventListener('click', function () {
+            items.forEach(function (i) { i.classList.remove('active'); });
+            item.classList.add('active');
+            label.textContent = item.textContent;
+            dropdown.classList.remove('open');
+        });
+    });
+});
+
+document.addEventListener('click', function () {
+    document.querySelectorAll('.fav-dropdown.open').forEach(function (d) {
+        d.classList.remove('open');
+    });
+});

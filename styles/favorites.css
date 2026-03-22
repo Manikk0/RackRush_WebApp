@@ -1,5 +1,5 @@
 /* ── Page layout ── */
-main {
+.fav-main {
     padding-top: 130px;
     padding-bottom: 3rem;
 }
@@ -10,9 +10,6 @@ main {
     color: var(--neon-ice) !important;
     border-color: var(--neon-ice) !important;
 }
-
-
-
 
 .fav-page-title {
     font-size: 1.6rem;
@@ -46,6 +43,9 @@ main {
     color: rgba(255, 255, 255, 0.4);
     font-size: 0.9rem;
 }
+.fav-empty-state p {
+    margin: 0;
+}
 
 .fav-empty-icon {
     width: 28px;
@@ -68,44 +68,13 @@ main {
     color: rgba(255, 255, 255, 0.55);
     line-height: 1.6;
     margin-bottom: 1.25rem;
-    max-width: 680px;
 }
 
-/* ── Filter & sort controls ── */
 .fav-controls {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
 }
-
-.fav-select {
-    background: var(--space-indigo);
-    border: 1px solid var(--dusk-blue);
-    border-radius: 8px;
-    color: #fff;
-    font-size: 0.88rem;
-    padding: 0.45rem 2rem 0.45rem 0.85rem;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236fffe9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.65rem center;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    min-width: 180px;
-}
-
-.fav-select:focus {
-    outline: none;
-    border-color: var(--tropical-teal);
-    box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.2);
-}
-
-.fav-select option {
-    background: var(--prussian-blue);
-    color: #fff;
-}
-
 /* ── Empty state for products grid ── */
 .fav-products-empty {
     background: var(--space-indigo);
@@ -140,7 +109,6 @@ main {
     margin: 0;
 }
 
-/* ── Responsive ── */
 @media (max-width: 768px) {
     main {
         padding-top: 80px;
@@ -149,8 +117,81 @@ main {
     .fav-controls {
         flex-direction: column;
     }
+}
+.fav-dropdown {
+    position: relative;
+}
+.fav-dropdown__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    min-width: 180px;
+    transition: border-color 0.2s;
+}
 
-    .fav-select {
-        width: 100%;
-    }
+.fav-dropdown__btn:hover {
+    border-color: var(--tropical-teal);
+}
+
+.fav-dropdown__chevron {
+    margin-left: auto;
+    transform: rotate(90deg);
+    transition: transform 0.2s;
+}
+
+.fav-dropdown.open .fav-dropdown__chevron {
+    transform: rotate(-90deg);
+}
+
+.fav-dropdown__menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 100%;
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.fav-dropdown.open .fav-dropdown__menu {
+    display: block;
+}
+
+.fav-dropdown__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.88rem;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.fav-dropdown__item:hover {
+    background: rgba(91, 192, 190, 0.1);
+    color: #fff;
+}
+
+.fav-dropdown__item.active {
+    color: var(--neon-ice);
+    font-weight: 600;
+}
+.category-breadcrumb .breadcrumb-item {
+    display: flex;
+    align-items: center;
 }

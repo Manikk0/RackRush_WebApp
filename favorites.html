@@ -232,10 +232,10 @@
     </div>
  
     <!-- ═══ MAIN ═══ -->
-    <main class="container-fluid px-4">
+    <main class="container-fluid px-4 fav-main" >
  
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb category-breadcrumb">
+            <ol class="breadcrumb category-breadcrumb d-flex align-items-center">
                 <li class="breadcrumb-item">
                     <a href="index.html">
                         <img src="assets/home.png" alt="Domov" class="breadcrumb-home-icon">
@@ -260,31 +260,45 @@
             <div class="fav-products-header">
                 <h2 class="fav-section-title">Obľúbené produkty</h2>
                 <p class="fav-products-description">
-                    Všetko, čo pravidelne nakupujete, si zapamätáme a uložíme tu do obľúbených.
-                    Kliknutím na ikonku srdiečka môžete pridať alebo odobrať akýkoľvek tovar.
+                    Všetko, čo pravidelne nakupujete, si zapamätáme a uložíme tu do obľúbených. Kliknutím na ikonku srdiečka môžete pridať alebo odobrať akýkoľvek tovar.
                 </p>
  
-                <!-- Filter & Sort bar -->
                 <div class="fav-controls">
-                    <div class="fav-filter-wrap">
-                        <select class="fav-select" id="fav-category-filter">
-                            <option value="">Všetky kategórie</option>
-                            <option value="ovocie">Ovocie a zelenina</option>
-                            <option value="mliecne">Mliečne a chladené</option>
-                            <option value="maso">Mäso a ryby</option>
-                            <option value="pecivo">Pečivo</option>
-                            <option value="napoje">Nápoje</option>
-                            <option value="sladke">Sladké a slané</option>
-                        </select>
+
+                    <div class="fav-dropdown" id="fav-cat-dropdown">
+                            <button class="fav-dropdown__btn" id="fav-cat-btn">
+                                <span id="fav-cat-label">Všetky kategórie</span>
+                                <img src="assets/chevron_right.png" class="fav-dropdown__chevron icon-xs">
+                            </button>
+                            <div class="fav-dropdown__menu" id="fav-cat-menu">
+                                <button class="fav-dropdown__item active" data-value="">Všetky kategórie</button>
+                                <button class="fav-dropdown__item" data-value="ovocie">Ovocie a zelenina</button>
+                                <button class="fav-dropdown__item" data-value="mliecne">Mliečne a chladené</button>
+                                <button class="fav-dropdown__item" data-value="maso">Mäso a ryby</button>
+                                <button class="fav-dropdown__item" data-value="pecivo">Pečivo</button>
+                                <button class="fav-dropdown__item" data-value="trvanlivé">Trvanlivé potraviny</button>
+                                <button class="fav-dropdown__item" data-value="napoje">Nápoje</button>
+                                <button class="fav-dropdown__item" data-value="sladke">Sladké a slané</button>
+                                <button class="fav-dropdown__item" data-value="mrazene">Mrazené produkty</button>
+                                <button class="fav-dropdown__item" data-value="deti">Pre deti</button>
+                                <button class="fav-dropdown__item" data-value="kozmetika">Kozmetika a drogéria</button>
+                                <button class="fav-dropdown__item" data-value="domacnost">Domácnosť</button>
+                                <button class="fav-dropdown__item" data-value="zvierata">Pre zvieratá</button>
+                            </div>
                     </div>
- 
-                    <div class="fav-sort-wrap">
-                        <select class="fav-select" id="fav-sort">
-                            <option value="recommended">Odporúčané</option>
-                            <option value="cheapest">Od najlacnejšieho</option>
-                            <option value="recent">Naposledy objednané</option>
-                            <option value="most">Najčastejšie kupované</option>
-                        </select>
+
+                        <!-- Sort dropdown -->
+                    <div class="fav-dropdown" id="fav-sort-dropdown">
+                        <button class="fav-dropdown__btn" id="fav-sort-btn">
+                            <span id="fav-sort-label">Odporúčané</span>
+                            <img src="assets/chevron_right.png" class="fav-dropdown__chevron icon-xs">
+                        </button>
+                        <div class="fav-dropdown__menu" id="fav-sort-menu">
+                            <button class="fav-dropdown__item active" data-value="recommended">Odporúčané</button>
+                            <button class="fav-dropdown__item" data-value="cheapest">Od najlacnejšieho</button>
+                            <button class="fav-dropdown__item" data-value="recent">Naposledy objednané</button>
+                            <button class="fav-dropdown__item" data-value="most">Najčastejšie kupované</button>
+                        </div>
                     </div>
                 </div>
             </div>
