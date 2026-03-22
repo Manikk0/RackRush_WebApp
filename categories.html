@@ -55,7 +55,8 @@
                                 <div class="notifications-body">
                                     <a href="#" class="notification-item unread">
                                         <span class="notification-title">Vybavenie objednávky</span>
-                                        <span class="notification-text">Vaša objednávka č. 123456 bola úspešne odoslaná.</span>
+                                        <span class="notification-text">Vaša objednávka č. 123456 bola úspešne
+                                            odoslaná.</span>
                                         <span class="notification-time">12:40</span>
                                     </a>
                                     <a href="#" class="notification-item">
@@ -70,12 +71,14 @@
                                     </a>
                                     <a href="#" class="notification-item">
                                         <span class="notification-title">Vernostný program</span>
-                                        <span class="notification-text">Získali ste 50 nových bodov za váš posledný nákup.</span>
+                                        <span class="notification-text">Získali ste 50 nových bodov za váš posledný
+                                            nákup.</span>
                                         <span class="notification-time">Predvčerom</span>
                                     </a>
                                     <a href="#" class="notification-item">
                                         <span class="notification-title">Dostupnosť tovaru</span>
-                                        <span class="notification-text">Hrušky, ktoré ste sledovali, sú opäť na sklade.</span>
+                                        <span class="notification-text">Hrušky, ktoré ste sledovali, sú opäť na
+                                            sklade.</span>
                                         <span class="notification-time">15. Mar</span>
                                     </a>
                                 </div>
@@ -148,7 +151,7 @@
                         <div>
                             <a href="categories.html" class="btn btn-teal">Kategórie</a>
                         </div>
-                        <button class="btn btn-outline-custom">Obľúbené</button>
+                        <a href="favorites.html" class="btn btn-outline-custom">Obľúbené</a>
                         <button class="btn btn-outline-custom">Cenové hity</button>
                     </div>
 
@@ -160,7 +163,7 @@
                     </div>
 
                     <div class="col-auto ms-auto d-flex align-items-center">
-                        <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
+                        <a href="shopping-lists.html" id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</a>
                         <div id="sticky-cart" class="d-none ms-3">
                             <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
                                     class="icon-md icon-white"></a>
@@ -183,14 +186,16 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white"></a>
+                    <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
+                            class="icon-md icon-white"></a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Mobile Offcanvas -->
-    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu"
+        aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="mobileMenuLabel">
                 <a href="index.html">
@@ -211,12 +216,15 @@
                         </div>
                     </div>
                     <a href="#" class="mobile-nav-link"><img src="assets/user.png" class="icon-sm"> Môj účet</a>
-                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Objednávky</a>
+                    <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm">
+                        Objednávky</a>
                 </div>
                 <div id="mobile-logged-out">
                     <div class="mobile-auth-btns">
-                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Prihlásiť sa</button>
-                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal" data-bs-target="#registerModal">Registrácia</button>
+                        <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Prihlásiť sa</button>
+                        <button class="btn btn-outline-custom w-100" data-bs-toggle="modal"
+                            data-bs-target="#registerModal">Registrácia</button>
                     </div>
                 </div>
             </div>
@@ -237,15 +245,16 @@
             <!-- Main Navigation -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Menu</p>
-                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm"> Kategórie</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
+                <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm">
+                    Kategórie</a>
+                <a href="favorites.html" class="mobile-nav-link"><img src="assets/heart.png" class="icon-sm"> Obľúbené</a>
                 <a href="#" class="mobile-nav-link"><img src="assets/tag.png" class="icon-sm"> Cenové hity</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
+                <a href="shopping-lists.html" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm"> Nákupné zoznamy</a>
             </div>
 
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title d-flex justify-content-between align-items-center">
-                    Upozornenia 
+                    Upozornenia
                     <span class="badge rounded-pill bg-danger" style="font-size: 0.65rem;">5</span>
                 </p>
                 <div class="mobile-notifications-list mt-3">
@@ -287,13 +296,14 @@
                     <a href="#" class="mobile-lang-link">DE</a>
                 </div>
                 <a href="#" class="mobile-nav-link"><img src="assets/question_mark.png" class="icon-sm"> Ako nakúpiť</a>
-                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem poradiť</a>
+                <a href="#" class="mobile-nav-link"><img src="assets/speech-bubble.png" class="icon-sm"> Potrebujem
+                    poradiť</a>
             </div>
 
             <!-- Logout -->
             <div class="mobile-menu-section d-none" id="mobile-logout-section">
                 <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
-                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile"> 
+                    <img src="assets/logout.png" class="icon-sm logout-icon-mobile">
                     <strong>Odhlásiť sa</strong>
                 </a>
             </div>
@@ -540,7 +550,9 @@
     <div id="cart-drawer" class="cart-drawer">
         <div class="cart-drawer__header">
             <span class="cart-drawer__title">Košík</span>
-            <button class="cart-drawer__close" id="cart-close" aria-label="Zavrieť">&times;</button>
+            <button class="cart-drawer__close" id="cart-close" aria-label="Zavrieť">
+                <img src="assets/close.png" class="icon-sm icon-white">
+            </button>
         </div>
         <div class="cart-drawer__body" id="cart-body"></div>
         <div class="cart-drawer__footer">

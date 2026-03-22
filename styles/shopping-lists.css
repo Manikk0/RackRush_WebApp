@@ -1,0 +1,364 @@
+/* ── Page layout ── */
+.sl-main {
+    padding-top: 130px;
+    padding-bottom: 4rem;
+}
+
+/* ── Active nav ── */
+.active-nav {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--neon-ice) !important;
+    border-color: var(--neon-ice) !important;
+}
+
+/* ── Page title ── */
+.sl-page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.75rem;
+}
+
+.sl-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sl-main {
+    flex: 1;
+}
+
+.sl-help-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.sl-help-btn:hover {
+    border-color: var(--tropical-teal);
+    color: var(--tropical-teal);
+}
+
+.sl-section-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
+}
+
+/* ── Grid ── */
+.sl-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+/* ── Create card button ── */
+.sl-create-card {
+    width: 160px;
+    height: 160px;
+    background: var(--prussian-blue);
+    border: 2px dashed var(--dusk-blue);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    flex-shrink: 0;
+}
+
+.sl-create-card:hover {
+    border-color: var(--tropical-teal);
+    background: rgba(91, 192, 190, 0.05);
+}
+
+.sl-create-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--tropical-teal);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--prussian-blue);
+    line-height: 1;
+}
+
+.sl-create-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 0.5rem;
+}
+
+/* ── List card ── */
+.sl-list-card {
+    width: 160px;
+    height: 160px;
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    padding: 1rem;
+}
+
+.sl-list-card:hover {
+    border-color: var(--tropical-teal);
+    transform: translateY(-2px);
+}
+
+.sl-list-card__icon {
+    width: 48px;
+    height: 48px;
+    background: var(--prussian-blue);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.sl-list-card__name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.sl-list-card__count {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+}
+
+.sl-list-card__delete {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 22px;
+    height: 22px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.2);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+    line-height: 1;
+    padding: 0;
+}
+
+.sl-list-card__delete:hover {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+/* ── Empty state ── */
+.sl-empty-state {
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.88rem;
+    padding: 0.5rem 0;
+    height: 160px;
+}
+
+/* ── Custom modal (not Bootstrap) ── */
+.sl-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.sl-modal-overlay.visible {
+    display: flex;
+}
+
+.sl-modal {
+    background: var(--prussian-blue);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 16px;
+    padding: 2.5rem 2rem 2rem;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    margin: 1rem;
+}
+
+.sl-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.sl-modal-close:hover { color: #fff; }
+
+.sl-modal-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.sl-modal-input {
+    width: 100%;
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 8px;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 1.25rem;
+}
+
+.sl-modal-input:focus {
+    border-color: var(--tropical-teal);
+    box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.2);
+}
+
+.sl-modal-input::placeholder {
+    color: rgba(255,255,255,0.3);
+}
+
+.sl-modal-tips-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.6rem;
+}
+
+.sl-modal-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.sl-chip {
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.35rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sl-chip:hover {
+    border-color: var(--tropical-teal);
+    color: var(--tropical-teal);
+}
+
+.sl-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.sl-modal-cancel {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: color 0.2s;
+}
+
+.sl-modal-cancel:hover { color: #fff; }
+
+.sl-modal-submit {
+    background: var(--tropical-teal);
+    border: none;
+    border-radius: 8px;
+    color: var(--prussian-blue);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.6rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.sl-modal-submit:hover {
+    background: var(--neon-ice);
+    transform: translateY(-1px);
+}
+
+.sl-modal-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .sl-main {
+        padding-top: 80px;
+    }
+
+    .sl-create-card,
+    .sl-list-card {
+        width: 140px;
+        height: 140px;
+    }
+}

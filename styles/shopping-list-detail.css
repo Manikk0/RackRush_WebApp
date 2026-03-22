@@ -1,0 +1,140 @@
+/* ── Page layout ── */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sld-main {
+    flex: 1;
+    padding-top: 130px;
+    padding-bottom: 4rem;
+}
+
+/* ── Title row ── */
+.sld-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.sld-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.sld-edit-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    opacity: 0.45;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.sld-edit-btn:hover {
+    opacity: 1;
+}
+
+/* ── Product search ── */
+.sld-search-wrap {
+    margin-bottom: 2rem;
+}
+
+.sld-search {
+    max-width: 600px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    transition: box-shadow 0.2s;
+}
+
+.sld-search .input-group-text {
+    background: var(--space-indigo);
+    border: none;
+    padding-right: 0;
+}
+
+.sld-search .form-control {
+    background: var(--space-indigo);
+    border: none;
+    color: #fff;
+    height: 48px;
+    font-size: 0.9rem;
+}
+
+.sld-search .form-control::placeholder {
+    color: rgba(255,255,255,0.35);
+}
+
+.sld-search .form-control:focus {
+    background: var(--space-indigo);
+    box-shadow: none;
+    color: #fff;
+}
+
+.sld-search:focus-within {
+    box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.25);
+    border-color: var(--tropical-teal);
+}
+
+/* ── Empty state ── */
+.sld-empty {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+}
+
+.sld-empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.sld-empty-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.sld-empty-sub {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.45);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+.sld-empty-icon-img {
+    width: 56px;
+    height: 56px;
+    opacity: 0.35;
+    margin-bottom: 1rem;
+}
+/* ── Recommendations ── */
+.sld-reco-section {
+    margin-top: 3rem;
+}
+
+.sld-reco-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .sld-main {
+        padding-top: 80px;
+    }
+
+    .sld-search {
+        max-width: 100%;
+    }
+}

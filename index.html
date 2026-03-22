@@ -173,7 +173,7 @@
                         <div>
                             <a href="categories.html" class="btn btn-teal">Kategórie</a>
                         </div>
-                        <button class="btn btn-outline-custom">Obľúbené</button>
+                        <a href="favorites.html" class="btn btn-outline-custom">Obľúbené</a>
                         <button class="btn btn-outline-custom">Cenové hity</button>
                     </div>
 
@@ -185,7 +185,7 @@
                     </div>
 
                     <div class="col-auto ms-auto d-flex align-items-center">
-                        <button id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</button>
+                        <a href="shopping-lists.html" id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</a>
                         <div id="sticky-cart" class="d-none ms-3">
                             <a href="cart.html" class="cart-trigger-btn"><img src="assets/shopping-cart.png" alt="Košík"
                                     class="icon-md icon-white"></a>
@@ -694,7 +694,9 @@
     <div id="cart-drawer" class="cart-drawer">
         <div class="cart-drawer__header">
             <span class="cart-drawer__title">Košík</span>
-            <button class="cart-drawer__close" id="cart-close" aria-label="Zavrieť">&times;</button>
+            <button class="cart-drawer__close" id="cart-close" aria-label="Zavrieť">
+                <img src="assets/close.png" class="icon-sm icon-white">
+            </button>
         </div>
 
         <div class="cart-drawer__body" id="cart-body">
