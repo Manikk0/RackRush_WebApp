@@ -1,17 +1,14 @@
-// ── Shared product card template (same as index.js) ──
 const card = `
 <div class="product-card">
     <div class="product-card__image-wrap">
-        <a href="product-detail.html">
-            <img src="https://placehold.co/200x160" alt="Rajo Kyslá smotana" class="product-card__image">
-        </a>
-        <button class="product-card__wishlist" aria-label="Wishlist"><img src="assets/heart.png" class="wishlist-icon"></button>
-        <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
-    </div>
-    <a href="product-detail.html" class="text-decoration-none">
-        <p class="product-card__name">Rajo Kyslá smotana</p>
+    <a href="product-detail.html">
+        <img src="assets/grapes_white_tray.png" alt="Hrozno biele, bezsemenné" class="product-card__image">
     </a>
-    <p class="product-card__price">0.65€</p>
+    <button class="product-card__wishlist" aria-label="Wishlist"><img src="assets/heart.png" class="wishlist-icon"></button>
+    <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
+    </div>
+    <a href="product-detail.html" class="text-decoration-none"><p class="product-card__name">Hrozno biele, bezsemenné</p></a>
+    <p class="product-card__price">1.65€</p>
     <p class="product-card__meta"><span>250g</span><span>2.60€/kg</span></p>
 </div>`;
 
@@ -161,23 +158,23 @@ function toggleAuthState(isLoggedIn) {
     const mobileLogoutSection = document.getElementById('mobile-logout-section');
 
     if (isLoggedIn) {
-        if(loggedInEl) loggedInEl.classList.remove('d-none');
-        if(loggedOutEl) loggedOutEl.classList.add('d-none');
-        if(logoutBtn) logoutBtn.classList.remove('d-none');
-        
-        if(mobileLoggedInEl) mobileLoggedInEl.classList.remove('d-none');
-        if(mobileLoggedOutEl) mobileLoggedOutEl.classList.add('d-none');
-        if(mobileLogoutSection) mobileLogoutSection.classList.remove('d-none');
+        if (loggedInEl) loggedInEl.classList.remove('d-none');
+        if (loggedOutEl) loggedOutEl.classList.add('d-none');
+        if (logoutBtn) logoutBtn.classList.remove('d-none');
+
+        if (mobileLoggedInEl) mobileLoggedInEl.classList.remove('d-none');
+        if (mobileLoggedOutEl) mobileLoggedOutEl.classList.add('d-none');
+        if (mobileLogoutSection) mobileLogoutSection.classList.remove('d-none');
 
         restrictedLinks.forEach(l => l.classList.remove('link-greyed'));
     } else {
-        if(loggedInEl) loggedInEl.classList.add('d-none');
-        if(loggedOutEl) loggedOutEl.classList.remove('d-none');
-        if(logoutBtn) logoutBtn.classList.add('d-none');
+        if (loggedInEl) loggedInEl.classList.add('d-none');
+        if (loggedOutEl) loggedOutEl.classList.remove('d-none');
+        if (logoutBtn) logoutBtn.classList.add('d-none');
 
-        if(mobileLoggedInEl) mobileLoggedInEl.classList.add('d-none');
-        if(mobileLoggedOutEl) mobileLoggedOutEl.classList.remove('d-none');
-        if(mobileLogoutSection) mobileLogoutSection.classList.add('d-none');
+        if (mobileLoggedInEl) mobileLoggedInEl.classList.add('d-none');
+        if (mobileLoggedOutEl) mobileLoggedOutEl.classList.remove('d-none');
+        if (mobileLogoutSection) mobileLogoutSection.classList.add('d-none');
 
         restrictedLinks.forEach(l => l.classList.add('link-greyed'));
     }
@@ -185,10 +182,10 @@ function toggleAuthState(isLoggedIn) {
 
 toggleAuthState(true);
 
-document.getElementById('logout-btn-mobile')?.addEventListener('click', function(e) {
+document.getElementById('logout-btn-mobile')?.addEventListener('click', function (e) {
     e.preventDefault();
     toggleAuthState(false);
-    
+
     // Close offcanvas if it's open
     const mobileMenuEl = document.getElementById('mobileMenu');
     if (mobileMenuEl) {
