@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RackRush Administrácia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- PRIHLÁSENIE ADMINISTRÁTORA -->
+    <div id="admin-login-view" class="admin-login-wrapper d-flex align-items-center justify-content-center vh-100">
+        <div class="admin-login-card p-4 shadow-lg text-center mx-3">
+            <img src="assets/logo.png" alt="RackRush Admin" class="admin-logo mb-3">
+            <h4 class="mb-4 admin-title">Administrácia</h4>
+            
+            <form id="admin-login-form">
+                <div class="mb-3 text-start">
+                    <label class="form-label small mb-1">E-mail</label>
+                    <input type="email" class="form-control" id="admin-email" required placeholder="admin@rackrush.sk">
+                </div>
+                <div class="mb-4 text-start">
+                    <label class="form-label small mb-1">Heslo</label>
+                    <input type="password" class="form-control" id="admin-password" required placeholder="Vaše heslo">
+                </div>
+                <!-- Error messages -->
+                <div id="admin-login-error" class="text-danger small mb-3 d-none">Nesprávne prihlasovacie údaje.</div>
+                <button type="submit" class="btn btn-primary w-100 mb-3 py-2 admin-btn">Prihlásiť sa</button>
+            </form>
+            <div class="mt-2 d-flex justify-content-center">
+                <a href="index.html" class="text-decoration-none admin-back-link small d-flex align-items-center gap-2">
+                    <img src="assets/chevron_right.png" class="icon-xs" style="transform: rotate(180deg);"> Späť do obchodu
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMINISTRÁTORSKÉ ROZHRANIE -->
+    <div id="admin-dashboard-view" class="d-none">
+        <!-- Admin Header -->
+        <header id="admin-header" class="fixed-top shadow-sm admin-navbar">
+            <div class="container-fluid px-4">
+                <div class="row align-items-center py-2 py-md-3">
+                    <div class="col-6 col-md-3 d-flex align-items-center gap-2">
+                        <button class="btn d-md-none p-0 border-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#admin-sidebar" aria-expanded="false" aria-controls="admin-sidebar">
+                            <img src="assets/burger-menu.png" alt="Menu" class="icon-md icon-white">
+                        </button>
+                        <a href="admin.html" class="d-inline-block">
+                            <img src="assets/logo.png" alt="RackRush" class="logo-placeholder" style="width:40px;height:40px;background:transparent;">
+                        </a>
+                        <span class="admin-header-title d-none d-md-inline ms-2">Administrácia</span>
+                    </div>
+
+                    <div class="col-6 col-md-9 d-flex justify-content-end align-items-center gap-4">
+                        <div class="admin-user-info d-none d-sm-flex align-items-center gap-2">
+                            <img src="assets/user.png" alt="Admin" class="icon-md icon-white" style="opacity: 0.8;">
+                            <span class="text-white small fw-bold">Hlavný administrátor</span>
+                        </div>
+                        <button id="admin-logout-btn" class="btn btn-outline-custom btn-sm py-1 px-3 d-flex align-items-center gap-2" title="Odhlásiť sa">
+                            <img src="assets/logout.png" class="icon-sm icon-theme"> 
+                            <span class="d-none d-sm-inline">Odhlásiť sa</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Admin Sidebar & Main Content -->
+        <div class="container-fluid admin-main-container">
+            <div class="row">
+                <!-- Sidebar -->
+                <nav id="admin-sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-space-indigo">
+                    <div class="position-sticky pt-3 pb-3">
+                        <ul class="nav flex-column admin-nav-list">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">
+                                    <img src="assets/check.png" class="icon-sm me-2 icon-theme">
+                                    Prehľad
+                                </a>
+                            </li>
+                            <li class="nav-item px-3 mt-3 mb-1">
+                                <small class="text-uppercase" style="font-size: 0.75rem; font-weight: 700; color: var(--tropical-teal); letter-spacing: 1px;">Správa e-shopu</small>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" title="Pripravuje sa v ďalšom kroku">
+                                    <img src="assets/product.png" class="icon-md icon-white me-2" style="opacity: 0.7;"> 
+                                    Produkty
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <img src="assets/box.png" class="icon-md icon-white me-2" style="opacity: 0.7;">
+                                    Objednávky
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <img src="assets/user.png" class="icon-md icon-white me-2" style="opacity: 0.7;">
+                                    Zákazníci
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Main Content -->
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-4 border-bottom border-dusk-blue">
+                        <h1 class="h3 text-white m-0">Prehľad</h1>
+                    </div>
+
+                    <div class="alert alert-info bg-space-indigo border-tropical-teal text-white mb-4 shadow-sm" role="alert" style="color: #fff !important;">
+                        <img src="assets/speech-bubble.png" class="icon-sm icon-theme me-2">
+                        <strong>Vitajte späť v administrácii!</strong> Momentálne je dostupné len prihlásenie a odhlásenie. Správa produktov (vytváranie a úprava) pribudne neskôr.
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stats-card h-100">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-tropical-teal text-uppercase mb-1" style="font-size: 0.8rem;">Celkom produktov</div>
+                                            <div class="h3 mb-0 font-weight-bold text-white">458</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stats-card h-100">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-tropical-teal text-uppercase mb-1" style="font-size: 0.8rem;">Dnešné objednávky</div>
+                                            <div class="h3 mb-0 font-weight-bold text-white">12</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stats-card h-100">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-tropical-teal text-uppercase mb-1" style="font-size: 0.8rem;">Registrovaní užívatelia</div>
+                                            <div class="h3 mb-0 font-weight-bold text-white">89</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="adminLogoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Boli ste úspešne odhlásený z administrácie.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Success Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="adminLoginToast" class="toast align-items-center border-0" style="background-color: var(--tropical-teal); color: var(--prussian-blue);" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    Úspešne prihlásený!
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

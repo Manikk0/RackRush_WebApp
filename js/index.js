@@ -13,7 +13,7 @@ const card = `
     <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
     </div>
     <a href="product-detail.html" class="text-decoration-none"><p class="product-card__name">Hrozno biele, bezsemenné</p></a>
-    <p class="product-card__price">0.65€</p>
+    <p class="product-card__price">1.65€</p>
     <p class="product-card__meta"><span>250g</span><span>2.60€/kg</span></p>
 </div>`;
 
