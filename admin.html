@@ -12,7 +12,7 @@
 
 <body class="admin-body">
 
-    <!-- PRIHLÁSENIE ADMINISTRÁTORA -->
+    <!-- ADMIN LOGIN VIEW -->
     <div id="admin-login-view" class="admin-login-wrapper d-flex align-items-center justify-content-center vh-100">
         <div class="admin-login-card p-4 shadow-lg text-center mx-3">
             <img src="assets/logo.png" alt="RackRush Admin" class="admin-logo mb-3">
@@ -27,7 +27,7 @@
                     <label class="form-label small mb-1">Heslo</label>
                     <input type="password" class="form-control" id="admin-password" required placeholder="Vaše heslo">
                 </div>
-                <!-- Error messages -->
+                <!-- LOGIN ERRORS -->
                 <div id="admin-login-error" class="text-danger small mb-3 d-none">Nesprávne prihlasovacie údaje.</div>
                 <button type="submit" class="btn btn-primary w-100 mb-3 py-2 admin-btn">Prihlásiť sa</button>
             </form>
@@ -40,9 +40,9 @@
         </div>
     </div>
 
-    <!-- ADMINISTRÁTORSKÉ ROZHRANIE -->
+    <!-- ADMIN DASHBOARD VIEW -->
     <div id="admin-dashboard-view" class="d-none">
-        <!-- Admin Header -->
+        <!-- ADMIN HEADER -->
         <header id="admin-header" class="fixed-top shadow-sm admin-navbar">
             <div class="container-fluid px-4">
                 <div class="row align-items-center py-2 py-md-3">
@@ -73,10 +73,10 @@
             </div>
         </header>
 
-        <!-- Admin Sidebar & Main Content -->
+        <!-- ADMIN MAIN CONTENT -->
         <div class="container-fluid admin-main-container">
             <div class="row">
-                <!-- Sidebar -->
+                <!-- SIDEBAR NAVIGATION -->
                 <nav id="admin-sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse bg-space-indigo">
                     <div class="position-sticky pt-3 pb-3">
                         <ul class="nav flex-column admin-nav-list" id="admin-nav">
@@ -112,6 +112,7 @@
                     </div>
                 </nav>
 
+                <!-- SECTION WRAPPER -->
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
 
                     <!-- OVERVIEW SECTION -->
@@ -215,7 +216,6 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <!-- Additional rows would go here -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -240,7 +240,7 @@
         </div>
     </div>
 
-    <!-- Add Product Modal -->
+    <!-- ADD PRODUCT MODAL -->
     <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -253,7 +253,7 @@
                 <div class="modal-body py-4 px-4">
                     <form id="add-product-form">
                         <div class="row g-4">
-                            <!-- Left Column -->
+                            <!-- FORM FIELDS -->
                             <div class="col-md-7">
                                 <div class="mb-3">
                                     <label class="form-label small mb-1 text-white-50">Názov produktu</label>
@@ -302,11 +302,10 @@
                                 </div>
                             </div>
 
-                            <!-- Right Column (Images) -->
+                            <!-- IMAGE UPLOAD -->
                             <div class="col-md-5">
                                 <label class="form-label small mb-1 text-white-50 d-block">Fotografie (min. 2)</label>
                                 <div id="product-images-container" class="d-flex flex-wrap gap-2 mb-3">
-                                    <!-- Previews will appear here -->
                                     <div class="image-upload-wrapper p-3 border border-dashed border-dusk-blue rounded text-center d-flex align-items-center justify-content-center">
                                         <input type="file" id="p-img-upload" class="d-none" accept="image/*" multiple>
                                         <label for="p-img-upload"
@@ -329,8 +328,9 @@
         </div>
     </div>
 
-    <!-- Logout Toast -->
+    <!-- TOAST NOTIFICATIONS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3 admin-toast-container">
+        <!-- LOGOUT TOAST -->
         <div id="adminLogoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -341,10 +341,7 @@
                     aria-label="Close"></button>
             </div>
         </div>
-    </div>
-
-    <!-- Login Success Toast -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3 admin-toast-container">
+        <!-- LOGIN SUCCESS TOAST -->
         <div id="adminLoginToast" class="toast align-items-center border-0 toast-success-custom" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="d-flex">

@@ -12,9 +12,11 @@
 </head>
 
 <body class="product-detail-page">
+    <!-- HEADER -->
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
 
+            <!-- DESKTOP NAVIGATION -->
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
                     <div class="col-3">
@@ -33,6 +35,7 @@
                     </div>
 
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <!-- NOTIFICATIONS -->
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle position-relative" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside">
@@ -72,11 +75,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- CART TRIGGER -->
                         <a href="#" id="cart-trigger" class="cart-trigger-btn position-relative">
                             <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
                             <span class="cart-badge d-none" id="cart-badge">0</span>
                         </a>
 
+                        <!-- USER DROPDOWN -->
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
@@ -95,11 +101,9 @@
                                         <a class="dropdown-item" href="#"><img src="assets/speech-bubble.png"
                                                 class="icon-sm icon-theme"> Potrebujem poradiť</a>
                                     </div>
-
                                     <div class="v-divider"></div>
-
                                     <div class="user-dropdown-info">
-                                        <!-- LOGGED IN STATE -->
+                                        <!-- LOGGED IN USER -->
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
                                                 <img src="assets/user_placeholder_profile.png"
@@ -110,8 +114,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- LOGGED OUT STATE -->
+                                        <!-- LOGGED OUT USER -->
                                         <div id="dropdown-logged-out" class="d-none">
                                             <div class="d-flex align-items-center gap-2 mb-3">
                                                 <img src="assets/user.png" class="icon-md logged-out-user-icon">
@@ -125,8 +128,7 @@
                                                     data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
-
-                                        <!-- COMMON -->
+                                        <!-- LANGUAGE SELECTOR -->
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
@@ -155,6 +157,7 @@
                     </div>
                 </div>
 
+                <!-- SUB NAVIGATION -->
                 <div id="bottom-row" class="row align-items-center py-2">
                     <div class="col-auto d-flex gap-2">
                         <div>
@@ -164,14 +167,12 @@
                         <button class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#appModal">Naša
                             aplikácia</button>
                     </div>
-
                     <div class="col d-none" id="sticky-search-container">
                         <div class="input-group search-container ms-3">
                             <span class="input-group-text"><img src="assets/search.png" class="icon-sm"></span>
                             <input type="text" class="form-control" placeholder="Hľadať...">
                         </div>
                     </div>
-
                     <div class="col-auto ms-auto d-flex align-items-center">
                         <a href="#" id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</a>
                         <div id="sticky-cart" class="d-none ms-3">
@@ -182,7 +183,7 @@
                 </div>
             </div>
 
-            <!-- Mobile nav -->
+            <!-- MOBILE NAVIGATION -->
             <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
                 <div class="col-auto">
                     <button class="btn p-0 border-0" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
@@ -203,7 +204,7 @@
         </div>
     </header>
 
-    <!-- Mobile Offcanvas -->
+    <!-- MOBILE OFFCANVAS -->
     <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu"
         aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
@@ -215,8 +216,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <!-- Mobile User Section -->
+            <!-- USER SECTION -->
             <div class="mobile-menu-section">
+                <!-- LOGGED IN USER -->
                 <div id="mobile-logged-in" class="d-none">
                     <div class="mobile-user-card d-flex align-items-center gap-3">
                         <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
@@ -229,6 +231,7 @@
                     <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm">
                         Objednávky</a>
                 </div>
+                <!-- LOGGED OUT USER -->
                 <div id="mobile-logged-out">
                     <div class="mobile-auth-btns">
                         <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal"
@@ -239,6 +242,7 @@
                 </div>
             </div>
 
+            <!-- MAIN MENU -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Menu</p>
                 <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm">
@@ -251,10 +255,11 @@
                         class="icon-sm"> Nákupné zoznamy</a>
             </div>
 
+            <!-- MOBILE NOTIFICATIONS -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title d-flex justify-content-between align-items-center">
                     Upozornenia
-                    <span class="badge rounded-pill bg-danger" style="font-size: 0.65rem;">5</span>
+                    <span class="badge rounded-pill bg-danger badge-micro">5</span>
                 </p>
                 <div class="mobile-notifications-list mt-3">
                     <a href="#" class="mobile-notification-item unread">
@@ -285,6 +290,7 @@
                 </div>
             </div>
 
+            <!-- MOBILE LOGOUT -->
             <div class="mobile-menu-section d-none" id="mobile-logout-section">
                 <a href="#" class="mobile-nav-link text-danger" id="logout-btn-mobile">
                     <img src="assets/logout.png" class="icon-sm"> Odhlásiť sa
@@ -293,9 +299,9 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- MAIN CONTENT -->
     <main class="container product-detail-container">
-        <!-- Breadcrumbs -->
+        <!-- BREADCRUMBS -->
         <nav aria-label="breadcrumb" class="breadcrumb-section category-breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="index.html"><img src="assets/home.png" alt="Domov"
@@ -306,10 +312,10 @@
             </ol>
         </nav>
 
-        <!-- Product Header Section -->
+        <!-- PRODUCT MAIN SECTION -->
         <div class="product-main">
             <div class="row">
-                <!-- Gallery -->
+                <!-- PRODUCT GALLERY -->
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <div class="product-gallery shadow-sm">
                         <button class="gallery-wishlist-btn" title="Pridať do obľúbených">
@@ -338,7 +344,7 @@
                     </div>
                 </div>
 
-                <!-- Basic Info -->
+                <!-- PRODUCT INFO -->
                 <div class="col-lg-6">
                     <div class="product-info">
                         <h1 class="product-title">Hrozno biele, bezsemenné</h1>
@@ -379,7 +385,7 @@
             </div>
         </div>
 
-        <!-- Description Section -->
+        <!-- PRODUCT DESCRIPTION SECTION -->
         <div class="product-details-content shadow-sm">
             <h2 class="section-title">Popis</h2>
 
@@ -411,6 +417,7 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer-section">
         <div class="container-fluid px-4 py-5">
             <div class="row">
@@ -454,7 +461,8 @@
         </div>
     </footer>
 
-    <!-- Zoom Modal -->
+    <!-- MODALS SECTION -->
+    <!-- ZOOM MODAL -->
     <div id="zoom-modal" class="zoom-modal">
         <div class="zoom-modal-content">
             <button class="zoom-modal-close-simple" id="zoom-modal-close">&times;</button>
@@ -462,7 +470,7 @@
         </div>
     </div>
 
-    <!-- Auth Modals -->
+    <!-- LOGIN MODAL -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -504,6 +512,7 @@
         </div>
     </div>
 
+    <!-- REGISTER MODAL -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -549,8 +558,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <!-- ═══ APP MODAL ═══ -->
+    <!-- APP MODAL -->
     <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content app-modal shadow-lg">
@@ -574,6 +582,7 @@
         </div>
     </div>
 
+    <!-- TOAST NOTIFICATIONS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
             aria-live="assertive" aria-atomic="true">
@@ -587,11 +596,8 @@
         </div>
     </div>
 
-
-    <!-- Cart Overlay -->
+    <!-- CART DRAWERS -->
     <div id="cart-overlay" class="cart-overlay"></div>
-
-    <!-- Cart Drawer -->
     <div id="cart-drawer" class="cart-drawer">
         <div class="cart-drawer__header">
             <span class="cart-drawer__title">Košík</span>
@@ -599,11 +605,9 @@
                 <img src="assets/close.png" class="icon-sm icon-white">
             </button>
         </div>
-
         <div class="cart-drawer__body" id="cart-body">
             <div class="cart-empty">Váš košík je prázdny.</div>
         </div>
-
         <div class="cart-drawer__footer">
             <div class="cart-total">
                 <span>Spolu</span>
@@ -613,9 +617,7 @@
         </div>
     </div>
 
-
     <script src="bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="js/index.js"></script>
     <script src="js/product-detail.js"></script>
 </body>
 

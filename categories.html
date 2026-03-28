@@ -12,9 +12,11 @@
 </head>
 
 <body class="categories-page">
+    <!-- HEADER -->
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
 
+            <!-- DESKTOP NAVIGATION -->
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
                     <div class="col-3">
@@ -33,6 +35,7 @@
                     </div>
 
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <!-- NOTIFICATIONS -->
                         <div class="dropdown">
                             <a href="#" class="position-relative notification-trigger" data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside">
@@ -72,11 +75,14 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- CART TRIGGER -->
                         <a href="#" id="cart-trigger" class="cart-trigger-btn position-relative">
                             <img src="assets/shopping-cart.png" alt="Košík" class="icon-md icon-white">
                             <span class="cart-badge d-none" id="cart-badge">0</span>
                         </a>
 
+                        <!-- USER DROPDOWN -->
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
@@ -126,7 +132,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- COMMON -->
+                                        <!-- LANGUAGE SELECTOR -->
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
@@ -155,6 +161,7 @@
                     </div>
                 </div>
 
+                <!-- SUB NAVIGATION -->
                 <div id="bottom-row" class="row align-items-center py-2">
                     <div class="col-auto d-flex gap-2">
                         <div>
@@ -182,7 +189,7 @@
                 </div>
             </div>
 
-            <!-- Mobile nav -->
+            <!-- MOBILE NAVIGATION -->
             <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
                 <div class="col-auto">
                     <button class="btn p-0 border-0" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
@@ -203,7 +210,7 @@
         </div>
     </header>
 
-    <!-- Mobile Offcanvas -->
+    <!-- MOBILE OFFCANVAS -->
     <div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="mobileMenu"
         aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
@@ -215,8 +222,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <!-- User Section -->
+            <!-- USER SECTION -->
             <div class="mobile-menu-section">
+                <!-- LOGGED IN USER -->
                 <div id="mobile-logged-in" class="d-none">
                     <div class="mobile-user-card d-flex align-items-center gap-3">
                         <img src="assets/user_placeholder_profile.png" class="icon-md icon-theme">
@@ -229,6 +237,7 @@
                     <a href="#" class="mobile-nav-link"><img src="assets/task_complete.png" class="icon-sm">
                         Objednávky</a>
                 </div>
+                <!-- LOGGED OUT USER -->
                 <div id="mobile-logged-out">
                     <div class="mobile-auth-btns">
                         <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal"
@@ -239,8 +248,7 @@
                 </div>
             </div>
 
-
-            <!-- Main Navigation -->
+            <!-- MAIN MENU -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Menu</p>
                 <a href="categories.html" class="mobile-nav-link"><img src="assets/category.png" class="icon-sm">
@@ -253,10 +261,11 @@
                         class="icon-sm"> Nákupné zoznamy</a>
             </div>
 
+            <!-- MOBILE NOTIFICATIONS -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title d-flex justify-content-between align-items-center">
                     Upozornenia
-                    <span class="badge rounded-pill bg-danger" style="font-size: 0.65rem;">5</span>
+                    <span class="badge rounded-pill bg-danger badge-micro">5</span>
                 </p>
                 <div class="mobile-notifications-list mt-3">
                     <a href="#" class="mobile-notification-item unread">
@@ -287,7 +296,7 @@
                 </div>
             </div>
 
-            <!-- Language & Help -->
+            <!-- OTHERS SECTION -->
             <div class="mobile-menu-section">
                 <p class="mobile-menu-title">Ostatné</p>
                 <div class="mobile-lang-selector mb-3 px-1">
@@ -301,7 +310,7 @@
                     poradiť</a>
             </div>
 
-            <!-- Logout -->
+            <!-- MOBILE LOGOUT -->
             <div class="mobile-menu-section d-none" id="mobile-logout-section">
                 <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
                     <img src="assets/logout.png" class="icon-sm logout-icon-mobile">
@@ -311,12 +320,14 @@
         </div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <main class="container-fluid px-4 categories-grid">
         <div class="page-title-section">
             <h1 class="page-title">Dostupné kategórie</h1>
             <p class="page-subtitle">Vyberte si z našej bohatej ponuky čerstvých a kvalitných produktov</p>
         </div>
 
+        <!-- CATEGORIES GRID -->
         <div class="row g-4 px-md-5">
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <a href="category.html" class="category-tile">
@@ -417,6 +428,7 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer-section">
         <div class="container-fluid px-4 py-5">
             <div class="row">
@@ -463,7 +475,8 @@
         </div>
     </footer>
 
-    <!-- Auth Modals -->
+    <!-- MODALS SECTION -->
+    <!-- LOGIN MODAL -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -505,6 +518,7 @@
         </div>
     </div>
 
+    <!-- REGISTER MODAL -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -549,38 +563,8 @@
             </div>
         </div>
     </div>
-    <!-- Logout Toast -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
-            aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">Boli ste úspešne odhlásený.</div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Cart Drawer -->
-    <div id="cart-overlay" class="cart-overlay"></div>
-    <div id="cart-drawer" class="cart-drawer">
-        <div class="cart-drawer__header">
-            <span class="cart-drawer__title">Košík</span>
-            <button class="cart-drawer__close" id="cart-close" aria-label="Zavrieť">
-                <img src="assets/close.png" class="icon-sm icon-white">
-            </button>
-        </div>
-        <div class="cart-drawer__body" id="cart-body"></div>
-        <div class="cart-drawer__footer">
-            <div class="cart-total">
-                <span>Spolu</span>
-                <span id="cart-total-price">0,00 €</span>
-            </div>
-            <a href="cart.html" class="btn-checkout">Prejsť na objednávku</a>
-        </div>
-    </div>
-
-    <!-- ═══ APP MODAL ═══ -->
+    <!-- APP MODAL -->
     <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content app-modal shadow-lg">
@@ -601,6 +585,37 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">Boli ste úspešne odhlásený.</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART DRAWERS -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-drawer__header">
+            <span class="cart-drawer__title">Košík</span>
+            <button class="cart-drawer__close" id="cart-close" aria-label="Zavrieť">
+                <img src="assets/close.png" class="icon-sm icon-white">
+            </button>
+        </div>
+        <div class="cart-drawer__body" id="cart-body"></div>
+        <div class="cart-drawer__footer">
+            <div class="cart-total">
+                <span>Spolu</span>
+                <span id="cart-total-price">0,00 €</span>
+            </div>
+            <a href="cart.html" class="btn-checkout">Prejsť na objednávku</a>
         </div>
     </div>
 

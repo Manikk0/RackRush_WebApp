@@ -1,4 +1,11 @@
-const card = `
+// GLOBAL VARIABLES
+const header = document.getElementById("main-header");
+const topRow = document.getElementById("top-row");
+const stickySearch = document.getElementById("sticky-search-container");
+const stickyCart = document.getElementById("sticky-cart");
+const btnLists = document.getElementById("btn-lists");
+
+const productCardTemplate = `
 <div class="product-card">
     <div class="product-card__image-wrap">
     <a href="product-detail.html">
@@ -14,31 +21,169 @@ const card = `
 
 let cartItems = [];
 
+// NAVIGATION & HEADER
+window.onscroll = function () {
+    if (window.innerWidth >= 768) {
+        if (window.scrollY > 40) {
+            header.classList.add("scrolled");
+            topRow.classList.add("d-none");
+            stickySearch.classList.remove("d-none");
+            stickyCart.classList.remove("d-none");
+            btnLists.classList.add("d-none");
+        } else {
+            header.classList.remove("scrolled");
+            topRow.classList.remove("d-none");
+            stickySearch.classList.add("d-none");
+            stickyCart.classList.add("d-none");
+            btnLists.classList.remove("d-none");
+        }
+    }
+};
+
+// AUTHENTICATION STATE
+function toggleAuthState(isLoggedIn) {
+    const loggedInEl = document.getElementById('dropdown-logged-in');
+    const loggedOutEl = document.getElementById('dropdown-logged-out');
+    const logoutBtn = document.getElementById('logout-btn');
+    const restrictedLinks = document.querySelectorAll('.auth-restricted');
+
+    const mobileLoggedInEl = document.getElementById('mobile-logged-in');
+    const mobileLoggedOutEl = document.getElementById('mobile-logged-out');
+    const mobileLogoutSection = document.getElementById('mobile-logout-section');
+
+    if (isLoggedIn) {
+        if (loggedInEl) { loggedInEl.classList.remove('d-none'); }
+        if (loggedOutEl) { loggedOutEl.classList.add('d-none'); }
+        if (logoutBtn) { logoutBtn.classList.remove('d-none'); }
+
+        if (mobileLoggedInEl) { mobileLoggedInEl.classList.remove('d-none'); }
+        if (mobileLoggedOutEl) { mobileLoggedOutEl.classList.add('d-none'); }
+        if (mobileLogoutSection) { mobileLogoutSection.classList.remove('d-none'); }
+
+        for (let i = 0; i < restrictedLinks.length; i++) {
+            restrictedLinks[i].classList.remove('link-greyed');
+        }
+    } else {
+        if (loggedInEl) { loggedInEl.classList.add('d-none'); }
+        if (loggedOutEl) { loggedOutEl.classList.remove('d-none'); }
+        if (logoutBtn) { logoutBtn.classList.add('d-none'); }
+
+        if (mobileLoggedInEl) { mobileLoggedInEl.classList.add('d-none'); }
+        if (mobileLoggedOutEl) { mobileLoggedOutEl.classList.remove('d-none'); }
+        if (mobileLogoutSection) { mobileLogoutSection.classList.add('d-none'); }
+
+        for (let i = 0; i < restrictedLinks.length; i++) {
+            restrictedLinks[i].classList.add('link-greyed');
+        }
+    }
+}
+
+// Initial state
+toggleAuthState(true);
+
+// AUTHENTICATION EVENTS
+const userMenu = document.getElementById('userMenu');
+if (userMenu) {
+    userMenu.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+}
+
+const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+if (logoutBtnMobile) {
+    logoutBtnMobile.addEventListener('click', function (e) {
+        e.preventDefault();
+        toggleAuthState(false);
+
+        const mobileMenuEl = document.getElementById('mobileMenu');
+        if (mobileMenuEl) {
+            const offcanvas = bootstrap.Offcanvas.getInstance(mobileMenuEl);
+            if (offcanvas) { offcanvas.hide(); }
+        }
+
+        const toastEl = document.getElementById('logoutToast');
+        if (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    });
+}
+
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        toggleAuthState(false);
+        const toastEl = document.getElementById('logoutToast');
+        if (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    });
+}
+
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+    loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        toggleAuthState(true);
+        const loginModalElement = document.getElementById('loginModal');
+        if (loginModalElement) {
+            const loginModal = bootstrap.Modal.getInstance(loginModalElement);
+            if (loginModal) { loginModal.hide(); }
+        }
+    });
+}
+
+const registerForm = document.getElementById('register-form');
+if (registerForm) {
+    registerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        toggleAuthState(true);
+        const registerModalElement = document.getElementById('registerModal');
+        if (registerModalElement) {
+            const registerModal = bootstrap.Modal.getInstance(registerModalElement);
+            if (registerModal) { registerModal.hide(); }
+        }
+    });
+}
+
+// PAGE SPECIFIC LOGIC (CART)
 function renderCart() {
     const container = document.getElementById('cart-items-container');
     const emptyState = document.getElementById('cart-empty-state');
     const title = document.getElementById('cart-page-title');
 
+    if (!container) { return; }
+
     if (cartItems.length === 0) {
         container.innerHTML = '';
-        container.appendChild(emptyState);
-        emptyState.style.display = 'block';
-        title.textContent = 'Prehľad objednávky (0)';
+        if (emptyState) {
+            container.appendChild(emptyState);
+            emptyState.style.display = 'block';
+        }
+        if (title) { title.textContent = 'Prehľad objednávky (0)'; }
         updateSummary();
         return;
     }
 
-    // Group items by category
+    // Group items by category (simplified)
     const groups = {};
-    cartItems.forEach(item => {
-        if (!groups[item.group]) groups[item.group] = [];
+    for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i];
+        if (!groups[item.group]) { groups[item.group] = []; }
         groups[item.group].push(item);
-    });
+    }
 
     let html = '';
-    Object.entries(groups).forEach(([groupName, items]) => {
-        html += `<p class="cart-group-label">${groupName}</p>`;
-        items.forEach(item => {
+    const groupEntries = Object.entries(groups);
+    for (let i = 0; i < groupEntries.length; i++) {
+        const groupName = groupEntries[i][0];
+        const items = groupEntries[i][1];
+        
+        html += '<p class="cart-group-label">' + groupName + '</p>';
+        for (let j = 0; j < items.length; j++) {
+            const item = items[j];
             html += `
             <div class="cart-row" data-id="${item.id}">
                 <div class="cart-row__img-wrap">
@@ -60,173 +205,95 @@ function renderCart() {
                 <span class="cart-row__price">${(item.price * item.qty).toFixed(2).replace('.', ',')} €</span>
                 <button class="cart-row__remove" data-id="${item.id}" aria-label="Odstrániť">×</button>
             </div>`;
-        });
-    });
+        }
+    }
 
     container.innerHTML = html;
-    title.textContent = `Prehľad objednávky (${cartItems.length})`;
+    if (title) { title.textContent = 'Prehľad objednávky (' + cartItems.length + ')'; }
     updateSummary();
     bindCartEvents();
 }
 
-// ── Update summary box ──
 function updateSummary() {
-    const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+    let subtotal = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+        subtotal += cartItems[i].price * cartItems[i].qty;
+    }
+
     const subtotalEl = document.getElementById('summary-subtotal');
     const totalEl = document.getElementById('summary-total');
     const savingsEl = document.getElementById('summary-savings');
-    if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(2).replace('.', ',') + ' €';
-    if (totalEl) totalEl.textContent = subtotal.toFixed(2).replace('.', ',') + ' €';
-    if (savingsEl) savingsEl.textContent = '0 €';
+
+    if (subtotalEl) { subtotalEl.textContent = subtotal.toFixed(2).replace('.', ',') + ' €'; }
+    if (totalEl) { totalEl.textContent = subtotal.toFixed(2).replace('.', ',') + ' €'; }
+    if (savingsEl) { savingsEl.textContent = '0 €'; }
 }
 
-// ── Bind qty / remove buttons ──
 function bindCartEvents() {
-    document.querySelectorAll('.cart-row__qty-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
+    const qtyButtons = document.querySelectorAll('.cart-row__qty-btn');
+    for (let i = 0; i < qtyButtons.length; i++) {
+        qtyButtons[i].addEventListener('click', function () {
             const id = parseInt(this.dataset.id);
-            const item = cartItems.find(i => i.id === id);
-            if (!item) return;
+            let itemIndex = -1;
+            for (let j = 0; j < cartItems.length; j++) {
+                if (cartItems[j].id === id) {
+                    itemIndex = j;
+                    break;
+                }
+            }
+            
+            if (itemIndex === -1) { return; }
+            const item = cartItems[itemIndex];
+
             if (this.dataset.action === 'plus') {
                 item.qty++;
             } else {
                 item.qty--;
                 if (item.qty <= 0) {
-                    cartItems = cartItems.filter(i => i.id !== id);
+                    cartItems.splice(itemIndex, 1);
                 }
             }
             renderCart();
         });
-    });
+    }
 
-    document.querySelectorAll('.cart-row__remove').forEach(btn => {
-        btn.addEventListener('click', function () {
+    const removeButtons = document.querySelectorAll('.cart-row__remove');
+    for (let i = 0; i < removeButtons.length; i++) {
+        removeButtons[i].addEventListener('click', function () {
             const id = parseInt(this.dataset.id);
-            cartItems = cartItems.filter(i => i.id !== id);
+            for (let j = 0; j < cartItems.length; j++) {
+                if (cartItems[j].id === id) {
+                    cartItems.splice(j, 1);
+                    break;
+                }
+            }
             renderCart();
         });
+    }
+}
+
+const clearCartBtn = document.getElementById('btn-clear');
+if (clearCartBtn) {
+    clearCartBtn.addEventListener('click', function () {
+        cartItems = [];
+        renderCart();
     });
 }
 
-// ── Clear cart ──
-document.getElementById('btn-clear')?.addEventListener('click', function () {
-    cartItems = [];
-    renderCart();
-});
-
-// ── Discount code toggle ──
-document.getElementById('btn-discount')?.addEventListener('click', function () {
-    const wrap = document.getElementById('discount-input-wrap');
-    wrap?.classList.toggle('visible');
-});
-
-// ── Sticky scroll (same as index) ──
-const header = document.getElementById('main-header');
-const topRow = document.getElementById('top-row');
-const stickySearch = document.getElementById('sticky-search-container');
-const stickyCart = document.getElementById('sticky-cart');
-const btnLists = document.getElementById('btn-lists');
-
-window.onscroll = function () {
-    if (window.innerWidth >= 768) {
-        if (window.scrollY > 40) {
-            header.classList.add('scrolled');
-            topRow.classList.add('d-none');
-            stickySearch.classList.remove('d-none');
-            stickyCart.classList.remove('d-none');
-            btnLists.classList.add('d-none');
-        } else {
-            header.classList.remove('scrolled');
-            topRow.classList.remove('d-none');
-            stickySearch.classList.add('d-none');
-            stickyCart.classList.add('d-none');
-            btnLists.classList.remove('d-none');
-        }
-    }
-};
-
-// ── Auth state (same as index) ──
-function toggleAuthState(isLoggedIn) {
-    const loggedInEl = document.getElementById('dropdown-logged-in');
-    const loggedOutEl = document.getElementById('dropdown-logged-out');
-    const logoutBtn = document.getElementById('logout-btn');
-    const restrictedLinks = document.querySelectorAll('.auth-restricted');
-
-    // Mobile elements
-    const mobileLoggedInEl = document.getElementById('mobile-logged-in');
-    const mobileLoggedOutEl = document.getElementById('mobile-logged-out');
-    const mobileLogoutSection = document.getElementById('mobile-logout-section');
-
-    if (isLoggedIn) {
-        if (loggedInEl) loggedInEl.classList.remove('d-none');
-        if (loggedOutEl) loggedOutEl.classList.add('d-none');
-        if (logoutBtn) logoutBtn.classList.remove('d-none');
-
-        if (mobileLoggedInEl) mobileLoggedInEl.classList.remove('d-none');
-        if (mobileLoggedOutEl) mobileLoggedOutEl.classList.add('d-none');
-        if (mobileLogoutSection) mobileLogoutSection.classList.remove('d-none');
-
-        restrictedLinks.forEach(l => l.classList.remove('link-greyed'));
-    } else {
-        if (loggedInEl) loggedInEl.classList.add('d-none');
-        if (loggedOutEl) loggedOutEl.classList.remove('d-none');
-        if (logoutBtn) logoutBtn.classList.add('d-none');
-
-        if (mobileLoggedInEl) mobileLoggedInEl.classList.add('d-none');
-        if (mobileLoggedOutEl) mobileLoggedOutEl.classList.remove('d-none');
-        if (mobileLogoutSection) mobileLogoutSection.classList.add('d-none');
-
-        restrictedLinks.forEach(l => l.classList.add('link-greyed'));
-    }
+const discountBtn = document.getElementById('btn-discount');
+if (discountBtn) {
+    discountBtn.addEventListener('click', function () {
+        const wrap = document.getElementById('discount-input-wrap');
+        if (wrap) { wrap.classList.toggle('visible'); }
+    });
 }
 
-toggleAuthState(true);
-
-document.getElementById('logout-btn-mobile')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    toggleAuthState(false);
-
-    // Close offcanvas if it's open
-    const mobileMenuEl = document.getElementById('mobileMenu');
-    if (mobileMenuEl) {
-        const offcanvas = bootstrap.Offcanvas.getInstance(mobileMenuEl);
-        if (offcanvas) offcanvas.hide();
-    }
-
-    const toastEl = document.getElementById('logoutToast');
-    if (toastEl) new bootstrap.Toast(toastEl).show();
-});
-
-document.getElementById('logout-btn')?.addEventListener('click', function (e) {
-    e.preventDefault();
-    toggleAuthState(false);
-    const toastEl = document.getElementById('logoutToast');
-    if (toastEl) new bootstrap.Toast(toastEl).show();
-});
-
-document.getElementById('login-form')?.addEventListener('submit', function (e) {
-    e.preventDefault();
-    toggleAuthState(true);
-    bootstrap.Modal.getInstance(document.getElementById('loginModal'))?.hide();
-});
-
-document.getElementById('register-form')?.addEventListener('submit', function (e) {
-    e.preventDefault();
-    toggleAuthState(true);
-    bootstrap.Modal.getInstance(document.getElementById('registerModal'))?.hide();
-});
-
-document.getElementById('userMenu')?.addEventListener('click', function (e) {
-    e.stopPropagation();
-});
-
-// ── Recommendations ──
 const recContainer = document.getElementById('recommendations');
 if (recContainer) {
-    recContainer.innerHTML = card.repeat(6);
+    recContainer.innerHTML = productCardTemplate.repeat(6);
 }
 
-// ── Init ──
+// INITIALIZE
 if (document.getElementById('cart-items-container')) {
     renderCart();
 }

@@ -1,6 +1,4 @@
-
-
-/* ── Page layout ── */
+/* --- PAGE LAYOUT --- */
 .os-main {
     padding-top: 110px;
     padding-bottom: 4rem;
@@ -10,7 +8,15 @@
     justify-content: center;
 }
 
-/* ── Central card ── */
+.os-header-dropdown {
+    min-width: 180px;
+}
+
+.os-divider-light {
+    opacity: 0.1;
+}
+
+/* --- CENTRAL CARD --- */
 .os-card {
     background: var(--space-indigo);
     border: 1px solid var(--dusk-blue);
@@ -22,7 +28,7 @@
     text-align: center;
 }
 
-/* ── Check circle ── */
+/* --- CHECK CIRCLE & TITLES --- */
 .os-check-wrap {
     width: 96px;
     height: 96px;
@@ -72,7 +78,18 @@
     margin-bottom: 0;
 }
 
-/* ── Divider ── */
+.os-order-number {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+.os-order-number strong {
+    color: var(--tropical-teal);
+    font-weight: 600;
+}
+
 .os-divider {
     height: 1px;
     background: var(--dusk-blue);
@@ -80,6 +97,7 @@
     margin: 2rem 0;
 }
 
+/* --- PROGRESS BAR --- */
 .os-progress {
     display: flex;
     align-items: flex-start;
@@ -114,7 +132,6 @@
     z-index: 1;
 }
 
-/* dot */
 .os-step-dot {
     width: 40px;
     height: 40px;
@@ -137,7 +154,6 @@
     opacity: 0.3;
 }
 
-/* active / completed step */
 .os-progress-step.is-active .os-step-dot {
     border-color: var(--tropical-teal);
     background: rgba(91, 192, 190, 0.15);
@@ -149,7 +165,6 @@
     opacity: 1;
 }
 
-/* label */
 .os-step-label {
     font-size: 0.72rem;
     font-weight: 600;
@@ -163,95 +178,7 @@
     color: var(--neon-ice);
 }
 
-/* ── Delivery date ── */
-.os-delivery {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 2rem;
-}
-
-.os-delivery strong {
-    color: #fff;
-    font-weight: 700;
-}
-
-/* ── Home button ── */
-.os-btn-home {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--tropical-teal);
-    border: none;
-    border-radius: 10px;
-    color: var(--prussian-blue);
-    font-size: 0.95rem;
-    font-weight: 700;
-    padding: 0.8rem 2rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    letter-spacing: 0.02em;
-}
-
-.os-btn-home:hover {
-    background: var(--neon-ice);
-    color: var(--prussian-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(111, 255, 233, 0.25);
-}
-
-/* ── Responsive ── */
-@media (max-width: 576px) {
-    .os-main {
-        padding-top: 90px;
-        align-items: flex-start;
-    }
-
-    .os-card {
-        padding: 2rem 1.25rem 2rem;
-        border-radius: 16px;
-        margin: 0 0.75rem;
-    }
-
-    .os-title {
-        font-size: 1.35rem;
-    }
-
-    .os-step-label {
-        font-size: 0.65rem;
-        max-width: 60px;
-    }
-
-    .os-step-dot {
-        width: 34px;
-        height: 34px;
-    }
-
-    .os-step-dot img {
-        width: 15px;
-        height: 15px;
-    }
-
-    .os-progress-step:not(:last-child)::after {
-        top: 17px;
-    }
-}
-.os-order-number {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.4);
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-}
-
-.os-order-number strong {
-    color: var(--tropical-teal);
-    font-weight: 600;
-}
-
+/* --- ORDER SUMMARY --- */
 .os-summary {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--dusk-blue);
@@ -307,10 +234,78 @@
     margin-top: 0.25rem;
 }
 
-.os-header-dropdown {
-    min-width: 180px;
+/* --- DELIVERY & BUTTONS --- */
+.os-delivery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 2rem;
 }
 
-.os-divider-light {
-    opacity: 0.1;
+.os-delivery strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+.os-btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--tropical-teal);
+    border: none;
+    border-radius: 10px;
+    color: var(--prussian-blue);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+}
+
+.os-btn-home:hover {
+    background: var(--neon-ice);
+    color: var(--prussian-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(111, 255, 233, 0.25);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 576px) {
+    .os-main {
+        padding-top: 90px;
+        align-items: flex-start;
+    }
+
+    .os-card {
+        padding: 2rem 1.25rem 2rem;
+        margin: 0 0.75rem;
+    }
+
+    .os-title {
+        font-size: 1.35rem;
+    }
+
+    .os-step-label {
+        font-size: 0.65rem;
+        max-width: 60px;
+    }
+
+    .os-step-dot {
+        width: 34px;
+        height: 34px;
+    }
+
+    .os-step-dot img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .os-progress-step:not(:last-child)::after {
+        top: 17px;
+    }
 }

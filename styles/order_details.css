@@ -1,8 +1,4 @@
-/* ═══════════════════════════════════════
-   Order Details Page  –  order_details.css
-   ═══════════════════════════════════════ */
-
-/* ── Page layout ── */
+/* --- PAGE LAYOUT --- */
 .od-main {
     padding-top: 110px;
     padding-bottom: 3rem;
@@ -15,7 +11,6 @@
     margin-bottom: 1.75rem;
 }
 
-/* ── Header centre title ── */
 .order-header-title {
     font-size: 1.1rem;
     font-weight: 700;
@@ -23,7 +18,15 @@
     letter-spacing: 0.02em;
 }
 
-/* ── Back link ── */
+.od-header-dropdown {
+    min-width: 180px;
+}
+
+.od-divider-light {
+    opacity: 0.1;
+}
+
+/* --- BACK LINK --- */
 .od-back-link {
     display: inline-flex;
     align-items: center;
@@ -43,9 +46,7 @@
     flex-shrink: 0;
 }
 
-/* ══════════════════════════════════════
-   ACCORDION
-   ══════════════════════════════════════ */
+/* --- ACCORDION --- */
 .od-accordion {
     background: var(--space-indigo);
     border: 1px solid var(--dusk-blue);
@@ -53,7 +54,6 @@
     overflow: hidden;
 }
 
-/* ── Each section ── */
 .od-section {
     position: relative;
 }
@@ -69,7 +69,6 @@
     display: none;
 }
 
-/* ── Section header (the clickable row) ── */
 .od-section__header {
     width: 100%;
     background: none;
@@ -87,7 +86,6 @@
     background: rgba(255, 255, 255, 0.03);
 }
 
-/* Icon circle */
 .od-section__icon-wrap {
     width: 40px;
     height: 40px;
@@ -108,7 +106,6 @@
     border-color: var(--tropical-teal);
 }
 
-/* Title block */
 .od-section__title-wrap {
     flex: 1;
     display: flex;
@@ -129,7 +126,6 @@
     font-weight: 400;
 }
 
-/* Chevron */
 .od-section__chevron {
     color: rgba(255, 255, 255, 0.4);
     transition: transform 0.3s ease, color 0.2s;
@@ -141,7 +137,6 @@
     color: var(--neon-ice);
 }
 
-/* ── Collapsible body ── */
 .od-section__body {
     max-height: 0;
     overflow: hidden;
@@ -153,14 +148,12 @@
 }
 
 .od-section__body.is-open {
-    max-height: 600px;    /* large enough for any content */
+    max-height: 600px;
     opacity: 1;
     padding: 0 1.5rem 1.5rem;
 }
 
-/* ══════════════════════════════════════
-   FORM INSIDE SECTIONS
-   ══════════════════════════════════════ */
+/* --- FORM --- */
 .od-form {
     display: flex;
     flex-direction: column;
@@ -199,12 +192,10 @@
     box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.18);
 }
 
-/* Half-width field */
 .od-form__field--half input {
     max-width: 120px;
 }
 
-/* Checkbox row */
 .od-form__checkbox {
     display: flex;
     align-items: center;
@@ -227,7 +218,6 @@
     margin: 0;
 }
 
-/* Save / confirm button inside form */
 .od-btn-save {
     display: block;
     width: 100%;
@@ -249,7 +239,7 @@
     transform: translateY(-1px);
 }
 
-/* ── Payment options ── */
+/* --- PAYMENT OPTIONS --- */
 .od-payment-options {
     display: flex;
     flex-direction: column;
@@ -300,9 +290,7 @@
     color: #fff;
 }
 
-/* ══════════════════════════════════════
-   SUMMARY BOX (right column)
-   ══════════════════════════════════════ */
+/* --- SUMMARY --- */
 .od-summary {
     background: var(--space-indigo);
     border: 1px solid var(--dusk-blue);
@@ -312,7 +300,6 @@
     top: 110px;
 }
 
-/* Voucher button */
 .od-voucher-btn {
     display: flex;
     align-items: center;
@@ -332,7 +319,6 @@
     color: var(--neon-ice);
 }
 
-/* Voucher input (hidden by default) */
 .od-voucher-input {
     display: none;
     gap: 0.5rem;
@@ -375,7 +361,6 @@
     background: var(--neon-ice);
 }
 
-/* Summary divider */
 .od-summary__divider {
     height: 1px;
     background: var(--dusk-blue);
@@ -383,7 +368,6 @@
     margin: 0.85rem 0;
 }
 
-/* Summary rows */
 .od-summary__row {
     display: flex;
     justify-content: space-between;
@@ -393,7 +377,6 @@
     margin-bottom: 0.5rem;
 }
 
-/* Total row */
 .od-summary__total {
     display: flex;
     justify-content: space-between;
@@ -409,7 +392,6 @@
     color: var(--neon-ice);
 }
 
-/* Confirm / place order button */
 .od-btn-order {
     display: block;
     background: var(--tropical-teal);
@@ -431,9 +413,7 @@
     box-shadow: 0 6px 20px rgba(111, 255, 233, 0.25);
 }
 
-/* ══════════════════════════════════════
-   RESPONSIVE
-   ══════════════════════════════════════ */
+/* --- RESPONSIVE --- */
 @media (max-width: 991px) {
     .od-summary {
         position: static;
@@ -452,12 +432,4 @@
     .od-section__body.is-open {
         padding: 0 1.25rem 1.25rem;
     }
-}
-
-.od-header-dropdown {
-    min-width: 180px;
-}
-
-.od-divider-light {
-    opacity: 0.1;
 }

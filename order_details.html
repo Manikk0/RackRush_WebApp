@@ -13,9 +13,11 @@
 </head>
 
 <body>
+    <!-- HEADER -->
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
 
+            <!-- DESKTOP NAVIGATION -->
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
                     <div class="col-3 d-flex align-items-center">
@@ -27,6 +29,7 @@
                     <div class="col-6 d-flex justify-content-center"></div>
 
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <!-- USER DROPDOWN -->
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
@@ -46,6 +49,7 @@
                                     </div>
                                     <div class="v-divider"></div>
                                     <div class="od-header-dropdown">
+                                        <!-- LOGGED IN USER -->
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
                                                 <img src="assets/user_placeholder_profile.png"
@@ -56,6 +60,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- LOGGED OUT USER -->
                                         <div id="dropdown-logged-out" class="d-none">
                                             <div class="d-flex align-items-center gap-2 mb-3">
                                                 <img src="assets/user.png" class="icon-md logged-out-user-icon">
@@ -69,6 +74,7 @@
                                                     data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
+                                        <!-- LANGUAGE SELECTOR -->
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
@@ -97,6 +103,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- MOBILE NAVIGATION -->
             <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
                 <div class="col-auto">
                     <a href="cart.html" class="btn p-0 border-0 od-back-link">
@@ -113,8 +121,10 @@
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main class="od-main container-fluid px-4">
 
+        <!-- BACK LINK -->
         <div class="d-none d-md-flex align-items-center mb-4">
             <a href="cart.html" class="od-back-link">
                 <img src="assets/chevron_left.png" class="icon-sm icon-white">
@@ -125,11 +135,11 @@
         <h1 class="od-page-title mb-4">Detaily objednávky</h1>
 
         <div class="row g-4">
-
+            <!-- FORM SECTIONS -->
             <div class="col-lg-7 col-xl-6">
                 <div class="od-accordion" id="orderAccordion">
 
-                    <!-- Section 1: Kam?  -->
+                    <!-- DELIVERY SECTION -->
                     <div class="od-section" id="section-delivery">
                         <button class="od-section__header" id="btn-delivery" aria-expanded="false"
                             aria-controls="body-delivery">
@@ -164,7 +174,7 @@
                     </div>
                     <div class="od-section__divider"></div>
 
-                    <!-- Section 2: Kto?  -->
+                    <!-- USER INFO SECTION -->
                     <div class="od-section" id="section-who">
                         <button class="od-section__header" id="btn-who" aria-expanded="false" aria-controls="body-who">
                             <div class="od-section__icon-wrap">
@@ -202,7 +212,7 @@
                     </div>
                     <div class="od-section__divider"></div>
 
-                    <!-- Section 3: Informácie pre kuriéra -->
+                    <!-- COURIER NOTES SECTION -->
                     <div class="od-section" id="section-courier">
                         <button class="od-section__header" id="btn-courier" aria-expanded="false"
                             aria-controls="body-courier">
@@ -228,7 +238,7 @@
                     </div>
                     <div class="od-section__divider"></div>
 
-                    <!-- Section 4: Spôsob platby -->
+                    <!-- PAYMENT SECTION -->
                     <div class="od-section" id="section-payment">
                         <button class="od-section__header" id="btn-payment" aria-expanded="false"
                             aria-controls="body-payment">
@@ -280,9 +290,10 @@
                 </div>
             </div>
 
+            <!-- ORDER SUMMARY -->
             <div class="col-lg-5 col-xl-4 offset-xl-1">
                 <div class="od-summary">
-
+                    <!-- VOUCHER SECTION -->
                     <button class="od-voucher-btn" id="btn-voucher">
                         <img src="assets/plus.png" class="icon-sm icon-white">
                         Vložiť kód
@@ -294,6 +305,7 @@
 
                     <div class="od-summary__divider"></div>
 
+                    <!-- SUMMARY DETAILS -->
                     <div class="od-summary__row">
                         <span>Hodnota košíku</span>
                         <span id="od-subtotal">0€</span>
@@ -317,10 +329,10 @@
                     <a href="order_success.html" class="od-btn-order mt-4 d-none d-lg-block w-100" id="btn-order-desktop">Objednať</a>
                 </div>
             </div>
-
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer-section">
         <div class="container-fluid px-4 py-5">
             <div class="row">
@@ -363,7 +375,8 @@
         </div>
     </footer>
 
-
+    <!-- MODALS SECTION -->
+    <!-- LOGIN MODAL -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -394,6 +407,7 @@
         </div>
     </div>
 
+    <!-- REGISTER MODAL -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -439,6 +453,7 @@
         </div>
     </div>
 
+    <!-- TOAST NOTIFICATIONS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="logoutToast" class="toast align-items-center text-white bg-dark border-0" role="alert">
             <div class="d-flex">

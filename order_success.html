@@ -12,11 +12,11 @@
 </head>
 
 <body>
-
+    <!-- HEADER -->
     <header id="main-header" class="fixed-top shadow-sm">
         <div class="container-fluid px-4">
 
-            <!-- Desktop -->
+            <!-- DESKTOP NAVIGATION -->
             <div id="desktop-nav" class="d-none d-md-block">
                 <div id="top-row" class="row align-items-center py-2">
                     <div class="col-3 d-flex align-items-center">
@@ -26,6 +26,7 @@
                     </div>
                     <div class="col-6 d-flex justify-content-center"></div>
                     <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
+                        <!-- USER DROPDOWN -->
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                 <img src="assets/user.png" alt="Profil" class="icon-md icon-white">
@@ -46,6 +47,7 @@
                                     </div>
                                     <div class="v-divider"></div>
                                     <div class="os-header-dropdown">
+                                        <!-- LOGGED IN USER -->
                                         <div id="dropdown-logged-in">
                                             <div class="d-flex align-items-center gap-3 mb-4">
                                                 <img src="assets/user_placeholder_profile.png"
@@ -56,6 +58,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- LOGGED OUT USER -->
                                         <div id="dropdown-logged-out" class="d-none">
                                             <div class="d-flex align-items-center gap-2 mb-3">
                                                 <img src="assets/user.png" class="icon-md logged-out-user-icon">
@@ -69,6 +72,7 @@
                                                     data-bs-target="#registerModal">Zaregistrovať sa</a>
                                             </div>
                                         </div>
+                                        <!-- LANGUAGE SELECTOR -->
                                         <div>
                                             <p class="small fw-bold mb-2 lang-section-title">Zmeniť jazyk</p>
                                             <div class="d-flex flex-column gap-1">
@@ -98,7 +102,7 @@
                 </div>
             </div>
 
-            <!-- Mobile -->
+            <!-- MOBILE NAVIGATION -->
             <div id="mobile-nav" class="row align-items-center py-2 d-flex d-md-none">
                 <div class="col-auto">
                     <a href="index.html" class="btn p-0 border-0 od-back-link">
@@ -111,13 +115,15 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main class="os-main container-fluid px-3">
+        <!-- SUCCESS CARD -->
         <div class="os-card">
 
+            <!-- CHECK ICON -->
             <div class="os-check-wrap">
                 <img src="assets/check.png" alt="Hotovo">
             </div>
@@ -128,6 +134,8 @@
             <p class="os-order-number">Číslo objednávky: <strong>#ORD-2026-84512</strong></p>
 
             <div class="os-divider"></div>
+
+            <!-- ORDER SUMMARY -->
             <div class="os-summary">
                 <p class="os-summary-title">Zhrnutie objednávky</p>
 
@@ -137,16 +145,15 @@
                     <span class="os-summary-price">€0.00</span>
                 </div>
 
-
                 <div class="os-summary-total">
                     <span>Celková suma</span>
                     <span>€0.00</span>
                 </div>
             </div>
 
+            <!-- ORDER PROGRESS -->
             <div class="os-progress" role="list">
-
-                <!-- Step 1 – active (completed) -->
+                <!-- STEP 1 - CONFIRMED -->
                 <div class="os-progress-step is-active" role="listitem">
                     <div class="os-step-dot">
                         <img src="assets/check.png" alt="">
@@ -154,7 +161,7 @@
                     <span class="os-step-label">Objednávka<br>potvrdená</span>
                 </div>
 
-                <!-- Step 2 -->
+                <!-- STEP 2 - SHIPPED -->
                 <div class="os-progress-step" role="listitem">
                     <div class="os-step-dot">
                         <img src="assets/task_complete.png" alt="">
@@ -162,7 +169,7 @@
                     <span class="os-step-label">Objednávka<br>odoslaná</span>
                 </div>
 
-                <!-- Step 3 -->
+                <!-- STEP 3 - ON THE WAY -->
                 <div class="os-progress-step" role="listitem">
                     <div class="os-step-dot">
                         <img src="assets/gps.png" alt="">
@@ -170,23 +177,22 @@
                     <span class="os-step-label">Na<br>ceste</span>
                 </div>
 
-                <!-- Step 4 -->
+                <!-- STEP 4 - DELIVERED -->
                 <div class="os-progress-step" role="listitem">
                     <div class="os-step-dot">
                         <img src="assets/bell.png" alt="">
                     </div>
                     <span class="os-step-label">Objednávka<br>doručená</span>
                 </div>
-
             </div>
 
-            <!-- Delivery date -->
+            <!-- DELIVERY DATE -->
             <p class="os-delivery">
                 Predpokladaný dátum doručenia:
                 <strong>20. marca 2026</strong>
             </p>
 
-            <!-- Back to home -->
+            <!-- BACK TO HOME -->
             <a href="index.html" class="os-btn-home" id="btn-back-home">
                 <img src="assets/chevron_left.png" class="icon-sm" alt="">
                 Späť na hlavnú stránku
@@ -194,7 +200,9 @@
 
         </div>
     </main>
-    <!-- Login modal -->
+
+    <!-- MODALS SECTION -->
+    <!-- LOGIN MODAL -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">
@@ -225,6 +233,7 @@
         </div>
     </div>
 
+    <!-- REGISTER MODAL -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="d-flex flex-column align-items-center w-100">

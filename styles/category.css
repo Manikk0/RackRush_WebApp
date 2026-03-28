@@ -1,3 +1,4 @@
+/* --- FILTER SIDEBAR --- */
 .filters-sidebar {
     background-color: var(--space-indigo);
     border-radius: 12px;
@@ -41,7 +42,11 @@
     cursor: pointer;
     color: #e0e0e0;
 }
+.filter-options-count {
+    color: #adb5bd !important;
+}
 
+/* --- NAVIGATION --- */
 .category-breadcrumb {
     font-size: 0.95rem;
     align-items: center;
@@ -64,7 +69,19 @@
     color: #e0e0e0;
     margin-top: 0;
 }
+.breadcrumb-home-icon {
+    width: 18px;
+    height: 18px;
+    margin-top: -3px;
+    filter: invert(85%) sepia(10%) saturate(100%) hue-rotate(180deg) brightness(1);
+    transition: filter 0.2s;
+}
 
+.category-breadcrumb .breadcrumb-item a:hover .breadcrumb-home-icon {
+    filter: invert(82%) sepia(35%) saturate(718%) hue-rotate(113deg) brightness(101%) contrast(104%);
+}
+
+/* --- SORTING --- */
 .sort-pills-container {
     display: flex;
     justify-content: center;
@@ -99,28 +116,9 @@
     color: #fff;
 }
 
+/* --- PRODUCTS --- */
 .category-page .product-row {
     grid-template-columns: repeat(4, 1fr);
-}
-
-@media (max-width: 1400px) {
-    .category-page .product-row {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-@media (max-width: 992px) {
-    .category-page .product-row {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-@media (max-width: 768px) {
-    .category-page .product-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .sort-pills {
-        flex-direction: column;
-        width: 100%;
-    }
 }
 
 .more-origins-chevron {
@@ -131,6 +129,12 @@
     transform: rotate(-90deg);
 }
 
+.category-main {
+    margin-top: 140px;
+    margin-bottom: 50px;
+}
+
+/* --- MOBILE FILTERS --- */
 .mobile-filter-chevron {
     transition: transform 0.2s ease;
     transform: rotate(-90deg);
@@ -140,7 +144,7 @@
     transform: rotate(90deg);
 }
 
-/* Pagination Styling */
+/* --- PAGINATION --- */
 .custom-pagination .page-link {
     background-color: var(--space-indigo);
     border-color: var(--dusk-blue);
@@ -205,16 +209,6 @@
     transform: rotate(180deg);
 }
 
-/* Category Page Cleanups */
-.category-main {
-    margin-top: 140px;
-    margin-bottom: 50px;
-}
-
-.filter-options-count {
-    color: #adb5bd !important;
-}
-
 .show-more-origins {
     color: var(--neon-ice) !important;
     text-decoration: none;
@@ -225,14 +219,24 @@
     width: 10px !important;
 }
 
-.breadcrumb-home-icon {
-    width: 18px;
-    height: 18px;
-    margin-top: -3px;
-    filter: invert(85%) sepia(10%) saturate(100%) hue-rotate(180deg) brightness(1);
-    transition: filter 0.2s;
-}
 
-.category-breadcrumb .breadcrumb-item a:hover .breadcrumb-home-icon {
-    filter: invert(82%) sepia(35%) saturate(718%) hue-rotate(113deg) brightness(101%) contrast(104%);
+/* --- RESPONSIVE --- */
+@media (max-width: 1400px) {
+    .category-page .product-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 992px) {
+    .category-page .product-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    .category-page .product-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .sort-pills {
+        flex-direction: column;
+        width: 100%;
+    }
 }
