@@ -76,10 +76,10 @@
                         <div class="dropdown-menu dropdown-menu-end user-dropdown-menu mt-3 shadow-lg" id="userMenu">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
-                                    <a class="dropdown-item auth-restricted" href="#"><img
+                                    <a class="dropdown-item @guest link-greyed @endguest" href="#"><img
                                             src="{{ asset('assets/task_complete.png') }}" class="icon-sm icon-theme">
                                         Objednávky</a>
-                                    <a class="dropdown-item auth-restricted" href="#"><img
+                                    <a class="dropdown-item @guest link-greyed @endguest" href="#"><img
                                             src="{{ asset('assets/user.png') }}" class="icon-sm icon-theme"> Môj
                                         účet</a>
                                     <a class="dropdown-item" href="#"><img
@@ -94,19 +94,22 @@
 
                                 <div class="user-dropdown-info">
                                     <!-- LOGGED IN STATE -->
+                                    @auth
                                     <div id="dropdown-logged-in">
                                         <div class="d-flex align-items-center gap-3 mb-4">
                                             <img src="{{ asset('assets/user_placeholder_profile.png') }}"
                                                 class="icon-md icon-theme">
                                             <div class="user-info-text">
-                                                <strong class="d-block text-nowrap user-name">Name Username</strong>
-                                                <span class="text-muted small user-email">example@gmail.com</span>
+                                                <strong class="d-block text-nowrap user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</strong>
+                                                <span class="text-muted small user-email">{{ Auth::user()->email }}</span>
                                             </div>
                                         </div>
                                     </div>
+                                    @endauth
 
                                     <!-- LOGGED OUT STATE -->
-                                    <div id="dropdown-logged-out" class="d-none">
+                                    @guest
+                                    <div id="dropdown-logged-out">
                                         <div class="d-flex align-items-center gap-2 mb-3">
                                             <img src="{{ asset('assets/user.png') }}"
                                                 class="icon-md logged-out-user-icon">
@@ -120,6 +123,7 @@
                                                 data-bs-target="#registerModal">Zaregistrovať sa</a>
                                         </div>
                                     </div>
+                                    @endguest
 
                                     <!-- LANGUAGE SELECTOR -->
                                     <div>
@@ -139,10 +143,15 @@
                             <hr class="my-4 dropdown-divider-dim">
 
                             <div class="d-flex justify-content-between align-items-center w-100">
-                                <a href="#" class="logout-pill" id="logout-btn">
-                                    <img src="{{ asset('assets/logout.png') }}" class="icon-sm icon-theme">
-                                    <strong>Odhlásiť sa</strong>
-                                </a>
+                                @auth
+                                <form action="{{ route('logout') }}" method="POST" id="logout-form" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="logout-pill border-0 bg-transparent" id="logout-btn">
+                                        <img src="{{ asset('assets/logout.png') }}" class="icon-sm icon-theme">
+                                        <strong>Odhlásiť sa</strong>
+                                    </button>
+                                </form>
+                                @endauth
                                 <div class="promo-bubble ms-auto">
                                     Pri použití našej Aplikácie získate 25% zľavu k prvému nákupu
                                 </div>

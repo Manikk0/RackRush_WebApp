@@ -12,17 +12,21 @@
                         data-bs-toggle="modal" data-bs-target="#registerModal"
                         class="text-decoration-none auth-modal-link">TU</a></p>
 
-                <form id="login-form">
+                <form id="login-form" method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="mb-3 text-start">
                         <label class="form-label small mb-1">E-mail</label>
-                        <input type="email" class="form-control" required>
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-4 text-start">
                         <div class="d-flex justify-content-between">
                             <label class="form-label small mb-1">Heslo</label>
                             <a href="#" class="small text-decoration-none forgot-password-link">Zabudnuté heslo?</a>
                         </div>
-                        <input type="password" class="form-control" required>
+                        <input type="password" name="password" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Prihlásiť sa</button>
                 </form>
@@ -54,22 +58,35 @@
                         aria-label="Close"></button>
                 </div>
 
-                <form id="register-form">
+                <form id="register-form" method="POST" action="{{ route('register') }}">
+                    @csrf
                     <div class="mb-3 text-start">
                         <label class="form-label small mb-1">Meno</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror" value="{{ old('first_name') }}" required>
+                        @error('first_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3 text-start">
                         <label class="form-label small mb-1">Priezvisko</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="last_name" class="form-control @error('last_name') is-invalid @enderror" value="{{ old('last_name') }}" required>
+                        @error('last_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3 text-start">
                         <label class="form-label small mb-1">E-mail</label>
-                        <input type="email" class="form-control" required>
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-4 text-start">
                         <label class="form-label small mb-1">Heslo</label>
-                        <input type="password" class="form-control" required>
+                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mb-4 py-2">Registrovať sa</button>
                 </form>

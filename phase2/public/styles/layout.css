@@ -193,7 +193,7 @@ header.scrolled {
     background-color: #f8f9fa;
     border-radius: 12px;
     padding: 12px 24px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 12px;
     text-decoration: none;
@@ -204,6 +204,10 @@ header.scrolled {
 .logout-pill:hover {
     background-color: var(--prussian-blue);
     color: #fff !important;
+}
+
+.logout-pill:hover .icon-theme {
+    filter: invert(1) brightness(2);
 }
 
 .logout-pill:hover .icon-theme {
@@ -405,6 +409,10 @@ header.scrolled {
 .auth-modal .modal-title {
     color: #ffffff;
     font-weight: 700;
+}
+
+.auth-modal .form-label {
+    color: #a0aab8; /* Light grey color for visibility */
 }
 
 .auth-modal .form-control {

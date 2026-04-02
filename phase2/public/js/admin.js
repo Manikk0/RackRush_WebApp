@@ -24,11 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const hiddenCategoryInput = document.getElementById("p-category");
     const categoryDropdownItems = document.querySelectorAll(".category-select-item");
 
+    // Initial state check removed for Laravel Auth
+    /*
     if (localStorage.getItem("adminLoggedIn") === "true") {
         showDashboard();
     }
+    */
 
-    // LOGIN VIEW LOGIC
+    // LOGIN VIEW LOGIC - Removed for Laravel Auth
+    /*
     if (loginForm) {
         loginForm.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -55,8 +59,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+    */
 
-    // LOGOUT LOGIC
+    // LOGOUT LOGIC - Removed for Laravel Auth
+    /*
     if (logoutBtn) {
         logoutBtn.addEventListener("click", function () {
             localStorage.removeItem("adminLoggedIn");
@@ -69,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+    */
 
     // SIDEBAR NAVIGATION
     if (adminNav) {

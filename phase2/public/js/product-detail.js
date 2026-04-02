@@ -65,74 +65,13 @@ function toggleAuthState(isLoggedIn) {
 }
 
 // Initial state
-toggleAuthState(true);
+// toggleAuthState(true); // Removed for Laravel Auth
 
 // AUTHENTICATION EVENTS
+/* Removed for Laravel Auth
 const userMenu = document.getElementById('userMenu');
-if (userMenu) {
-    userMenu.addEventListener('click', function (e) {
-        e.stopPropagation();
-    });
-}
-
-const logoutBtnMobile = document.getElementById('logout-btn-mobile');
-if (logoutBtnMobile) {
-    logoutBtnMobile.addEventListener('click', function (e) {
-        e.preventDefault();
-        toggleAuthState(false);
-
-        const mobileMenuEl = document.getElementById('mobileMenu');
-        if (mobileMenuEl) {
-            const offcanvas = bootstrap.Offcanvas.getInstance(mobileMenuEl);
-            if (offcanvas) { offcanvas.hide(); }
-        }
-
-        const toastEl = document.getElementById('logoutToast');
-        if (toastEl) {
-            const toast = new bootstrap.Toast(toastEl);
-            toast.show();
-        }
-    });
-}
-
-const logoutBtn = document.getElementById('logout-btn');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        toggleAuthState(false);
-        const toastEl = document.getElementById('logoutToast');
-        if (toastEl) {
-            const toast = new bootstrap.Toast(toastEl);
-            toast.show();
-        }
-    });
-}
-
-const loginForm = document.getElementById('login-form');
-if (loginForm) {
-    loginForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        toggleAuthState(true);
-        const loginModalElement = document.getElementById('loginModal');
-        if (loginModalElement) {
-            const loginModal = bootstrap.Modal.getInstance(loginModalElement);
-            if (loginModal) { loginModal.hide(); }
-        }
-    });
-}
-
-const registerForm = document.getElementById('register-form');
-if (registerForm) {
-    registerForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        toggleAuthState(true);
-        const registerModalElement = document.getElementById('registerModal');
-        if (registerModalElement) {
-            const registerModal = bootstrap.Modal.getInstance(registerModalElement);
-            if (registerModal) { registerModal.hide(); }
-        }
-    });
-}
+...
+*/
 
 // CART DRAWER
 (function () {

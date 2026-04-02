@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
 })->name('index');
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/categories', function () {
     return view('categories');
@@ -32,4 +37,4 @@ Route::get('/order-success', function () {
 
 Route::get('/admin', function () {
     return view('admin');
-})->name('admin');
+})->middleware('auth')->name('admin');
