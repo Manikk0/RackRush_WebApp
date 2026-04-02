@@ -1,0 +1,310 @@
+/* --- PAGE LAYOUT --- */
+.os-main {
+    padding-bottom: 4rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.os-header-dropdown {
+    min-width: 180px;
+}
+
+.os-divider-light {
+    opacity: 0.1;
+}
+
+/* --- CENTRAL CARD --- */
+.os-card {
+    background: var(--space-indigo);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 20px;
+    padding: 3rem 2.5rem 2.5rem;
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* --- CHECK CIRCLE & TITLES --- */
+.os-check-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: rgba(91, 192, 190, 0.12);
+    border: 2px solid var(--tropical-teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.75rem;
+    box-shadow: 0 0 32px rgba(111, 255, 233, 0.18);
+    animation: os-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.os-check-wrap img {
+    width: 48px;
+    height: 48px;
+    filter: invert(71%) sepia(18%) saturate(934%) hue-rotate(129deg) brightness(91%) contrast(88%);
+}
+
+@keyframes os-pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+.os-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tropical-teal);
+    margin-bottom: 0.4rem;
+}
+
+.os-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.os-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0;
+}
+
+.os-order-number {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+.os-order-number strong {
+    color: var(--tropical-teal);
+    font-weight: 600;
+}
+
+.os-divider {
+    height: 1px;
+    background: var(--dusk-blue);
+    opacity: 0.6;
+    margin: 2rem 0;
+}
+
+/* --- PROGRESS BAR --- */
+.os-progress {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.os-progress-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: calc(50% + 20px);
+    right: calc(-50% + 20px);
+    height: 2px;
+    background: var(--dusk-blue);
+    z-index: 0;
+}
+
+.os-progress-step:first-child::after {
+    background: linear-gradient(to right, var(--tropical-teal), var(--dusk-blue));
+}
+
+.os-progress-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.os-step-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--dusk-blue);
+    background: var(--prussian-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.os-step-dot img {
+    width: 18px;
+    height: 18px;
+    filter: invert(1) brightness(2);
+    opacity: 0.3;
+}
+
+.os-progress-step.is-active .os-step-dot {
+    border-color: var(--tropical-teal);
+    background: rgba(91, 192, 190, 0.15);
+    box-shadow: 0 0 14px rgba(111, 255, 233, 0.2);
+}
+
+.os-progress-step.is-active .os-step-dot img {
+    filter: invert(71%) sepia(18%) saturate(934%) hue-rotate(129deg) brightness(91%) contrast(88%);
+    opacity: 1;
+}
+
+.os-step-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.35);
+    text-align: center;
+    line-height: 1.3;
+    max-width: 72px;
+}
+
+.os-progress-step.is-active .os-step-label {
+    color: var(--neon-ice);
+}
+
+/* --- ORDER SUMMARY --- */
+.os-summary {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--dusk-blue);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.os-summary-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 1rem;
+}
+
+.os-summary-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.os-summary-name {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.os-summary-qty {
+    color: rgba(255, 255, 255, 0.35);
+    min-width: 28px;
+    text-align: center;
+}
+
+.os-summary-price {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    min-width: 60px;
+    text-align: right;
+}
+
+.os-summary-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 0.25rem;
+}
+
+/* --- DELIVERY & BUTTONS --- */
+.os-delivery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 2rem;
+}
+
+.os-delivery strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+.os-btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--tropical-teal);
+    border: none;
+    border-radius: 10px;
+    color: var(--prussian-blue);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+}
+
+.os-btn-home:hover {
+    background: var(--neon-ice);
+    color: var(--prussian-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(111, 255, 233, 0.25);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 576px) {
+    .os-main {
+        padding-top: 90px;
+        align-items: flex-start;
+    }
+
+    .os-card {
+        padding: 2rem 1.25rem 2rem;
+        margin: 0 0.75rem;
+    }
+
+    .os-title {
+        font-size: 1.35rem;
+    }
+
+    .os-step-label {
+        font-size: 0.65rem;
+        max-width: 60px;
+    }
+
+    .os-step-dot {
+        width: 34px;
+        height: 34px;
+    }
+
+    .os-step-dot img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .os-progress-step:not(:last-child)::after {
+        top: 17px;
+    }
+}
