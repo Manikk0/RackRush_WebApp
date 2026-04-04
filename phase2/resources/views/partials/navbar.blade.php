@@ -146,7 +146,7 @@
                                 @auth
                                 <form action="{{ route('logout') }}" method="POST" id="logout-form" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="logout-pill border-0 bg-transparent" id="logout-btn">
+                                    <button type="submit" class="logout-pill border-0" id="logout-btn">
                                         <img src="{{ asset('assets/logout.png') }}" class="icon-sm icon-theme">
                                         <strong>Odhlásiť sa</strong>
                                     </button>
