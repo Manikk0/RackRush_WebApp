@@ -228,21 +228,25 @@
         <!-- USER SECTION -->
         <div class="mobile-menu-section">
             <!-- LOGGED IN USER -->
-            <div id="mobile-logged-in" class="d-none">
+            @auth
+            <div id="mobile-logged-in">
                 <div class="mobile-user-card d-flex align-items-center gap-3">
                     <img src="{{ asset('assets/user_placeholder_profile.png') }}" class="icon-md icon-theme">
                     <div>
-                        <div class="mobile-user-name">Name Username</div>
-                        <div class="mobile-user-email">example@gmail.com</div>
+                        <div class="mobile-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
+                        <div class="mobile-user-email">{{ Auth::user()->email }}</div>
                     </div>
                 </div>
                 <a href="#" class="mobile-nav-link"><img src="{{ asset('assets/user.png') }}" class="icon-sm"> Môj
-                    účét</a>
+                    účet</a>
                 <a href="#" class="mobile-nav-link"><img src="{{ asset('assets/task_complete.png') }}"
                         class="icon-sm">
                     Objednávky</a>
             </div>
+            @endauth
+
             <!-- LOGGED OUT USER -->
+            @guest
             <div id="mobile-logged-out">
                 <div class="mobile-auth-btns">
                     <button class="btn btn-teal w-100 mb-2" data-bs-toggle="modal"
@@ -251,6 +255,7 @@
                         data-bs-target="#registerModal">Registrácia</button>
                 </div>
             </div>
+            @endguest
         </div>
 
         <!-- MAIN MENU -->
@@ -320,11 +325,16 @@
         </div>
 
         <!-- MOBILE LOGOUT -->
-        <div class="mobile-menu-section d-none" id="mobile-logout-section">
-            <a href="#" class="mobile-nav-link text-danger logout-btn-mobile" id="logout-btn-mobile">
-                <img src="{{ asset('assets/logout.png') }}" class="icon-sm logout-icon-mobile">
-                <strong>Odhlásiť sa</strong>
-            </a>
+        @auth
+        <div class="mobile-menu-section" id="mobile-logout-section">
+            <form action="{{ route('logout') }}" method="POST" id="logout-form-mobile">
+                @csrf
+                <button type="submit" class="mobile-nav-link text-danger logout-btn-mobile border-0 bg-transparent p-0 w-100 text-start">
+                    <img src="{{ asset('assets/logout.png') }}" class="icon-sm logout-icon-mobile">
+                    <strong>Odhlásiť sa</strong>
+                </button>
+            </form>
         </div>
+        @endauth
     </div>
 </div>
