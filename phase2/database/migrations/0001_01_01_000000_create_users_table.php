@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -17,7 +15,16 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('legacy_password')->nullable();
+            $table->string('password'); // Laravel compat core
+            $table->boolean('is_admin')->default(false);
+            $table->string('language', 10)->default('SK');
+            $table->string('currency', 10)->default('EUR');
+            $table->string('address')->nullable();
+            $table->boolean('receive_newsletter')->default(false);
+            $table->timestamp('account_created_at')->useCurrent();
+            $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

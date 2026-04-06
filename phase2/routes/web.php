@@ -1,28 +1,26 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+// HOME
+Route::get('/', [ProductController::class, 'index'])->name('index');
 
+// AUTH
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/categories', function () {
-    return view('categories');
-})->name('categories');
+// CATEGORIES
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/category/{kategoria}', [CategoryController::class, 'show'])->name('category');
 
-Route::get('/category', function () {
-    return view('category');
-})->name('category');
+// PRODUCTS
+Route::get('/product/{produkt}', [ProductController::class, 'show'])->name('product-detail');
 
-Route::get('/product-detail', function () {
-    return view('product-detail');
-})->name('product-detail');
-
+// CART & ORDERS
 Route::get('/cart', function () {
     return view('cart');
 })->name('cart');
@@ -35,6 +33,7 @@ Route::get('/order-success', function () {
     return view('order_success');
 })->name('order_success');
 
+// ADMIN
 Route::get('/admin', function () {
     return view('admin');
 })->middleware('auth')->name('admin');

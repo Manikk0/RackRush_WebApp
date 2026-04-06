@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'RackRush - Kategória')
+@section('title', 'RackRush - ' . $kategoria->name)
 
 @section('body-class', 'category-page')
 
@@ -38,43 +38,12 @@
                             <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
                         </button>
                         <div class="collapse show mt-3 filter-content" id="filter-origin">
+                            @foreach($zemePovodu as $i => $zem)
                             <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin1">
-                                <label class="form-check-label small" for="origin1">Argentína (7)</label>
+                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin{{ $i }}">
+                                <label class="form-check-label small" for="origin{{ $i }}">{{ $zem }}</label>
                             </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin2">
-                                <label class="form-check-label small" for="origin2">Belgicko (5)</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin3">
-                                <label class="form-check-label small" for="origin3">Čína (1)</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin4">
-                                <label class="form-check-label small" for="origin4">Taliansko (14)</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin5">
-                                <label class="form-check-label small" for="origin5">Francúzsko (3)</label>
-                            </div>
-                            <div class="collapse" id="more-origins">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin6">
-                                    <label class="form-check-label small" for="origin6">Slovensko (12)</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input custom-checkbox" type="checkbox" id="origin7">
-                                    <label class="form-check-label small" for="origin7">Španielsko (8)</label>
-                                </div>
-                            </div>
-                            <a href="#more-origins" data-bs-toggle="collapse" id="show-more-origins-btn"
-                                aria-expanded="false"
-                                class="d-block mt-2 small text-decoration-none d-flex align-items-center gap-1 show-more-origins">
-                                <span class="show-more-text">Zobraziť viac</span> <img
-                                    src="{{ asset('assets/chevron_right.png') }}"
-                                    class="icon-xs more-origins-chevron show-more-origins-icon">
-                            </a>
+                            @endforeach
                         </div>
                     </div>
 
@@ -183,23 +152,28 @@
                             <img src="{{ asset('assets/home.png') }}" class="breadcrumb-home-icon" alt="Domov">
                         </a>
                     </li>
-                    <li class="breadcrumb-item"><a href="#">Ovocie a Zelenina</a></li>
-                    <li class="breadcrumb-item"><a href="#">Ovocie</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Jablká a Hrušky</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $kategoria->name }}</li>
                 </ol>
             </nav>
 
             <!-- SORTING -->
             <div class="sort-pills-container">
                 <div class="sort-pills">
-                    <button class="sort-pill active">Odporúčané</button>
-                    <button class="sort-pill">Od najlacnejších</button>
-                    <button class="sort-pill">Od najdrahších</button>
+                    <a href="{{ route('category', [$kategoria->id, 'sort' => 'odporucane']) }}" class="sort-pill {{ $sort === 'odporucane' ? 'active' : '' }}">Odporúčané</a>
+                    <a href="{{ route('category', [$kategoria->id, 'sort' => 'najlacnejsie']) }}" class="sort-pill {{ $sort === 'najlacnejsie' ? 'active' : '' }}">Od najlacnejších</a>
+                    <a href="{{ route('category', [$kategoria->id, 'sort' => 'najdrahsie']) }}" class="sort-pill {{ $sort === 'najdrahsie' ? 'active' : '' }}">Od najdrahších</a>
                 </div>
             </div>
 
             <!-- PRODUCT GRID -->
-            <div class="product-row" id="category-products"></div>
+            <div class="product-row" id="category-products">
+                @forelse($produkty as $produkt)
+                    @include('partials.product-card', ['produkt' => $produkt])
+                @empty
+                    <p class="text-muted py-4">V tejto kategórii sa nenašli žiadne produkty.</p>
+                @endforelse
+            </div>
+            <div class="mt-4">{{ $produkty->links() }}</div>
 
             <!-- PAGINATION AND LOAD MORE -->
             <div class="d-flex flex-column align-items-center mt-5 mb-5 gap-4">
@@ -233,5 +207,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/category.js') }}"></script>
+    <script src="{{ asset('js/category.js') }}?v=2"></script>
 @endpush

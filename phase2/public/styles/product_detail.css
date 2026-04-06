@@ -219,6 +219,70 @@
     margin-bottom: 2rem;
 }
 
+.product-sale-price {
+    margin-bottom: 2rem;
+}
+
+.product-sale-price__current {
+    color: var(--neon-ice);
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.3rem;
+}
+
+.product-sale-price__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.product-sale-price__old {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: line-through;
+    text-decoration-thickness: 1.8px;
+    text-decoration-color: rgba(255, 255, 255, 0.8);
+}
+
+.product-sale-price__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.13rem 0.48rem;
+    border-radius: 999px;
+    background: #ff5d73;
+    color: #fff;
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.recipe-content-block {
+    margin-bottom: 1.2rem;
+}
+
+.recipe-subtitle {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.8rem;
+}
+
+.recipe-content-block p {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.65;
+    margin-bottom: 0.7rem;
+}
+
+.recipe-tip {
+    color: #d7fff0 !important;
+    font-weight: 600;
+}
+
 /* --- BUTTONS --- */
 .add-to-cart-btn {
     background: var(--neon-ice);
@@ -328,10 +392,28 @@
 }
 
 .recipe-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
     padding: 1.5rem;
     border-left: 4px solid var(--tropical-teal);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.recipe-card h3 {
+    color: #fff;
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+}
+
+.recipe-card p {
+    color: rgba(255, 255, 255, 0.86);
+    line-height: 1.65;
+}
+
+.recipe-goodtaste {
+    margin-top: 1rem;
+    color: #fff !important;
+    font-weight: 700;
 }
 
 /* --- ZOOM MODAL --- */

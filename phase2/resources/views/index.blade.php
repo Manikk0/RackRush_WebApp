@@ -14,61 +14,12 @@
         </button>
         <div class="categories-scroll-wrapper">
             <div class="categories-slider">
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/vegetable&fruit.png') }}"
-                            alt="Ovocie a zelenina"></div><span class="category-card__name">Ovocie
-                        a<br>zelenina</span>
+                @foreach($kategorie as $kat)
+                <a href="{{ route('category', $kat->id) }}" class="category-card">
+                    <div class="category-card__image-wrap"><img src="{{ asset($kat->image ?? 'assets/vegetable&fruit.png') }}" alt="{{ $kat->name }}"></div>
+                    <span class="category-card__name">{{ $kat->name }}</span>
                 </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/dairy.png') }}"
-                            alt="Mliečne a chladené">
-                    </div><span class="category-card__name">Mliečne a<br>chladené</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/meat.png') }}" alt="Mäso a ryby">
-                    </div><span class="category-card__name">Mäso a<br>ryby</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/breads.png') }}" alt="Pečivo">
-                    </div><span class="category-card__name">Pečivo</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/durable_food.png') }}"
-                            alt="Trvanlivé potraviny"></div><span
-                        class="category-card__name">Trvanlivé<br>potraviny</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/drinks.png') }}" alt="Nápoje">
-                    </div><span class="category-card__name">Nápoje</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/sweet&snacks.png') }}"
-                            alt="Sladké a slané"></div><span class="category-card__name">Sladké a<br>slané</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/frozen-food.png') }}"
-                            alt="Mrazené produkty">
-                    </div><span class="category-card__name">Mrazené<br>produkty</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/baby.png') }}" alt="Pre deti">
-                    </div><span class="category-card__name">Pre deti</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/cosmetics.png') }}"
-                            alt="Kozmetika a drogéria"></div><span class="category-card__name">Kozmetika
-                        a<br>drogéria</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/household.png') }}"
-                            alt="Domácnosť"></div>
-                    <span class="category-card__name">Domácnosť</span>
-                </a>
-                <a href="{{ route('category') }}" class="category-card">
-                    <div class="category-card__image-wrap"><img src="{{ asset('assets/pet-food.png') }}"
-                            alt="Pre zvieratá"></div>
-                    <span class="category-card__name">Pre<br>zvieratá</span>
-                </a>
+                @endforeach
                 <!-- PLACEHOLDERS -->
                 <div class="category-card category-card--placeholder">
                     <div class="category-card__image-wrap"><img src="{{ asset('assets/plus.png') }}" alt="Coming soon">
@@ -89,7 +40,17 @@
         </button>
     </div>
 
-    <div id="products-top-1"></div>
+    <section class="product-section">
+        <h2 class="product-section__title">Pre vás</h2>
+        <div class="product-row">
+            @foreach($featured as $produkt)
+                @include('partials.product-card', ['produkt' => $produkt])
+            @endforeach
+        </div>
+        <div class="product-section__footer">
+            <a href="{{ route('categories') }}" class="product-section__more">Zobraziť viac</a>
+        </div>
+    </section>
 
     <!-- COMPARISON SECTION -->
     <section class="comparison-section mt-5 mb-5">
@@ -145,7 +106,17 @@
         </div>
     </section>
 
-    <div id="products-top-2"></div>
+    <section class="product-section">
+        <h2 class="product-section__title">Najpredávanejšie</h2>
+        <div class="product-row">
+            @foreach($bestsellers as $produkt)
+                @include('partials.product-card', ['produkt' => $produkt])
+            @endforeach
+        </div>
+        <div class="product-section__footer">
+            <a href="{{ route('categories') }}" class="product-section__more">Zobraziť viac</a>
+        </div>
+    </section>
 
     <!-- FAQ SECTION -->
     <section class="faq-section mt-5 mb-5">
@@ -215,9 +186,21 @@
         </div>
     </section>
 
-    <div id="products-bottom"></div>
+    <section class="product-section">
+        <h2 class="product-section__title">Aktuálne v zľave</h2>
+        <div class="product-row">
+            @forelse($onSale as $produkt)
+                @include('partials.product-card', ['produkt' => $produkt])
+            @empty
+                <p class="text-muted">Momentálne žiadne zľavnené produkty.</p>
+            @endforelse
+        </div>
+        <div class="product-section__footer">
+            <a href="{{ route('categories') }}" class="product-section__more">Zobraziť viac</a>
+        </div>
+    </section>
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/index.js') }}"></script>
+    <script src="{{ asset('js/index.js') }}?v=2"></script>
 @endpush

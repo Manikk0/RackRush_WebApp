@@ -146,21 +146,8 @@ const userMenu = document.getElementById('userMenu');
 })();
 
 // PAGE SPECIFIC LOGIC (CATEGORY)
-const categoryProducts = document.getElementById("category-products");
-if (categoryProducts) {
-    categoryProducts.innerHTML = productCardTemplate.repeat(16);
-}
-
-const pills = document.querySelectorAll('.sort-pill');
-for (let i = 0; i < pills.length; i++) {
-    const pill = pills[i];
-    pill.addEventListener('click', function () {
-        for (let j = 0; j < pills.length; j++) {
-            pills[j].classList.remove('active');
-        }
-        pill.classList.add('active');
-    });
-}
+// Products are now rendered server-side by Laravel (category.blade.php @foreach)
+// No JS injection needed here.
 
 const moreBtn = document.getElementById('show-more-origins-btn');
 if (moreBtn) {

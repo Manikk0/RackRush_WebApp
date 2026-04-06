@@ -15,30 +15,13 @@
 
     <!-- CATEGORIES GRID -->
     <div class="row g-4 px-md-5">
-        @php
-            $categories = [
-                ['name' => 'Ovocie a zelenina', 'icon' => 'vegetable&fruit.png'],
-                ['name' => 'Mliečne a chladené', 'icon' => 'dairy.png'],
-                ['name' => 'Mäso a ryby', 'icon' => 'meat.png'],
-                ['name' => 'Pečivo', 'icon' => 'breads.png'],
-                ['name' => 'Trvanlivé potraviny', 'icon' => 'durable_food.png'],
-                ['name' => 'Nápoje', 'icon' => 'drinks.png'],
-                ['name' => 'Sladké a slané', 'icon' => 'sweet&snacks.png'],
-                ['name' => 'Mrazené produkty', 'icon' => 'frozen-food.png'],
-                ['name' => 'Pre deti', 'icon' => 'baby.png'],
-                ['name' => 'Kozmetika a drogéria', 'icon' => 'cosmetics.png'],
-                ['name' => 'Domácnosť', 'icon' => 'household.png'],
-                ['name' => 'Pre zvieratá', 'icon' => 'pet-food.png'],
-            ];
-        @endphp
-
-        @foreach ($categories as $category)
+        @foreach ($kategorie as $kat)
             <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                <a href="{{ route('category') }}" class="category-tile">
+                <a href="{{ route('category', $kat->id) }}" class="category-tile">
                     <div class="category-tile__icon-wrap">
-                        <img src="{{ asset('assets/' . $category['icon']) }}" alt="" class="category-tile__icon">
+                        <img src="{{ asset($kat->image ?? 'assets/vegetable&fruit.png') }}" alt="" class="category-tile__icon">
                     </div>
-                    <span class="category-tile__name">{{ $category['name'] }}</span>
+                    <span class="category-tile__name">{{ $kat->name }}</span>
                 </a>
             </div>
         @endforeach

@@ -239,4 +239,9 @@
         flex-direction: column;
         width: 100%;
     }
+    .sort-pill {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
 }
