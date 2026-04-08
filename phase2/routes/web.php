@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 // HOME
@@ -19,6 +20,9 @@ Route::get('/category/{kategoria}', [CategoryController::class, 'show'])->name('
 
 // PRODUCTS
 Route::get('/product/{produkt}', [ProductController::class, 'show'])->name('product-detail');
+
+// Search products by name, description, recipe, code
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 // CART & ORDERS
 Route::get('/cart', function () {

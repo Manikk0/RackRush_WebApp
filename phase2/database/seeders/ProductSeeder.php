@@ -9,6 +9,21 @@ use App\Models\ObrazokProduktu;
 
 class ProductSeeder extends Seeder
 {
+    private array $categoryFilterDefaults = [
+        'Ovocie a zelenina' => ['bio' => true, 'plastic' => true, 'allergens' => ['orechy']],
+        'Mliečne a chladené' => ['bio' => true, 'plastic' => true, 'allergens' => ['mlieko', 'laktoza']],
+        'Mäso a ryby' => ['bio' => false, 'plastic' => true, 'allergens' => ['ryby']],
+        'Pečivo' => ['bio' => true, 'plastic' => true, 'allergens' => ['lepok', 'sezam']],
+        'Trvanlivé potraviny' => ['bio' => true, 'plastic' => true, 'allergens' => ['lepok', 'soja']],
+        'Nápoje' => ['bio' => false, 'plastic' => false, 'allergens' => []],
+        'Sladké a slané' => ['bio' => false, 'plastic' => true, 'allergens' => ['orechy', 'mlieko', 'lepok']],
+        'Mrazené produkty' => ['bio' => false, 'plastic' => true, 'allergens' => ['mlieko', 'lepok']],
+        'Pre deti' => ['bio' => false, 'plastic' => true, 'allergens' => ['mlieko', 'lepok']],
+        'Kozmetika a drogéria' => ['bio' => false, 'plastic' => false, 'allergens' => []],
+        'Domácnosť' => ['bio' => false, 'plastic' => false, 'allergens' => []],
+        'Pre zvieratá' => ['bio' => false, 'plastic' => false, 'allergens' => []],
+    ];
+
     public function run(): void
     {
         $categories = [
@@ -148,12 +163,14 @@ class ProductSeeder extends Seeder
 
         $codeCounter = 1;
         $productIndex = 0;
+        $categoryIdsByName = [];
 
         foreach ($categories as $categoryName => [$categoryImage, $products]) {
             $kategoria = Kategoria::create([
                 'name' => $categoryName,
                 'image' => $categoryImage,
             ]);
+            $categoryIdsByName[$categoryName] = $kategoria->id;
 
             foreach ($products as [$name, $price, $quantity, $unit, $origin]) {
                 $description = $this->buildDescription($name, $categoryName, $origin);
@@ -163,7 +180,7 @@ class ProductSeeder extends Seeder
 
                 $produkt = Produkt::create([
                     'category_id'        => $kategoria->id,
-                    'product_code'       => sprintf('PRD%03d', $codeCounter),
+                    'product_code'       => sprintf('PRD%05d', $codeCounter),
                     'name'               => $name,
                     'price'              => $price,
                     'quantity'           => $quantity,
@@ -173,6 +190,53 @@ class ProductSeeder extends Seeder
                     'discount'           => [0, 0, 0, 5, 10, 15][rand(0, 5)],
                     'sold_count'         => rand(20, 1400),
                     'country_of_origin'  => $origin,
+                    'is_bio'             => $this->generateBioValue($categoryName),
+                    'is_plastic_free'    => $this->generatePlasticValue($categoryName),
+                    'allergens'          => $this->generateAllergensValue($categoryName),
+                ]);
+
+                $imageUrls = $this->buildImageUrlsForProduct($name);
+                foreach ($imageUrls as $imageOrder => $imageUrl) {
+                    ObrazokProduktu::create([
+                        'product_id' => $produkt->id,
+                        'url'        => $imageUrl,
+                        'order'      => $imageOrder,
+                    ]);
+                }
+
+                $codeCounter++;
+                $productIndex++;
+            }
+        }
+
+        // More products per category so every category has enough rows for pagination.
+        foreach ($this->getExtraProductsByCategory() as $categoryName => $extraProducts) {
+            $categoryId = $categoryIdsByName[$categoryName] ?? null;
+            if ($categoryId === null) {
+                continue;
+            }
+
+            foreach ($extraProducts as [$name, $price, $quantity, $unit, $origin]) {
+                $description = $this->buildDescription($name, $categoryName, $origin);
+                $recipe = $this->shouldHaveRecipe($productIndex)
+                    ? $this->buildRecipe($name, $categoryName)
+                    : null;
+
+                $produkt = Produkt::create([
+                    'category_id'       => $categoryId,
+                    'product_code'      => sprintf('PRD%05d', $codeCounter),
+                    'name'              => $name,
+                    'price'             => $price,
+                    'quantity'          => $quantity,
+                    'unit'              => $unit,
+                    'description'       => $description,
+                    'recipe'            => $recipe,
+                    'discount'          => [0, 0, 5, 10, 15][rand(0, 4)],
+                    'sold_count'        => rand(15, 900),
+                    'country_of_origin' => $origin,
+                    'is_bio'            => $this->generateBioValue($categoryName),
+                    'is_plastic_free'   => $this->generatePlasticValue($categoryName),
+                    'allergens'         => $this->generateAllergensValue($categoryName),
                 ]);
 
                 $imageUrls = $this->buildImageUrlsForProduct($name);
@@ -190,6 +254,181 @@ class ProductSeeder extends Seeder
         }
     }
 
+    /** Extra rows: name, price, quantity, unit, country. */
+    private function getExtraProductsByCategory(): array
+    {
+        return [
+            'Ovocie a zelenina' => [
+                ['Brokolica čerstvá', 1.89, 0.5, 'kg', 'Slovensko'],
+                ['Mrkva mytá', 0.99, 1.0, 'kg', 'Poľsko'],
+                ['Cibuľa žltá', 0.79, 1.0, 'kg', 'Slovensko'],
+                ['Cesnak biely', 2.49, 0.25, 'kg', 'Španielsko'],
+                ['Špenát baby', 2.19, 0.125, 'kg', 'Taliansko'],
+                ['Rukola', 1.99, 0.1, 'kg', 'Taliansko'],
+                ['Šalát ľadový', 1.29, 1.0, 'ks', 'Slovensko'],
+                ['Zemiaky konzumné', 0.69, 2.5, 'kg', 'Slovensko'],
+                ['Kukuričnica v struke', 1.59, 2.0, 'ks', 'Slovensko'],
+                ['Hrušky Williams', 2.39, 1.0, 'kg', 'Taliansko'],
+                ['Slivky modré', 2.79, 0.5, 'kg', 'Slovensko'],
+                ['Kiwi zlaté', 3.49, 0.5, 'kg', 'Grécko'],
+            ],
+            'Mliečne a chladené' => [
+                ['Smotana kyslá 20%', 1.39, 0.2, 'l', 'Slovensko'],
+                ['Jogurt ovocný mix', 0.89, 0.15, 'kg', 'Slovensko'],
+                ['Syr Gouda plátky', 2.19, 0.15, 'kg', 'Holandsko'],
+                ['Tvaroh hrudkovitý', 1.69, 0.25, 'kg', 'Slovensko'],
+                ['Maslo solené', 2.89, 0.25, 'kg', 'Poľsko'],
+                ['Mlieko polotučné 1,5%', 0.99, 1.0, 'l', 'Slovensko'],
+                ['Jogurt vanilkový', 0.79, 0.125, 'kg', 'Česko'],
+                ['Smetana na šľahanie 33%', 1.99, 0.2, 'l', 'Slovensko'],
+                ['Syr Cottage', 1.49, 0.2, 'kg', 'Poľsko'],
+                ['Kyslá smotana 12%', 1.09, 0.18, 'l', 'Slovensko'],
+                ['Jogurt biely prírodný', 0.69, 0.15, 'kg', 'Slovensko'],
+                ['Syr Mozzarella guľka', 1.79, 0.125, 'kg', 'Taliansko'],
+            ],
+            'Mäso a ryby' => [
+                ['Kuracie krídelká', 3.99, 1.0, 'kg', 'Slovensko'],
+                ['Bravčová panenka', 8.99, 0.5, 'kg', 'Slovensko'],
+                ['Hovädzí steak ribeye', 12.49, 0.4, 'kg', 'Argentína'],
+                ['Pstruh celý', 6.29, 0.35, 'kg', 'Slovensko'],
+                ['Krevety lúpané', 7.99, 0.25, 'kg', 'Vietnam'],
+                ['Morčacie stehno', 4.59, 1.0, 'kg', 'Slovensko'],
+                ['Kačacie prsia', 9.49, 0.4, 'kg', 'Maďarsko'],
+                ['Sardinky čerstvé', 5.29, 0.3, 'kg', 'Portugalsko'],
+                ['Klobása domáca', 6.19, 0.4, 'kg', 'Slovensko'],
+                ['Slanina údená', 5.89, 0.3, 'kg', 'Česko'],
+                ['Ryža s lososom (porcia)', 4.49, 0.25, 'kg', 'Nórsko'],
+                ['Kuracia pečeň', 2.99, 0.5, 'kg', 'Slovensko'],
+            ],
+            'Pečivo' => [
+                ['Chlieb ražný', 1.29, 1.0, 'ks', 'Slovensko'],
+                ['Bageta celozrnná', 0.99, 1.0, 'ks', 'Slovensko'],
+                ['Langoš', 1.19, 1.0, 'ks', 'Slovensko'],
+                ['Šiška s džemom', 0.89, 1.0, 'ks', 'Slovensko'],
+                ['Pagáč syrový', 0.45, 1.0, 'ks', 'Slovensko'],
+                ['Brioška maslová', 0.65, 1.0, 'ks', 'Francúzsko'],
+                ['Chlieb kváskový', 2.49, 1.0, 'ks', 'Slovensko'],
+                ['Pita celozrnná', 0.99, 4.0, 'ks', 'Grécko'],
+                ['Mini croissanty', 2.99, 0.2, 'kg', 'Francúzsko'],
+                ['Chlieb toast celozrnný', 1.59, 1.0, 'ks', 'Slovensko'],
+                ['Rohlík makový', 0.25, 1.0, 'ks', 'Slovensko'],
+                ['Donut s čokoládou', 0.95, 1.0, 'ks', 'Slovensko'],
+            ],
+            'Trvanlivé potraviny' => [
+                ['Ovsené vločky', 1.39, 0.5, 'kg', 'Poľsko'],
+                ['Med agátový', 4.99, 0.35, 'kg', 'Slovensko'],
+                ['Kečup jemný', 1.59, 0.5, 'kg', 'Česko'],
+                ['Horčica dijon', 1.29, 0.2, 'kg', 'Francúzsko'],
+                ['Bazalka sušená', 0.99, 0.02, 'kg', 'Taliansko'],
+                ['Soľ morská jemná', 0.89, 0.25, 'kg', 'Španielsko'],
+                ['Čierne korenie mleté', 1.09, 0.05, 'kg', 'India'],
+                ['Cestoviny penne', 0.95, 0.5, 'kg', 'Taliansko'],
+                ['Polievka v prášku', 0.79, 0.06, 'kg', 'Nemecko'],
+                ['Omáčka na cestoviny', 1.89, 0.4, 'kg', 'Taliansko'],
+                ['Červená šošovica', 1.49, 0.5, 'kg', 'Turecko'],
+                ['Quinoa biela', 2.99, 0.4, 'kg', 'Peru'],
+            ],
+            'Nápoje' => [
+                ['Sirup malina', 2.49, 0.7, 'l', 'Slovensko'],
+                ['Ľadový čaj citrón', 1.29, 1.5, 'l', 'Poľsko'],
+                ['Šťava višňová', 1.99, 1.0, 'l', 'Poľsko'],
+                ['Voda perlivá citrón', 0.59, 1.5, 'l', 'Slovensko'],
+                ['Energetický nápoj zero', 1.39, 0.5, 'l', 'Rakúsko'],
+                ['Pivo ležiak 6 ks', 5.99, 6.0, 'ks', 'Česko'],
+                ['Víno biele polosuché', 4.49, 0.75, 'l', 'Slovensko'],
+                ['Prosecco', 7.99, 0.75, 'l', 'Taliansko'],
+                ['Káva zrnková', 6.49, 0.25, 'kg', 'Taliansko'],
+                ['Čaj zelený s citrónom', 1.79, 40.0, 'ks', 'Čína'],
+                ['Kakao instantné', 2.29, 0.25, 'kg', 'Holandsko'],
+                ['Sirup bazový', 3.19, 0.5, 'l', 'Slovensko'],
+            ],
+            'Sladké a slané' => [
+                ['Sušienky maslové', 1.59, 0.2, 'kg', 'Česko'],
+                ['Popcorn slaný', 1.29, 0.1, 'kg', 'USA'],
+                ['Lupienky cibuľové', 1.89, 0.15, 'kg', 'Poľsko'],
+                ['Marshmallows', 1.49, 0.2, 'kg', 'Nemecko'],
+                ['Žuvačky mint', 0.99, 1.0, 'ks', 'USA'],
+                ['Trubičky s krémom', 1.69, 0.18, 'kg', 'Slovensko'],
+                ['Pralinky mix', 3.99, 0.15, 'kg', 'Belgicko'],
+                ['Keksíky s čokoládou', 1.39, 0.2, 'kg', 'Poľsko'],
+                ['Arašidy solené', 1.19, 0.15, 'kg', 'USA'],
+                ['Hrozienka', 2.19, 0.25, 'kg', 'Turecko'],
+                ['Tyčinka proteínová', 1.99, 0.06, 'kg', 'Nemecko'],
+                ['Puding vanilkový 4 ks', 2.49, 4.0, 'ks', 'Francúzsko'],
+            ],
+            'Mrazené produkty' => [
+                ['Mrazené brokolica', 1.89, 0.45, 'kg', 'Poľsko'],
+                ['Mrkvové plátky mrazené', 1.59, 0.5, 'kg', 'Belgicko'],
+                ['Rybie prsty', 3.29, 0.3, 'kg', 'Nórsko'],
+                ['Palacinky mrazené', 2.19, 0.4, 'kg', 'Francúzsko'],
+                ['Zmrzlina čokoládová', 3.99, 0.5, 'l', 'Taliansko'],
+                ['Mrazené šampiňóny', 2.49, 0.3, 'kg', 'Poľsko'],
+                ['Lasagne mrazená', 4.29, 0.4, 'kg', 'Taliansko'],
+                ['Knedle slivkové mrazené', 3.59, 0.5, 'kg', 'Česko'],
+                ['Ryža s kuracím mrazená', 2.99, 0.35, 'kg', 'Thajsko'],
+                ['Zeleninová zmes wok', 2.79, 0.6, 'kg', 'Vietnam'],
+                ['Mrazené maliny', 3.19, 0.25, 'kg', 'Poľsko'],
+                ['Langoše mrazené', 2.89, 4.0, 'ks', 'Slovensko'],
+            ],
+            'Pre deti' => [
+                ['Detské pyré jablko', 1.19, 0.09, 'kg', 'Slovensko'],
+                ['Kaša kukuričná', 2.29, 0.2, 'kg', 'Nemecko'],
+                ['Detské piškóty s vitamínmi', 1.59, 0.18, 'kg', 'Poľsko'],
+                ['Nápoj jahoda', 0.99, 0.2, 'l', 'Slovensko'],
+                ['Ovocné pyré broskyňa', 1.39, 0.09, 'kg', 'Česko'],
+                ['Detské cereálie', 2.99, 0.25, 'kg', 'UK'],
+                ['Žuvačky pre deti', 1.09, 1.0, 'ks', 'Nemecko'],
+                ['Detský puding čokoláda', 1.79, 4.0, 'ks', 'Francúzsko'],
+                ['Sušienky detské mrkva', 1.49, 0.15, 'kg', 'Slovensko'],
+                ['Kaša ovsená detská', 2.19, 0.2, 'kg', 'Rakúsko'],
+                ['Detský čaj ovocný', 1.69, 0.3, 'l', 'Slovensko'],
+                ['Príkrm zeleninový', 1.29, 0.19, 'kg', 'Taliansko'],
+            ],
+            'Kozmetika a drogéria' => [
+                ['Gél na holenie', 3.99, 0.2, 'l', 'Nemecko'],
+                ['Pleťová voda', 4.49, 0.2, 'l', 'Francúzsko'],
+                ['Micelárna voda', 5.29, 0.4, 'l', 'Poľsko'],
+                ['Kondicionér na vlasy', 3.79, 0.25, 'l', 'Česko'],
+                ['Telové mlieko', 4.19, 0.4, 'l', 'Slovensko'],
+                ['Holiace žiletky 5 ks', 2.99, 5.0, 'ks', 'Nemecko'],
+                ['Vatové tyčinky', 1.09, 200.0, 'ks', 'Slovensko'],
+                ['Ústna voda', 3.49, 0.5, 'l', 'USA'],
+                ['Maska na tvár', 2.49, 1.0, 'ks', 'Kórea'],
+                ['Suchý šampón', 4.99, 0.2, 'l', 'UK'],
+                ['Krém na nohy', 3.29, 0.1, 'l', 'Nemecko'],
+                ['Odlakovač', 2.19, 0.125, 'l', 'Poľsko'],
+            ],
+            'Domácnosť' => [
+                ['Guma na riad', 0.99, 2.0, 'ks', 'Slovensko'],
+                ['Handra z mikrovlákna', 2.49, 3.0, 'ks', 'Čína'],
+                ['Saponát na podlahy', 2.79, 1.0, 'l', 'Poľsko'],
+                ['WC blok modrý', 1.89, 1.0, 'ks', 'Nemecko'],
+                ['Vreckovky box', 1.59, 1.0, 'ks', 'Slovensko'],
+                ['Fólia na potraviny', 1.29, 1.0, 'ks', 'Poľsko'],
+                ['Alobal', 1.99, 1.0, 'ks', 'Taliansko'],
+                ['Rukavice gumové', 2.19, 1.0, 'ks', 'Malajzia'],
+                ['Hubka na riad 5 ks', 1.49, 5.0, 'ks', 'Slovensko'],
+                ['Čistič skla', 2.39, 0.75, 'l', 'Nemecko'],
+                ['Osviežovač vzduchu', 3.49, 0.25, 'l', 'USA'],
+                ['Batérie AA 4 ks', 3.99, 4.0, 'ks', 'Japonsko'],
+            ],
+            'Pre zvieratá' => [
+                ['Granule pre mačky', 7.49, 2.0, 'kg', 'Francúzsko'],
+                ['Konzerva pre psa', 1.99, 0.41, 'kg', 'Nemecko'],
+                ['Pamlsky dentálne pre psa', 3.29, 0.2, 'kg', 'USA'],
+                ['Vitamíny pre mačky', 4.99, 0.05, 'kg', 'Nemecko'],
+                ['Podstielka drevená', 5.49, 7.0, 'kg', 'Česko'],
+                ['Hračka pre mačku', 2.99, 1.0, 'ks', 'Čína'],
+                ['Obojok nylonový', 6.99, 1.0, 'ks', 'Poľsko'],
+                ['Vodítko pre psa', 8.49, 1.0, 'ks', 'Nemecko'],
+                ['Krmivo pre vtáky', 2.19, 0.5, 'kg', 'Slovensko'],
+                ['Sen pre hlodavce', 3.99, 1.0, 'kg', 'Maďarsko'],
+                ['Miska keramická mačka', 4.49, 1.0, 'ks', 'Poľsko'],
+                ['Šampón pre mačky', 3.99, 0.25, 'l', 'Česko'],
+            ],
+        ];
+    }
+
     private function shouldHaveRecipe(int $index): bool
     {
         // 9/20 = 45% of products will have a recipe.
@@ -200,14 +439,14 @@ class ProductSeeder extends Seeder
     {
         return $name . ' patrí medzi obľúbené produkty v kategórii ' . $categoryName . ' a je starostlivo vyberaný pre stabilnú kvalitu. '
             . 'Tento produkt má vyváženú chuť, praktické balenie a výborné využitie pri každodennom varení alebo rýchlych jedlách. '
-            . 'Pochádza z krajiny ' . $origin . ', pričom pri skladovaní podľa odporúčania si zachováva čerstvosť aj dobré senzorické vlastnosti.';
+            . 'Pochádza z krajiny ' . $origin . ', pričom pri skladovaní podľa odporúčania si zachováva kvalitu a dobré senzorické vlastnosti.';
     }
 
     private function buildRecipe(string $name, string $categoryName): string
     {
         return 'Recept s produktom ' . $name . ': Najprv si pripravte základ zo surovín, ktoré bežne používate pri jedlách z kategórie ' . $categoryName . ' a všetko nakrájajte na menšie časti. '
             . 'Následne produkt krátko tepelne upravte alebo premiešajte podľa typu jedla, dochuťte soľou, korením a bylinkami, a nechajte chute prepojiť aspoň 5 minút. '
-            . 'Hotové jedlo podávajte s čerstvou prílohou alebo pečivom; pre výraznejšiu chuť môžete pridať citrónovú šťavu, olivový olej alebo jemný dresing.';
+            . 'Hotové jedlo podávajte so zeleninovou prílohou alebo pečivom; pre výraznejšiu chuť môžete pridať citrónovú šťavu, olivový olej alebo jemný dresing.';
     }
 
     private function buildImageUrlsForProduct(string $name): array
@@ -224,5 +463,58 @@ class ProductSeeder extends Seeder
         }
 
         return ['assets/grapes_white_tray.png'];
+    }
+
+    private function generateBioValue(string $categoryName): ?bool
+    {
+        if (!isset($this->categoryFilterDefaults[$categoryName])) {
+            return null;
+        }
+
+        $canHaveBio = $this->categoryFilterDefaults[$categoryName]['bio'];
+        if (!$canHaveBio) {
+            return null;
+        }
+
+        return rand(0, 1) === 1;
+    }
+
+    private function generatePlasticValue(string $categoryName): ?bool
+    {
+        if (!isset($this->categoryFilterDefaults[$categoryName])) {
+            return null;
+        }
+
+        $canHavePlasticInfo = $this->categoryFilterDefaults[$categoryName]['plastic'];
+        if (!$canHavePlasticInfo) {
+            return null;
+        }
+
+        return rand(0, 1) === 1;
+    }
+
+    private function generateAllergensValue(string $categoryName): ?string
+    {
+        if (!isset($this->categoryFilterDefaults[$categoryName])) {
+            return null;
+        }
+
+        $allergens = $this->categoryFilterDefaults[$categoryName]['allergens'];
+        if (count($allergens) === 0) {
+            return null;
+        }
+
+        $picked = [];
+        foreach ($allergens as $allergen) {
+            if (rand(0, 1) === 1) {
+                $picked[] = $allergen;
+            }
+        }
+
+        if (count($picked) === 0) {
+            return null;
+        }
+
+        return implode(',', $picked);
     }
 }

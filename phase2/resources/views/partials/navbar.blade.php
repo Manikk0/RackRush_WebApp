@@ -1,3 +1,7 @@
+@php
+    $headerSearchQuery = request('q', '');
+@endphp
+
 <!-- HEADER -->
 <header id="main-header" class="fixed-top shadow-sm">
     <div class="container-fluid px-4">
@@ -12,12 +16,16 @@
                 </div>
 
                 <div class="col-6">
-                    <div class="input-group search-container">
-                        <span class="input-group-text">
-                            <img src="{{ asset('assets/search.png') }}" class="icon-sm">
-                        </span>
-                        <input type="text" class="form-control" placeholder="Hľadať produkty...">
-                    </div>
+                    <form action="{{ route('search') }}" method="GET" class="header-search-form" role="search">
+                        <div class="input-group search-container">
+                            <input type="search" name="q" value="{{ $headerSearchQuery }}" class="form-control"
+                                placeholder="Hľadať produkty..." maxlength="120" autocomplete="off"
+                                aria-label="Hľadať produkty">
+                            <button type="submit" class="btn btn-search-submit" aria-label="Hľadať">
+                                <img src="{{ asset('assets/search.png') }}" class="icon-sm" alt="">
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="col-3 d-flex justify-content-end gap-4 align-items-center">
@@ -173,11 +181,15 @@
                 </div>
 
                 <div class="col d-none" id="sticky-search-container">
-                    <div class="input-group search-container ms-3">
-                        <span class="input-group-text"><img src="{{ asset('assets/search.png') }}"
-                                class="icon-sm"></span>
-                        <input type="text" class="form-control" placeholder="Hľadať...">
-                    </div>
+                    <form action="{{ route('search') }}" method="GET" class="header-search-form ms-3" role="search">
+                        <div class="input-group search-container">
+                            <input type="search" name="q" value="{{ $headerSearchQuery }}" class="form-control"
+                                placeholder="Hľadať produkty..." maxlength="120" autocomplete="off" aria-label="Hľadať">
+                            <button type="submit" class="btn btn-search-submit" aria-label="Hľadať">
+                                <img src="{{ asset('assets/search.png') }}" class="icon-sm" alt="">
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="col-auto ms-auto d-flex align-items-center">
@@ -198,12 +210,16 @@
                     <img src="{{ asset('assets/burger-menu.png') }}" alt="Menu" class="icon-md icon-white">
                 </button>
             </div>
-            <div class="col px-1">
-                <div class="input-group search-container">
-                    <span class="input-group-text pe-1"><img src="{{ asset('assets/search.png') }}"
-                            class="icon-sm"></span>
-                    <input type="text" class="form-control" placeholder="Hľadať...">
-                </div>
+            <div class="col px-1 mobile-search-col">
+                <form action="{{ route('search') }}" method="GET" class="header-search-form" role="search">
+                    <div class="input-group search-container">
+                        <input type="search" name="q" value="{{ $headerSearchQuery }}" class="form-control"
+                            placeholder="Hľadať produkty..." maxlength="120" autocomplete="off" aria-label="Hľadať">
+                        <button type="submit" class="btn btn-search-submit" aria-label="Hľadať">
+                            <img src="{{ asset('assets/search.png') }}" class="icon-sm" alt="">
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="col-auto">
                 <a href="{{ route('cart') }}" class="cart-trigger-btn"><img

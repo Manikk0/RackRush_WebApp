@@ -13,18 +13,20 @@
 <body class="@yield('body-class')">
     @include('partials.navbar')
 
-    <!-- MAIN CONTENT -->
-    <main class="container-fluid px-4">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @yield('content')
-    </main>
+    <div class="page-fill">
+        <!-- MAIN CONTENT -->
+        <main class="container-fluid px-4 site-main">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @yield('content')
+        </main>
 
-    @include('partials.footer')
+        @include('partials.footer')
+    </div>
 
     @include('partials.modals')
 

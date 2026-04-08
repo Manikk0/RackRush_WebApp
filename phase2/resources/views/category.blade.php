@@ -25,117 +25,124 @@
 
             <div class="collapse d-lg-block" id="filters-container">
                 <aside class="filters-sidebar">
+                    <form method="GET" action="{{ route('category', $kategoria->id) }}" class="filters-form">
+                        <input type="hidden" name="sort" value="{{ $sort }}">
 
-                    <!-- ORIGIN FILTER -->
-                    <div class="filter-group">
-                        <button class="filter-btn d-flex justify-content-between align-items-center w-100" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#filter-origin" aria-expanded="true">
-                            <div>
-                                <span class="d-block fw-bold text-start">Zem pôvodu</span>
-                                <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">12
-                                    možností</span>
-                            </div>
-                            <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
-                        </button>
-                        <div class="collapse show mt-3 filter-content" id="filter-origin">
-                            @foreach($zemePovodu as $i => $zem)
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="origin{{ $i }}">
-                                <label class="form-check-label small" for="origin{{ $i }}">{{ $zem }}</label>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <!-- WEIGHT FILTER -->
-                    <div class="filter-group">
-                        <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
-                            type="button" data-bs-toggle="collapse" data-bs-target="#filter-weight" aria-expanded="false">
-                            <div>
-                                <span class="d-block fw-bold text-start">Hmotnosť</span>
-                                <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">6
-                                    možností</span>
-                            </div>
-                            <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
-                        </button>
-                        <div class="collapse mt-3 filter-content" id="filter-weight">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="weight1">
-                                <label class="form-check-label small" for="weight1">100g (2)</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="weight2">
-                                <label class="form-check-label small" for="weight2">250g (4)</label>
+                        <!-- PRICE FILTER -->
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-price"
+                                aria-expanded="true">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Cena</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">od
+                                        / do</span>
+                                </div>
+                                <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse show mt-3 filter-content" id="filter-price">
+                                <div class="d-flex gap-2">
+                                    <input type="number" step="0.01" min="0" class="form-control form-control-sm"
+                                        name="price_min" placeholder="Od €" value="{{ $priceMin }}">
+                                    <input type="number" step="0.01" min="0" class="form-control form-control-sm"
+                                        name="price_max" placeholder="Do €" value="{{ $priceMax }}">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- BIO FILTER -->
-                    <div class="filter-group">
-                        <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
-                            type="button" data-bs-toggle="collapse" data-bs-target="#filter-bio" aria-expanded="false">
-                            <div>
-                                <span class="d-block fw-bold text-start">BIO</span>
-                                <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">2
-                                    možnosti</span>
-                            </div>
-                            <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
-                        </button>
-                        <div class="collapse mt-3 filter-content" id="filter-bio">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="bio1">
-                                <label class="form-check-label small" for="bio1">Áno (12)</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="bio2">
-                                <label class="form-check-label small" for="bio2">Nie (3)</label>
+                        <!-- ORIGIN FILTER -->
+                        @if(count($availableFilters['origins']) > 0)
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-origin"
+                                aria-expanded="true">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Zem pôvodu</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">{{ count($availableFilters['origins']) }}
+                                        možností</span>
+                                </div>
+                                <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse show mt-3 filter-content" id="filter-origin">
+                                @foreach($availableFilters['origins'] as $i => $origin)
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox"
+                                        name="origin[]" value="{{ $origin }}" id="origin{{ $i }}"
+                                        @checked(in_array($origin, $activeOrigins, true))>
+                                    <label class="form-check-label small" for="origin{{ $i }}">{{ $origin }}</label>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
+                        @endif
 
-                    <!-- PACKAGING FILTER -->
-                    <div class="filter-group">
-                        <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
-                            type="button" data-bs-toggle="collapse" data-bs-target="#filter-plastic"
-                            aria-expanded="false">
-                            <div>
-                                <span class="d-block fw-bold text-start">Plastový obal</span>
-                                <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">2
-                                    možnosti</span>
-                            </div>
-                            <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
-                        </button>
-                        <div class="collapse mt-3 filter-content" id="filter-plastic">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="plas1">
-                                <label class="form-check-label small" for="plas1">Bez plastu (8)</label>
+                        <!-- WEIGHT FILTER -->
+                        @if($availableFilters['showWeight'])
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-weight"
+                                aria-expanded="false">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Hmotnosť</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">3
+                                        možnosti</span>
+                                </div>
+                                <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse mt-3 filter-content" id="filter-weight">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" name="weight[]"
+                                        value="small" id="weight-small" @checked(in_array('small', $activeWeights, true))>
+                                    <label class="form-check-label small" for="weight-small">Malé balenie</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" name="weight[]"
+                                        value="medium" id="weight-medium" @checked(in_array('medium', $activeWeights, true))>
+                                    <label class="form-check-label small" for="weight-medium">Stredné balenie</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" name="weight[]"
+                                        value="large" id="weight-large" @checked(in_array('large', $activeWeights, true))>
+                                    <label class="form-check-label small" for="weight-large">Veľké balenie</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        @endif
 
-                    <!-- ALLERGENS FILTER -->
-                    <div class="filter-group">
-                        <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
-                            type="button" data-bs-toggle="collapse" data-bs-target="#filter-allergens"
-                            aria-expanded="false">
-                            <div>
-                                <span class="d-block fw-bold text-start">Alergény</span>
-                                <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">9
-                                    možností</span>
-                            </div>
-                            <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
-                        </button>
-                        <div class="collapse mt-3 filter-content" id="filter-allergens">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="aler1">
-                                <label class="form-check-label small" for="aler1">Mlieko</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input custom-checkbox" type="checkbox" id="aler2">
-                                <label class="form-check-label small" for="aler2">Orechy</label>
+                        <!-- PACKAGING FILTER -->
+                        @if($availableFilters['showPlastic'])
+                        <div class="filter-group">
+                            <button class="filter-btn d-flex justify-content-between align-items-center w-100 collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#filter-plastic"
+                                aria-expanded="false">
+                                <div>
+                                    <span class="d-block fw-bold text-start">Plastový obal</span>
+                                    <span class="d-block text-start small text-muted text-opacity-75 filter-options-count">2
+                                        možnosti</span>
+                                </div>
+                                <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs filter-chevron">
+                            </button>
+                            <div class="collapse mt-3 filter-content" id="filter-plastic">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="radio" name="plastic_free"
+                                        value="1" id="plastic-free-yes" @checked($activePlasticFree === '1')>
+                                    <label class="form-check-label small" for="plastic-free-yes">Bez plastu</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input custom-checkbox" type="radio" name="plastic_free"
+                                        value="0" id="plastic-free-no" @checked($activePlasticFree === '0')>
+                                    <label class="form-check-label small" for="plastic-free-no">Plastový obal</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        @endif
+
+                        <div class="d-grid gap-3 mt-4">
+                            <button type="submit" class="btn btn-teal py-2">Použiť filtre</button>
+                            <a href="{{ route('category', ['kategoria' => $kategoria->id, 'sort' => $sort]) }}"
+                                class="btn btn-outline-custom py-2">Vyčistiť</a>
+                        </div>
+                    </form>
 
                 </aside>
             </div>
@@ -159,9 +166,12 @@
             <!-- SORTING -->
             <div class="sort-pills-container">
                 <div class="sort-pills">
-                    <a href="{{ route('category', [$kategoria->id, 'sort' => 'odporucane']) }}" class="sort-pill {{ $sort === 'odporucane' ? 'active' : '' }}">Odporúčané</a>
-                    <a href="{{ route('category', [$kategoria->id, 'sort' => 'najlacnejsie']) }}" class="sort-pill {{ $sort === 'najlacnejsie' ? 'active' : '' }}">Od najlacnejších</a>
-                    <a href="{{ route('category', [$kategoria->id, 'sort' => 'najdrahsie']) }}" class="sort-pill {{ $sort === 'najdrahsie' ? 'active' : '' }}">Od najdrahších</a>
+                    <a href="{{ route('category', array_merge(['kategoria' => $kategoria->id, 'sort' => 'odporucane'], request()->except(['page', 'sort']))) }}"
+                        class="sort-pill {{ $sort === 'odporucane' ? 'active' : '' }} text-decoration-none">Odporúčané</a>
+                    <a href="{{ route('category', array_merge(['kategoria' => $kategoria->id, 'sort' => 'najlacnejsie'], request()->except(['page', 'sort']))) }}"
+                        class="sort-pill {{ $sort === 'najlacnejsie' ? 'active' : '' }} text-decoration-none">Od najlacnejších</a>
+                    <a href="{{ route('category', array_merge(['kategoria' => $kategoria->id, 'sort' => 'najdrahsie'], request()->except(['page', 'sort']))) }}"
+                        class="sort-pill {{ $sort === 'najdrahsie' ? 'active' : '' }} text-decoration-none">Od najdrahších</a>
                 </div>
             </div>
 
@@ -170,36 +180,50 @@
                 @forelse($produkty as $produkt)
                     @include('partials.product-card', ['produkt' => $produkt])
                 @empty
-                    <p class="text-muted py-4">V tejto kategórii sa nenašli žiadne produkty.</p>
+                    <div class="category-empty-state">
+                        <div class="category-empty-state__icon">!</div>
+                        <h3 class="category-empty-state__title">Žiadne výsledky</h3>
+                        <p class="category-empty-state__text">V tejto kategórii sa nenašli žiadne produkty pre zvolené filtre.</p>
+                        <a href="{{ route('category', ['kategoria' => $kategoria->id]) }}" class="btn btn-outline-custom mt-2 px-4">
+                            Vyčistiť filtre
+                        </a>
+                    </div>
                 @endforelse
             </div>
-            <div class="mt-4">{{ $produkty->links() }}</div>
 
-            <!-- PAGINATION AND LOAD MORE -->
-            <div class="d-flex flex-column align-items-center mt-5 mb-5 gap-4">
-                <button class="product-section__more product-more-btn px-4 py-2">Načítať ďalšie</button>
-
+            @if($produkty->hasPages())
+            <div class="category-pagination-wrap mt-4 mb-5">
                 <nav aria-label="Stránkovanie kategórie">
-                    <ul class="pagination custom-pagination mb-0 align-items-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" aria-label="Predchádzajúca" tabindex="-1">
-                                <img src="{{ asset('assets/chevron_right.png') }}" class="pagination-chevron left" alt="">
-                            </a>
-                        </li>
-                        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item disabled pagination-dots"><span class="page-link">...</span></li>
-                        <li class="page-item"><a class="page-link" href="#">12</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Nasledujúca">
-                                <img src="{{ asset('assets/chevron_right.png') }}" class="pagination-chevron right"
-                                    alt="">
-                            </a>
-                        </li>
+                    <ul class="pagination custom-pagination justify-content-center mb-0">
+                        @if($produkty->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-hidden="true">&laquo;</span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $produkty->previousPageUrl() }}" rel="prev" aria-label="Predchádzajúca">&laquo;</a>
+                            </li>
+                        @endif
+
+                        @for($page = 1; $page <= $produkty->lastPage(); $page++)
+                            <li class="page-item {{ $page === $produkty->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $produkty->url($page) }}">{{ $page }}</a>
+                            </li>
+                        @endfor
+
+                        @if($produkty->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $produkty->nextPageUrl() }}" rel="next" aria-label="Nasledujúca">&raquo;</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-hidden="true">&raquo;</span>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>
+            @endif
 
         </div>
 

@@ -32,6 +32,9 @@ return new class extends Migration
             $table->integer('discount')->default(0);
             $table->decimal('sold_count', 10, 2)->default(0);
             $table->string('country_of_origin')->nullable();
+            $table->boolean('is_bio')->nullable();
+            $table->boolean('is_plastic_free')->nullable();
+            $table->string('allergens')->nullable();
             $table->timestamps();
         });
 

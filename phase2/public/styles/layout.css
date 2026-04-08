@@ -8,15 +8,40 @@
 }
 
 body {
+    --site-header-h: 140px;
     background-color: #3a506b;
     color: #fff;
-    padding-top: 130px; /* Offset for fixed header on desktop */
+    padding-top: var(--site-header-h);
+}
+
+/* --- PAGE SHELL (STICKY FOOTER) --- */
+.page-fill {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+    min-height: calc(100vh - var(--site-header-h));
+}
+
+@media (min-width: 768px) {
+    body:has(#main-header.scrolled) {
+        --site-header-h: 92px;
+        padding-top: var(--site-header-h);
+    }
 }
 
 @media (max-width: 767px) {
     body {
-        padding-top: 70px; /* Offset for fixed header on mobile */
+        --site-header-h: 72px;
+        padding-top: var(--site-header-h);
     }
+}
+
+/* --- MAIN CONTENT AREA --- */
+.site-main {
+    flex: 1 0 auto;
+    min-height: 0;
+    padding-top: 1rem;
 }
 
 body.cart-open {
@@ -114,7 +139,7 @@ header.scrolled {
 
 .search-container .form-control {
     border: none;
-    padding-left: 10px;
+    padding-left: 14px;
     height: 40px;
 }
 
@@ -130,6 +155,49 @@ header.scrolled {
 
 #sticky-search-container {
     flex-grow: 1;
+}
+
+.header-search-form {
+    width: 100%;
+    min-width: 0;
+}
+
+.header-search-form .search-container {
+    flex-wrap: nowrap;
+}
+
+.header-search-form .form-control {
+    min-width: 0;
+}
+
+.header-search-form .btn-search-submit {
+    border: none;
+    background-color: var(--tropical-teal);
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, filter 0.2s ease;
+}
+
+.header-search-form .btn-search-submit .icon-sm {
+    display: block;
+}
+
+.header-search-form .btn-search-submit:hover {
+    background-color: var(--neon-ice);
+}
+
+.header-search-form .btn-search-submit:focus-visible {
+    outline: 2px solid var(--neon-ice);
+    outline-offset: 2px;
+}
+
+#mobile-nav .mobile-search-col {
+    min-width: 0;
 }
 
 /* --- USER DROPDOWN --- */
@@ -784,7 +852,7 @@ header.scrolled {
     background-color: var(--prussian-blue);
     border-top: 1px solid var(--dusk-blue);
     color: #ffffff;
-    margin-top: 50px;
+    flex-shrink: 0;
 }
 
 .footer-heading {

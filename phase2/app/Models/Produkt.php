@@ -23,6 +23,9 @@ class Produkt extends Model
         'discount',
         'sold_count',
         'country_of_origin',
+        'is_bio',
+        'is_plastic_free',
+        'allergens',
     ];
 
     protected $casts = [
@@ -30,6 +33,8 @@ class Produkt extends Model
         'quantity' => 'float',
         'discount' => 'integer',
         'sold_count' => 'float',
+        'is_bio' => 'boolean',
+        'is_plastic_free' => 'boolean',
     ];
 
     public function kategoria()
