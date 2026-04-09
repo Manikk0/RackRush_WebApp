@@ -234,5 +234,5 @@ if (recContainer) {
 
 // INITIALIZE
 if (document.getElementById('cart-items-container')) {
-    renderCart();
+    // renderCart(); // ZAKOMENTOVANE PRETOZE MAME SSR KOSIK
 }

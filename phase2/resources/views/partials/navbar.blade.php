@@ -195,9 +195,10 @@
                 <div class="col-auto ms-auto d-flex align-items-center">
                     <a href="#" id="btn-lists" class="btn btn-outline-custom">Nákupné zoznamy</a>
                     <div id="sticky-cart" class="d-none ms-3">
-                        <a href="{{ route('cart') }}" class="cart-trigger-btn"><img
-                                src="{{ asset('assets/shopping-cart.png') }}" alt="Košík"
-                                class="icon-md icon-white"></a>
+                        <a href="{{ route('cart') }}" class="cart-trigger-btn position-relative">
+                            <img src="{{ asset('assets/shopping-cart.png') }}" alt="Košík" class="icon-md icon-white">
+                            <span class="cart-badge d-none">0</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -222,8 +223,10 @@
                 </form>
             </div>
             <div class="col-auto">
-                <a href="{{ route('cart') }}" class="cart-trigger-btn"><img
-                        src="{{ asset('assets/shopping-cart.png') }}" alt="Košík" class="icon-md icon-white"></a>
+                <a href="{{ route('cart') }}" class="cart-trigger-btn position-relative">
+                    <img src="{{ asset('assets/shopping-cart.png') }}" alt="Košík" class="icon-md icon-white">
+                    <span class="cart-badge d-none">0</span>
+                </a>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +26,11 @@ Route::get('/product/{produkt}', [ProductController::class, 'show'])->name('prod
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 // CART & ORDERS
-Route::get('/cart', function () {
-    return view('cart');
-})->name('cart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/empty', [CartController::class, 'emptyCart'])->name('cart.empty');
+Route::get('/cart/api', [CartController::class, 'getCart'])->name('cart.api');
 
 Route::get('/order-details', function () {
     return view('order_details');

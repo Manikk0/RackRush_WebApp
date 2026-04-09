@@ -78,12 +78,22 @@
                             <div class="product-price">{{ number_format($produkt->price, 2) }}€</div>
                         @endif
 
+                        @php
+                            $cart = session()->get('cart', []);
+                            $inCart = isset($cart[$produkt->id]);
+                            $qty = $inCart ? $cart[$produkt->id]['quantity'] : 0;
+                        @endphp
+
                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
-                            <button class="btn add-to-cart-btn">
-                                <img src="{{ asset('assets/shopping-cart.png') }}" alt="cart">
-                                Do košíka
-                            </button>
-                            <button class="btn add-to-list-btn">
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="number" id="detail-qty-input" value="1" min="1" max="99" class="form-control text-center" style="width: 70px; height: 44px; font-weight: bold;">
+                                <button class="btn add-to-cart-btn" style="height: 44px; display: flex; align-items: center; justify-content: center;" onclick="addToCartClick({{ $produkt->id }})">
+                                    <img src="{{ asset('assets/shopping-cart.png') }}" alt="cart" style="margin-right: 8px;">
+                                    Do košíka
+                                </button>
+                            </div>
+
+                            <button class="btn add-to-list-btn" style="height: 44px;">
                                 <img src="{{ asset('assets/task_complete.png') }}" alt="list">
                                 Pridať do nákupného zoznamu
                             </button>
@@ -145,4 +155,39 @@
 
 @push('scripts')
     <script src="{{ asset('js/product-detail.js') }}"></script>
+    <script>
+        var CART_ADD_BASE = @json(url('/cart/add'));
+        function addToCartClick(id) {
+            var input = document.getElementById('detail-qty-input');
+            var amount = parseInt(input.value, 10);
+            if (isNaN(amount) || amount <= 0) {
+                amount = 1;
+            }
+
+            var meta = document.querySelector('meta[name="csrf-token"]');
+            var csrf = meta ? meta.getAttribute('content') : '';
+
+            fetch(CART_ADD_BASE + '/' + id, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrf,
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                body: JSON.stringify({ quantity: amount }),
+            })
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (!data.success) {
+                        return;
+                    }
+                    input.value = 1;
+                    if (typeof openCartDrawer === 'function') {
+                        openCartDrawer();
+                    }
+                });
+        }
+    </script>
 @endpush

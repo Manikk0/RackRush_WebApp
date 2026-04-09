@@ -9,29 +9,27 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $raw = $request->input('q', '');
-        if (! is_string($raw)) {
-            $raw = '';
-        }
-        $q = trim($raw);
-        if (mb_strlen($q) > 120) {
-            $q = mb_substr($q, 0, 120);
-        }
+        $q = $request->input('q');
 
-        if ($q === '') {
+        if ($q == null || $q == '') {
             return view('search', [
                 'q' => '',
                 'produkty' => null,
             ]);
         }
 
-        $like = '%' . addcslashes(mb_strtolower($q), '%_\\') . '%';
+        // Jednoduche vyhladavanie podla nazvu
+        $query = Produkt::with(['hlavnyObrazok', 'kategoria']);
 
-        $query = Produkt::with(['hlavnyObrazok', 'kategoria'])
-            ->whereRaw('LOWER(name) LIKE ?', [$like])
-            ->orderBy('name');
+        $query->where(function ($qBuilder) use ($q) {
+            $qBuilder->where('name', 'LIKE', '%' . $q . '%')
+                     ->orWhere('description', 'LIKE', '%' . $q . '%');
+        });
 
-        $produkty = $query->paginate(16)->withQueryString();
+        $produkty = $query->orderBy('name')->paginate(16);
+
+        // Pridame query string aby fungovalo strankovanie s vyhladavanim
+        $produkty->appends(['q' => $q]);
 
         return view('search', [
             'q' => $q,
