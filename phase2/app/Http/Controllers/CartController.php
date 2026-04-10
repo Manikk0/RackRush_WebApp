@@ -13,9 +13,14 @@ class CartController extends Controller
     public function index()
     {
         $kosik = session('cart', []);
+        $odporucaneProdukty = Produkt::with(['hlavnyObrazok'])
+            ->orderBy('sold_count', 'desc')
+            ->limit(6)
+            ->get();
 
         return view('cart', [
             'cart' => $kosik,
+            'odporucaneProdukty' => $odporucaneProdukty,
         ]);
     }
 

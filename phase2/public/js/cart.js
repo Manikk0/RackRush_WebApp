@@ -5,20 +5,6 @@ const stickySearch = document.getElementById("sticky-search-container");
 const stickyCart = document.getElementById("sticky-cart");
 const btnLists = document.getElementById("btn-lists");
 
-const productCardTemplate = `
-<div class="product-card">
-    <div class="product-card__image-wrap">
-    <a href="/product-detail">
-        <img src="assets/grapes_white_tray.png" alt="Hrozno biele, bezsemenné" class="product-card__image">
-    </a>
-    <button class="product-card__wishlist" aria-label="Wishlist"><img src="assets/heart.png" class="wishlist-icon"></button>
-    <button class="product-card__add" aria-label="Pridať do košíka"><img src="assets/plus.png" class="icon-sm icon-white"></button>
-    </div>
-    <a href="/product-detail" class="text-decoration-none"><p class="product-card__name">Hrozno biele, bezsemenné</p></a>
-    <p class="product-card__price">1.65€</p>
-    <p class="product-card__meta"><span>250g</span><span>2.60€/kg</span></p>
-</div>`;
-
 let cartItems = [];
 
 // NAVIGATION & HEADER
@@ -225,11 +211,6 @@ if (discountBtn) {
         const wrap = document.getElementById('discount-input-wrap');
         if (wrap) { wrap.classList.toggle('visible'); }
     });
-}
-
-const recContainer = document.getElementById('recommendations');
-if (recContainer) {
-    recContainer.innerHTML = productCardTemplate.repeat(6);
 }
 
 // INITIALIZE

@@ -134,7 +134,11 @@
     <!-- RECOMMENDATIONS SECTION -->
     <section class="recommendations-section">
         <h2 class="recommendations-section__title">Mohlo by sa vám páčiť</h2>
-        <div class="product-row" id="recommendations"></div>
+        <div class="product-row" id="recommendations">
+            @foreach($odporucaneProdukty as $produkt)
+                @include('partials.product-card', ['produkt' => $produkt])
+            @endforeach
+        </div>
     </section>
 @endsection
 

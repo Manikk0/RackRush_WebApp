@@ -61,6 +61,10 @@
             cartTriggers.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     if (window.location.pathname === '/cart') return;
+                    if (window.innerWidth <= 768) {
+                        window.location.href = '/cart';
+                        return;
+                    }
                     e.preventDefault();
                     openCartDrawer();
                 });
@@ -130,12 +134,20 @@
                         }
 
                         // Noob-friendly generovanie HTML pre kazdy produkt v popupe
+                        var detailUrl = '/product/' + id;
                         html += `
                         <div class="d-flex align-items-center mb-3 pb-3" style="border-bottom: 1px solid #333; position:relative;">
-                            <img src="${cartImageUrl(item.image)}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; background: white; padding: 2px;">
+                            <a href="${detailUrl}" style="display:block;">
+                                <img src="${cartImageUrl(item.image)}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; background: white; padding: 2px;">
+                            </a>
                             
                             <div class="ms-3 flex-grow-1">
-                                <h6 class="mb-1 text-white" style="font-size: 14px;">${item.name} <span style="font-style:italic; color:#ccc;">${item.weight ? item.weight : ''}</span></h6>
+                                <h6 class="mb-1" style="font-size: 14px;">
+                                    <a href="${detailUrl}" style="text-decoration:none;color:white;">
+                                        ${item.name}
+                                    </a>
+                                    <span style="font-style:italic; color:#ccc;">${item.weight ? item.weight : ''}</span>
+                                </h6>
                                 
                                 <div class="d-flex align-items-end justify-content-between mt-2">
                                     <div class="d-flex align-items-center" style="border: 1px solid #444; border-radius: 5px; padding: 2px;">
@@ -181,22 +193,39 @@
                     if (totalEl) {
                         totalEl.innerText = totalPrice.toFixed(2).replace('.', ',') + ' €';
                     }
+
+                    if (typeof window.syncProductCardCartFromServer === 'function') {
+                        window.syncProductCardCartFromServer(data);
+                    }
                 });
         }
 
         // Pomocne funkcie priamo v popupe
         function updatePopupItem(id, change) {
-            fetch('/cart/add/' + id, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': getCsrfToken(),
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({ quantity: change })
-            }).then(function () {
-                loadCartPopup();
-            });
+            fetch('/cart/api')
+                .then(function (res) { return res.json(); })
+                .then(function (cart) {
+                    var currentQty = 0;
+                    if (cart && cart[id] && cart[id].quantity) {
+                        currentQty = parseInt(cart[id].quantity, 10) || 0;
+                    }
+                    var nextQty = currentQty + change;
+                    if (nextQty < 0) nextQty = 0;
+                    if (nextQty > 99) nextQty = 99;
+
+                    return fetch('/cart/add/' + id, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': getCsrfToken(),
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                        },
+                        body: JSON.stringify({ quantity: nextQty, exact: true })
+                    });
+                })
+                .then(function () {
+                    loadCartPopup();
+                });
         }
 
         function removePopupItem(id) {
@@ -211,7 +240,7 @@
             });
         }
     </script>
-    <script src="{{ asset('js/product-card-cart.js') }}?v=3"></script>
+    <script src="{{ asset('js/product-card-cart.js') }}?v=5"></script>
     @stack('scripts')
 </body>
 

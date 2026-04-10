@@ -184,8 +184,8 @@
                         return;
                     }
                     input.value = 1;
-                    if (typeof openCartDrawer === 'function') {
-                        openCartDrawer();
+                    if (typeof loadCartPopup === 'function') {
+                        loadCartPopup();
                     }
                 });
         }
