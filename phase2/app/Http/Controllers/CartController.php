@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    /** Najviac kusov jedneho produktu v košíku (rovnako ako na fronte). */
+    // MAX QTY PER LINE (SAME AS FRONTEND)
     private const MAX_KS = 99;
 
+    // CART PAGE VIEW
     public function index()
     {
         $kosik = session('cart', []);
@@ -24,15 +25,7 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * Pridanie alebo úprava produktu v košíku (session).
-     *
-     * JSON body často: { "quantity": 5, "exact": true }
-     * - exact true  -> nastav množstvo presne na quantity
-     * - exact false -> pripočítaj quantity k tomu, čo už v košíku je
-     *
-     * Odstránenie riadku: exact true a quantity 0 (alebo menej).
-     */
+    // ADD OR UPDATE LINE (SESSION). JSON: exact true = set qty; false = add delta; exact + qty 0 = remove line
     public function add(Request $request, $id)
     {
         $idProduktu = (int) $id;
@@ -41,7 +34,7 @@ class CartController extends Controller
 
         $kosik = session('cart', []);
 
-        // Koľko chceme (ak parameter chýba, berieme 1)
+        // REQUEST QTY (DEFAULT 1)
         $mnozstvo = (int) $request->input('quantity', 1);
         if ($mnozstvo < 0) {
             $mnozstvo = 0;
@@ -52,7 +45,7 @@ class CartController extends Controller
 
         $jePresne = $request->boolean('exact');
 
-        // --- Odstránenie z košíka (používa product-card aj košík pri množstve 0) ---
+        // REMOVE LINE: exact + qty <= 0
         if ($jePresne === true && $mnozstvo <= 0) {
             if (array_key_exists($idProduktu, $kosik)) {
                 unset($kosik[$idProduktu]);
@@ -69,7 +62,7 @@ class CartController extends Controller
             return redirect()->back();
         }
 
-        // --- Už je v košíku: uprav množstvo ---
+        // EXISTING LINE: REPLACE OR ADD TO QTY
         if (array_key_exists($idProduktu, $kosik) === true) {
             if ($jePresne === true) {
                 $kosik[$idProduktu]['quantity'] = $mnozstvo;
@@ -77,7 +70,7 @@ class CartController extends Controller
                 $kosik[$idProduktu]['quantity'] = $kosik[$idProduktu]['quantity'] + $mnozstvo;
             }
         } else {
-            // --- Nový riadok (nepridávame nič, ak by množstvo bolo 0 bez presného módu) ---
+            // NEW LINE: SKIP IF qty 0 WITHOUT exact MODE
             if ($mnozstvo <= 0) {
                 session(['cart' => $kosik]);
 
@@ -94,7 +87,7 @@ class CartController extends Controller
             $kosik[$idProduktu] = $this->polozkaKosikaZProduktu($produkt, $mnozstvo);
         }
 
-        // --- Spoločné pravidlá: max 99, pri 0 riadok zmazať ---
+        // CLAMP MAX; REMOVE IF QTY <= 0
         if (array_key_exists($idProduktu, $kosik) === true) {
             if ($kosik[$idProduktu]['quantity'] > self::MAX_KS) {
                 $kosik[$idProduktu]['quantity'] = self::MAX_KS;
@@ -116,9 +109,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Produkt pridaný do košíka!');
     }
 
-    /**
-     * Jeden záznam v session košíku (jednoduché pole, aby s ním vedel pracovať aj JS).
-     */
+    // SESSION CART ROW ARRAY (FOR JSON / VIEWS)
     private function polozkaKosikaZProduktu(Produkt $produkt, int $mnozstvo): array
     {
         $obrazok = 'assets/grapes_white_tray.png';
@@ -137,6 +128,7 @@ class CartController extends Controller
         ];
     }
 
+    // REMOVE ONE PRODUCT LINE
     public function remove(Request $request, $id)
     {
         $idProduktu = (int) $id;
@@ -158,6 +150,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Produkt odstránený.');
     }
 
+    // CLEAR ENTIRE CART
     public function emptyCart(Request $request)
     {
         session()->forget('cart');
@@ -172,6 +165,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Košík bol vyprázdnený.');
     }
 
+    // JSON: FULL CART (DRAWER / JS)
     public function getCart()
     {
         return response()->json(session('cart', []));

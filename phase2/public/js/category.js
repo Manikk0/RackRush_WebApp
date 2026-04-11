@@ -76,8 +76,7 @@ function toggleAuthState(isLoggedIn) {
     }
 }
 
-// Initial state
-// toggleAuthState(true); // Removed for Laravel Auth
+// INITIAL STATE (LARAVEL AUTH — toggleAuthState() NOT USED HERE)
 
 // AUTHENTICATION EVENTS
 /* Removed for Laravel Auth
@@ -146,8 +145,7 @@ const userMenu = document.getElementById('userMenu');
 })();
 
 // PAGE SPECIFIC LOGIC (CATEGORY)
-// Products are now rendered server-side by Laravel (category.blade.php @foreach)
-// No JS injection needed here.
+// PRODUCTS: SSR (category.blade.php); NO JS PRODUCT LIST INJECTION
 
 const moreBtn = document.getElementById('show-more-origins-btn');
 if (moreBtn) {

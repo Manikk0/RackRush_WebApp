@@ -11,24 +11,32 @@ class SearchController extends Controller
     {
         $q = $request->input('q');
 
-        if ($q == null || $q == '') {
+        if ($q === null || $q === '') {
             return view('search', [
                 'q' => '',
                 'produkty' => null,
             ]);
         }
 
-        // Jednoduche vyhladavanie podla nazvu
+        $q = trim((string) $q);
+        if ($q === '') {
+            return view('search', [
+                'q' => '',
+                'produkty' => null,
+            ]);
+        }
+
+        // SEARCH: NAME OR PRODUCT_CODE (LIKE)
         $query = Produkt::with(['hlavnyObrazok', 'kategoria']);
 
         $query->where(function ($qBuilder) use ($q) {
             $qBuilder->where('name', 'LIKE', '%' . $q . '%')
-                     ->orWhere('description', 'LIKE', '%' . $q . '%');
+                ->orWhere('product_code', 'LIKE', '%' . $q . '%');
         });
 
         $produkty = $query->orderBy('name')->paginate(16);
 
-        // Pridame query string aby fungovalo strankovanie s vyhladavanim
+        // PAGINATION: PRESERVE q IN QUERY STRING
         $produkty->appends(['q' => $q]);
 
         return view('search', [

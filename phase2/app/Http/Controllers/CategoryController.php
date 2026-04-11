@@ -7,14 +7,14 @@ use App\Models\Produkt;
 
 class CategoryController extends Controller
 {
-    // All categories overview page
+    // CATEGORIES: OVERVIEW PAGE
     public function index()
     {
         $kategorie = Kategoria::whereNull('parent_id')->withCount('produkty')->get();
         return view('categories', compact('kategorie'));
     }
 
-    // Products within a specific category
+    // CATEGORY: PRODUCT LIST (FILTERS, SORT, PAGINATION)
     public function show(Kategoria $kategoria)
     {
         $sort = request()->get('sort', 'odporucane');

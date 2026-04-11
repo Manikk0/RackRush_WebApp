@@ -7,13 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class AuthController extends Controller
 {
-    /**
-     * Handle an authentication attempt.
-     */
+    // AUTH: LOGIN (POST)
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -32,9 +29,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * Handle a registration request.
-     */
+    // AUTH: REGISTER (POST)
     public function register(Request $request)
     {
         $request->validate([
@@ -56,9 +51,7 @@ class AuthController extends Controller
         return redirect(route('index'))->with('success', 'Váš účet bol úspešne vytvorený.');
     }
 
-    /**
-     * Log the user out of the application.
-     */
+    // AUTH: LOGOUT (POST)
     public function logout(Request $request)
     {
         Auth::logout();

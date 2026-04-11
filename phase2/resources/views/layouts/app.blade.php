@@ -49,10 +49,10 @@
                 logoutToast.show();
             @endif
 
-            // Nahrat popup prvy raz pri nacitani stranky
+            // CART DRAWER: INITIAL POPUP DATA
             loadCartPopup();
-            
-            // Kliknutie na kosik v navbare otvori drawer
+
+            // CART DRAWER: NAVBAR TRIGGERS
             const cartTriggers = document.querySelectorAll('.cart-trigger-btn');
             const cartDrawer = document.getElementById('cart-drawer');
             const cartOverlay = document.getElementById('cart-overlay');
@@ -109,6 +109,7 @@
             if (overlay) overlay.classList.remove('cart-overlay--visible');
         }
 
+        // CART DRAWER: FETCH /cart/api, RENDER, SYNC BADGES & PRODUCT CARDS
         function loadCartPopup() {
             fetch('/cart/api')
                 .then(res => res.json())
@@ -124,7 +125,7 @@
                         totalItems += parseInt(item.quantity);
                         totalPrice += item.price * item.quantity;
                         
-                        // Vypocet zlavnenia (do popisu ak bola zlava)
+                        // DISCOUNT LINE IN DRAWER ROW
                         let ustriteHodnota = '';
                         let oldPriceHtml = '';
                         
@@ -133,7 +134,7 @@
                             ustriteHodnota = `<div style="color: #ff4d4d; font-size: 12px; margin-top: 5px;">Ušetríte ${item.discount} %</div>`;
                         }
 
-                        // Noob-friendly generovanie HTML pre kazdy produkt v popupe
+                        // DRAWER ROW HTML
                         var detailUrl = '/product/' + id;
                         html += `
                         <div class="d-flex align-items-center mb-3 pb-3" style="border-bottom: 1px solid #333; position:relative;">
@@ -178,7 +179,7 @@
 
                     cartBody.innerHTML = html;
                     
-                    // Updatni cisielka vsetkych badges v UI
+                    // HEADER: CART BADGE COUNTS
                     const badges = document.querySelectorAll('.cart-badge');
                     badges.forEach(badge => {
                         badge.innerText = totalItems;
@@ -197,10 +198,14 @@
                     if (typeof window.syncProductCardCartFromServer === 'function') {
                         window.syncProductCardCartFromServer(data);
                     }
+
+                    if (typeof window.applyCartPageDomFromData === 'function') {
+                        window.applyCartPageDomFromData(data);
+                    }
                 });
         }
 
-        // Pomocne funkcie priamo v popupe
+        // CART DRAWER: QTY +/- & REMOVE
         function updatePopupItem(id, change) {
             fetch('/cart/api')
                 .then(function (res) { return res.json(); })
@@ -240,7 +245,7 @@
             });
         }
     </script>
-    <script src="{{ asset('js/product-card-cart.js') }}?v=5"></script>
+    <script src="{{ asset('js/product-card-cart.js') }}?v=6"></script>
     @stack('scripts')
 </body>
 

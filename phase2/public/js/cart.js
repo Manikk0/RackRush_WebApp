@@ -64,8 +64,7 @@ function toggleAuthState(isLoggedIn) {
     }
 }
 
-// Initial state
-// toggleAuthState(true); // Removed for Laravel Auth
+// INITIAL STATE (LARAVEL AUTH — toggleAuthState() NOT USED HERE)
 
 // AUTHENTICATION EVENTS
 /* Removed for Laravel Auth
@@ -213,7 +212,6 @@ if (discountBtn) {
     });
 }
 
-// INITIALIZE
+// INITIALIZE (SSR CART — NO client renderCart(); LIST FROM BLADE)
 if (document.getElementById('cart-items-container')) {
-    // renderCart(); // ZAKOMENTOVANE PRETOZE MAME SSR KOSIK
 }

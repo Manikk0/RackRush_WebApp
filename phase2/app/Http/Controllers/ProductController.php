@@ -7,7 +7,7 @@ use App\Models\Produkt;
 
 class ProductController extends Controller
 {
-    // Homepage - show featured/sale products grouped
+    // HOME: FEATURED, BESTSELLERS, ON SALE, CATEGORY STRIP
     public function index()
     {
         $featured    = Produkt::with(['hlavnyObrazok', 'kategoria'])->orderBy('id')->limit(12)->get();
@@ -18,7 +18,7 @@ class ProductController extends Controller
         return view('index', compact('featured', 'bestsellers', 'onSale', 'kategorie'));
     }
 
-    // Single product detail page
+    // PRODUCT: DETAIL PAGE
     public function show(Produkt $produkt)
     {
         $produkt->load(['obrazky', 'kategoria']);
