@@ -1,4 +1,4 @@
-// GLOBAL VARIABLES
+// Order details accordion and form helper behavior.
 const orderSections = [
     { btn: 'btn-delivery', body: 'body-delivery' },
     { btn: 'btn-who', body: 'body-who' },
@@ -6,7 +6,7 @@ const orderSections = [
     { btn: 'btn-payment', body: 'body-payment' }
 ];
 
-// ORDER ACCORDION LOGIC
+// Close all accordion sections.
 function closeAllOrderSections() {
     for (let i = 0; i < orderSections.length; i++) {
         const section = orderSections[i];
@@ -19,6 +19,7 @@ function closeAllOrderSections() {
     }
 }
 
+// Toggle clicked accordion section and close others.
 for (let i = 0; i < orderSections.length; i++) {
     const section = orderSections[i];
     const btnElement = document.getElementById(section.btn);
@@ -38,7 +39,7 @@ for (let i = 0; i < orderSections.length; i++) {
     }
 }
 
-// VOUCHER LOGIC
+// Voucher input toggle behavior.
 const voucherBtn = document.getElementById('btn-voucher');
 const voucherWrap = document.getElementById('voucher-input-wrap');
 
@@ -54,7 +55,7 @@ if (voucherBtn && voucherWrap) {
     });
 }
 
-// FORM SUBTITLES
+// Subtitle updates based on form values.
 function setOrderSubtitle(id, text) {
     const element = document.getElementById(id);
     if (element) {
@@ -62,6 +63,7 @@ function setOrderSubtitle(id, text) {
     }
 }
 
+// Save delivery form summary into section subtitle.
 const saveDeliveryBtn = document.getElementById('save-delivery');
 if (saveDeliveryBtn) {
     saveDeliveryBtn.addEventListener('click', function () {
@@ -87,6 +89,7 @@ if (saveDeliveryBtn) {
     });
 }
 
+// Save customer identity form summary into subtitle.
 const saveWhoBtn = document.getElementById('save-who');
 if (saveWhoBtn) {
     saveWhoBtn.addEventListener('click', function () {
@@ -110,6 +113,7 @@ if (saveWhoBtn) {
     });
 }
 
+// These sections only collapse after save click.
 const saveCourierBtn = document.getElementById('save-courier');
 if (saveCourierBtn) {
     saveCourierBtn.addEventListener('click', function () {

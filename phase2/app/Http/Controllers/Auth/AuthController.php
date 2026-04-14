@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+// Customer authentication (login/register/logout).
 class AuthController extends Controller
 {
-    // AUTH: LOGIN (POST)
+    // Validate credentials and sign user in.
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -29,7 +30,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    // AUTH: REGISTER (POST)
+    // Validate input, create account, then auto-login.
     public function register(Request $request)
     {
         $request->validate([
@@ -51,7 +52,7 @@ class AuthController extends Controller
         return redirect(route('index'))->with('success', 'Váš účet bol úspešne vytvorený.');
     }
 
-    // AUTH: LOGOUT (POST)
+    // Log current user out and reset session.
     public function logout(Request $request)
     {
         Auth::logout();

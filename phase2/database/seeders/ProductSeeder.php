@@ -7,8 +7,10 @@ use App\Models\Kategoria;
 use App\Models\Produkt;
 use App\Models\ObrazokProduktu;
 
+// Seeds categories, products, and product images.
 class ProductSeeder extends Seeder
 {
+    // Defaults used to generate filter-related attributes.
     private array $categoryFilterDefaults = [
         'Ovocie a zelenina' => ['bio' => true, 'plastic' => true, 'allergens' => ['orechy']],
         'Mliečne a chladené' => ['bio' => true, 'plastic' => true, 'allergens' => ['mlieko', 'laktoza']],

@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    // Create queue jobs, batches, and failed jobs tables.
     public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
@@ -45,9 +43,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    // Drop queue-related tables.
     public function down(): void
     {
         Schema::dropIfExists('jobs');

@@ -1,13 +1,8 @@
-// GLOBAL VARIABLES
+// Admin page UI-only interactions (mock dashboard behavior).
 let editingRow = null;
 
-// PAGE INITIALIZATION
+// Initialize admin page listeners.
 document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("admin-login-form");
-    const loginView = document.getElementById("admin-login-view");
-    const dashboardView = document.getElementById("admin-dashboard-view");
-    const logoutBtn = document.getElementById("admin-logout-btn");
-    const errorMsg = document.getElementById("admin-login-error");
     const adminNav = document.getElementById("admin-nav");
     const sections = document.querySelectorAll(".admin-section");
     const addProductForm = document.getElementById("add-product-form");
@@ -24,60 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const hiddenCategoryInput = document.getElementById("p-category");
     const categoryDropdownItems = document.querySelectorAll(".category-select-item");
 
-    // Initial state check removed for Laravel Auth
-    /*
-    if (localStorage.getItem("adminLoggedIn") === "true") {
-        showDashboard();
-    }
-    */
-
-    // LOGIN VIEW LOGIC - Removed for Laravel Auth
-    /*
-    if (loginForm) {
-        loginForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const emailInput = document.getElementById("admin-email");
-            const passwordInput = document.getElementById("admin-password");
-            
-            let email = "";
-            let password = "";
-            if (emailInput) { email = emailInput.value.trim(); }
-            if (passwordInput) { password = passwordInput.value.trim(); }
-
-            if (email !== "" && password !== "") {
-                localStorage.setItem("adminLoggedIn", "true");
-                showDashboard();
-
-                const toastEl = document.getElementById("adminLoginToast");
-                if (toastEl) {
-                    const toast = new bootstrap.Toast(toastEl);
-                    toast.show();
-                }
-            } else {
-                if (errorMsg) { errorMsg.classList.remove("d-none"); }
-            }
-        });
-    }
-    */
-
-    // LOGOUT LOGIC - Removed for Laravel Auth
-    /*
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", function () {
-            localStorage.removeItem("adminLoggedIn");
-            showLoginView();
-
-            const toastEl = document.getElementById("adminLogoutToast");
-            if (toastEl) {
-                const toast = new bootstrap.Toast(toastEl);
-                toast.show();
-            }
-        });
-    }
-    */
-
-    // SIDEBAR NAVIGATION
+    // Sidebar tab navigation.
     if (adminNav) {
         adminNav.addEventListener("click", function (e) {
             const link = e.target.closest(".nav-link");
@@ -103,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // CATEGORY DROPDOWN LOGIC
+    // Category dropdown selection.
     for (let i = 0; i < categoryDropdownItems.length; i++) {
         const item = categoryDropdownItems[i];
         item.addEventListener("click", function (e) {
@@ -114,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // IMAGE UPLOAD LOGIC
+    // Image preview upload handling.
     if (uploadWrapper) {
         uploadWrapper.addEventListener("click", function (e) {
             if (e.target.closest("label") || e.target === imgUploadInput) { return; }
@@ -122,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Convert selected files to previews.
     if (imgUploadInput) {
         imgUploadInput.addEventListener("change", function (e) {
             const files = e.target.files;
@@ -153,9 +96,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // PRODUCT LIST ACTIONS (EDIT/DELETE)
+    // Product table edit/delete actions.
     if (productList) {
         productList.addEventListener("click", function (e) {
+            // Delete button hides row from table (UI only).
             const deleteBtn = e.target.closest(".btn-delete-icon");
             if (deleteBtn) {
                 const row = deleteBtn.closest("tr");
@@ -163,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+            // Edit button loads row data into modal form.
             const editBtn = e.target.closest(".btn-edit-icon");
             if (editBtn) {
                 const row = editBtn.closest("tr");
@@ -193,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (categoryText) { categoryText.innerText = categoryCell; }
                     if (hiddenCategoryInput) { hiddenCategoryInput.value = categoryCell; }
                     
-                    // Clear existing previews
+                    // Clear old previews before new data.
                     if (imgPreviewContainer) {
                         const allPreviews = imgPreviewContainer.querySelectorAll(".product-image-preview");
                         for (let i = 0; i < allPreviews.length; i++) {
@@ -201,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     }
                     
-                    // Handle images preview for edit mode
+                    // Build image previews for edit mode.
                     if (imagesAttr) {
                         try {
                             const imageUrls = JSON.parse(decodeURIComponent(imagesAttr));
@@ -223,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         } catch (err) { console.error(err); }
                     } else {
-                        // Fallback to thumbnail
+                        // Fallback to row thumbnail.
                         const thumbImg = row.querySelector(".product-thumb-sm img");
                         if (thumbImg) {
                             const preview = document.createElement("div");
@@ -256,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ADD PRODUCT MODAL OPENING
+    // Reset modal before adding a new product.
     const addProductBtn = document.querySelector("[data-bs-target='#addProductModal']");
     if (addProductBtn) {
         addProductBtn.addEventListener("click", function () {
@@ -276,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // FORM SUBMISSION (ADD/EDIT RELOAD)
+    // Save add/edit form changes into table row.
     if (addProductForm) {
         addProductForm.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -292,6 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 previews = imgPreviewContainer.querySelectorAll(".product-image-preview");
             }
 
+            // Basic validation: require at least two images.
             if (previews.length < 2) {
                 const toastEl = document.getElementById("adminLoginToast");
                 if (toastEl) {
@@ -310,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (editingRow) {
-                // UPDATE ROW
+                // Update existing table row.
                 const nameDiv = editingRow.querySelector("td:nth-child(2) div");
                 if (nameDiv) {
                     let textNodeUpdated = false;
@@ -345,7 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             } else {
-                // ADD ROW
+                // Add a new table row.
                 const newRow = document.createElement("tr");
                 newRow.setAttribute("data-desc", desc);
                 newRow.setAttribute("data-images", encodeURIComponent(JSON.stringify(imageUrls)));
@@ -372,14 +318,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (productList) { productList.prepend(newRow); }
             }
 
-            // CLOSE MODAL
+            // Close modal and reset form state.
             const modalEl = document.getElementById("addProductModal");
             if (modalEl) {
                 const modal = bootstrap.Modal.getInstance(modalEl);
                 if (modal) { modal.hide(); }
             }
 
-            // RESET FORM
             if (addProductForm) { addProductForm.reset(); }
             if (imgPreviewContainer) {
                 const allPreviews = imgPreviewContainer.querySelectorAll(".product-image-preview");
@@ -391,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (categoryText) { categoryText.innerText = "Vybrať kategóriu..."; }
             if (hiddenCategoryInput) { hiddenCategoryInput.value = ""; }
 
-            // NOTIFICATION
+            // Show toast notification.
             const toastEl = document.getElementById("adminLoginToast");
             if (toastEl) {
                 const toastBody = toastEl.querySelector(".toast-body");
@@ -407,24 +352,5 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             editingRow = null;
         });
-    }
-
-    // DASHBOARD DISPLAY HELPERS
-    function showDashboard() {
-        if (loginView && dashboardView) {
-            loginView.classList.add("d-none");
-            loginView.classList.remove("d-flex");
-            dashboardView.classList.remove("d-none");
-            if (errorMsg) { errorMsg.classList.add("d-none"); }
-            if (loginForm) { loginForm.reset(); }
-        }
-    }
-
-    function showLoginView() {
-        if (loginView && dashboardView) {
-            loginView.classList.add("d-flex");
-            loginView.classList.remove("d-none");
-            dashboardView.classList.add("d-none");
-        }
     }
 });

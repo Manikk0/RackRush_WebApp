@@ -6,13 +6,12 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+// Entry seeder that runs all project seeders.
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
+    // Seed base user and product catalog.
     public function run(): void
     {
         // User::factory(10)->create();

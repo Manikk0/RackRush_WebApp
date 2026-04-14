@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Produkt;
 use Illuminate\Http\Request;
 
+// Session cart operations for customer checkout.
 class CartController extends Controller
 {
-    // MAX QTY PER LINE (SAME AS FRONTEND)
+    // Max quantity allowed for one cart line.
     private const MAX_KS = 99;
 
-    // CART PAGE VIEW
+    // Show cart page with recommended products.
     public function index()
     {
         $kosik = session('cart', []);
@@ -25,70 +26,41 @@ class CartController extends Controller
         ]);
     }
 
-    // ADD OR UPDATE LINE (SESSION). JSON: exact true = set qty; false = add delta; exact + qty 0 = remove line
+    // Add/update one cart line in session.
     public function add(Request $request, $id)
     {
         $idProduktu = (int) $id;
-
         $produkt = Produkt::findOrFail($idProduktu);
-
         $kosik = session('cart', []);
-
-        // REQUEST QTY (DEFAULT 1)
         $mnozstvo = (int) $request->input('quantity', 1);
-        if ($mnozstvo < 0) {
-            $mnozstvo = 0;
-        }
-        if ($mnozstvo > self::MAX_KS) {
-            $mnozstvo = self::MAX_KS;
-        }
+        $mnozstvo = max(0, min(self::MAX_KS, $mnozstvo));
 
         $jePresne = $request->boolean('exact');
 
-        // REMOVE LINE: exact + qty <= 0
-        if ($jePresne === true && $mnozstvo <= 0) {
-            if (array_key_exists($idProduktu, $kosik)) {
+        if ($jePresne && $mnozstvo <= 0) {
+            if (isset($kosik[$idProduktu])) {
                 unset($kosik[$idProduktu]);
             }
             session(['cart' => $kosik]);
-
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'success' => true,
-                    'cart' => $kosik,
-                ]);
-            }
-
-            return redirect()->back();
+            return $this->returnCartResponse($request, $kosik);
         }
 
-        // EXISTING LINE: REPLACE OR ADD TO QTY
-        if (array_key_exists($idProduktu, $kosik) === true) {
-            if ($jePresne === true) {
+        if (isset($kosik[$idProduktu])) {
+            if ($jePresne) {
                 $kosik[$idProduktu]['quantity'] = $mnozstvo;
             } else {
-                $kosik[$idProduktu]['quantity'] = $kosik[$idProduktu]['quantity'] + $mnozstvo;
+                $kosik[$idProduktu]['quantity'] += $mnozstvo;
             }
         } else {
-            // NEW LINE: SKIP IF qty 0 WITHOUT exact MODE
             if ($mnozstvo <= 0) {
                 session(['cart' => $kosik]);
-
-                if ($request->wantsJson()) {
-                    return response()->json([
-                        'success' => true,
-                        'cart' => $kosik,
-                    ]);
-                }
-
-                return redirect()->back();
+                return $this->returnCartResponse($request, $kosik);
             }
 
             $kosik[$idProduktu] = $this->polozkaKosikaZProduktu($produkt, $mnozstvo);
         }
 
-        // CLAMP MAX; REMOVE IF QTY <= 0
-        if (array_key_exists($idProduktu, $kosik) === true) {
+        if (isset($kosik[$idProduktu])) {
             if ($kosik[$idProduktu]['quantity'] > self::MAX_KS) {
                 $kosik[$idProduktu]['quantity'] = self::MAX_KS;
             }
@@ -98,7 +70,6 @@ class CartController extends Controller
         }
 
         session(['cart' => $kosik]);
-
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -109,7 +80,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Produkt pridaný do košíka!');
     }
 
-    // SESSION CART ROW ARRAY (FOR JSON / VIEWS)
+    // Build cart row structure from product model.
     private function polozkaKosikaZProduktu(Produkt $produkt, int $mnozstvo): array
     {
         $obrazok = 'assets/grapes_white_tray.png';
@@ -128,14 +99,13 @@ class CartController extends Controller
         ];
     }
 
-    // REMOVE ONE PRODUCT LINE
+    // Remove one product line from cart.
     public function remove(Request $request, $id)
     {
         $idProduktu = (int) $id;
-
         $kosik = session('cart', []);
 
-        if (array_key_exists($idProduktu, $kosik) === true) {
+        if (isset($kosik[$idProduktu])) {
             unset($kosik[$idProduktu]);
             session(['cart' => $kosik]);
         }
@@ -150,7 +120,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Produkt odstránený.');
     }
 
-    // CLEAR ENTIRE CART
+    // Remove all items from cart.
     public function emptyCart(Request $request)
     {
         session()->forget('cart');
@@ -165,9 +135,22 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Košík bol vyprázdnený.');
     }
 
-    // JSON: FULL CART (DRAWER / JS)
+    // Return current cart as JSON.
     public function getCart()
     {
         return response()->json(session('cart', []));
+    }
+
+    // Return JSON or redirect response based on request type.
+    private function returnCartResponse(Request $request, array $kosik)
+    {
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'cart' => $kosik,
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

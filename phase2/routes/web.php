@@ -7,31 +7,32 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
-// HOME
+// Homepage.
 Route::get('/', [ProductController::class, 'index'])->name('index');
 
-// AUTH
+// Customer authentication.
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// CATEGORIES
+// Category browsing.
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 Route::get('/category/{kategoria}', [CategoryController::class, 'show'])->name('category');
 
-// PRODUCTS
+// Product details.
 Route::get('/product/{produkt}', [ProductController::class, 'show'])->name('product-detail');
 
-// Search products by name, description, recipe, code
+// Product search by name/code.
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-// CART & ORDERS
+// Cart endpoints.
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/empty', [CartController::class, 'emptyCart'])->name('cart.empty');
 Route::get('/cart/api', [CartController::class, 'getCart'])->name('cart.api');
 
+// Checkout pages.
 Route::get('/order-details', function () {
     return view('order_details');
 })->name('order_details');
@@ -40,7 +41,7 @@ Route::get('/order-success', function () {
     return view('order_success');
 })->name('order_success');
 
-// ADMIN
+// Admin page.
 Route::get('/admin', function () {
     return view('admin');
 })->middleware('auth')->name('admin');

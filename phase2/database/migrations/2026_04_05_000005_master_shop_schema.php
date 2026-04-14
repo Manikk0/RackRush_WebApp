@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    // Create all custom eshop domain tables.
     public function up(): void
     {
         // 1. Categories
@@ -123,6 +124,7 @@ return new class extends Migration
         });
     }
 
+    // Drop all custom eshop domain tables.
     public function down(): void
     {
         Schema::dropIfExists('payments');

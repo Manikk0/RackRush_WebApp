@@ -4,29 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategoria;
 use App\Models\Produkt;
+use Illuminate\Http\Request;
 
+// Category list and category product browsing.
 class CategoryController extends Controller
 {
-    // CATEGORIES: OVERVIEW PAGE
+    // Show top-level categories page.
     public function index()
     {
         $kategorie = Kategoria::whereNull('parent_id')->withCount('produkty')->get();
-        return view('categories', compact('kategorie'));
+
+        return view('categories', [
+            'kategorie' => $kategorie,
+        ]);
     }
 
-    // CATEGORY: PRODUCT LIST (FILTERS, SORT, PAGINATION)
-    public function show(Kategoria $kategoria)
+    // Show products in one category with filters/sort/pagination.
+    public function show(Request $request, Kategoria $kategoria)
     {
-        $sort = request()->get('sort', 'odporucane');
+        $sort = $request->input('sort', 'odporucane');
         $perPage = 16;
 
         $query = Produkt::with(['hlavnyObrazok'])
             ->where('category_id', $kategoria->id);
 
-        $this->applyPriceFilter($query);
-        $this->applyOriginFilter($query);
-        $this->applyWeightFilter($query);
-        $this->applyPlasticFilter($query);
+        $this->applyPriceFilter($request, $query);
+        $this->applyOriginFilter($request, $query);
+        $this->applyWeightFilter($request, $query);
+        $this->applyPlasticFilter($request, $query);
 
         $effectivePriceExpression = '(price * (100 - discount) / 100)';
 
@@ -50,18 +55,19 @@ class CategoryController extends Controller
             'kategorie' => $kategorie,
             'sort' => $sort,
             'availableFilters' => $availableFilters,
-            'activeOrigins' => request()->input('origin', []),
-            'activeWeights' => request()->input('weight', []),
-            'activePlasticFree' => request()->input('plastic_free'),
-            'priceMin' => request()->input('price_min'),
-            'priceMax' => request()->input('price_max'),
+            'activeOrigins' => $request->input('origin', []),
+            'activeWeights' => $request->input('weight', []),
+            'activePlasticFree' => $request->input('plastic_free'),
+            'priceMin' => $request->input('price_min'),
+            'priceMax' => $request->input('price_max'),
         ]);
     }
 
-    private function applyPriceFilter($query): void
+    // Apply min/max price filter on discounted price.
+    private function applyPriceFilter(Request $request, $query): void
     {
-        $priceMin = request()->input('price_min');
-        $priceMax = request()->input('price_max');
+        $priceMin = $request->input('price_min');
+        $priceMax = $request->input('price_max');
         $effectivePriceExpression = '(price * (100 - discount) / 100)';
 
         if ($priceMin !== null && $priceMin !== '') {
@@ -73,9 +79,10 @@ class CategoryController extends Controller
         }
     }
 
-    private function applyOriginFilter($query): void
+    // Apply origin multiselect filter.
+    private function applyOriginFilter(Request $request, $query): void
     {
-        $origins = request()->input('origin', []);
+        $origins = $request->input('origin', []);
         if (!is_array($origins) || count($origins) === 0) {
             return;
         }
@@ -83,9 +90,10 @@ class CategoryController extends Controller
         $query->whereIn('country_of_origin', $origins);
     }
 
-    private function applyWeightFilter($query): void
+    // Apply weight bucket filter.
+    private function applyWeightFilter(Request $request, $query): void
     {
-        $weights = request()->input('weight', []);
+        $weights = $request->input('weight', []);
         if (!is_array($weights) || count($weights) === 0) {
             return;
         }
@@ -103,9 +111,10 @@ class CategoryController extends Controller
         });
     }
 
-    private function applyPlasticFilter($query): void
+    // Apply radio filter for plastic-free packaging.
+    private function applyPlasticFilter(Request $request, $query): void
     {
-        $plasticFree = request()->input('plastic_free');
+        $plasticFree = $request->input('plastic_free');
         if ($plasticFree === '1') {
             $query->where('is_plastic_free', true);
         } elseif ($plasticFree === '0') {
@@ -113,6 +122,7 @@ class CategoryController extends Controller
         }
     }
 
+    // Build filter options visible in sidebar.
     private function buildAvailableFilters($products): array
     {
         $origins = [];

@@ -10,18 +10,13 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<User>
  */
+// Factory for generating fake users in tests/seeding.
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
+    // Reused hashed password for generated users.
     protected static ?string $password;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    // Default fake user attributes.
     public function definition(): array
     {
         return [
@@ -34,9 +29,7 @@ class UserFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
+    // Optional state with unverified email.
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [

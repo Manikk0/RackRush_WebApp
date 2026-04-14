@@ -1,11 +1,12 @@
-﻿// PRODUCT CARD CART (LISTING / CATEGORY CARDS — SESSION SYNC, STAYS OPEN UNTIL CLICK OUTSIDE .product-card)
+﻿// Product card cart controls and server sync.
 (function () {
   var MAX_QTY = 99;
   var WAIT_BEFORE_SEND_MS = 550;
 
-  // SYNC TIMERS (PRODUCT ID -> TIMEOUT ID)
+  // Store pending debounce timers per product id.
   var timersWaitingToSend = {};
 
+  // Read CSRF token for cart API requests.
   function getCsrfFromPage() {
     var m = document.querySelector('meta[name="csrf-token"]');
     if (m === null) {
@@ -18,6 +19,7 @@
     return v;
   }
 
+  // Clamp and sanitize quantity input.
   function makeQtyValid(x) {
     var n = parseInt(x, 10);
     if (isNaN(n)) {
@@ -32,7 +34,7 @@
     return n;
   }
 
-  // IMAGE WRAP (CARD IMAGE + CART CONTROLS)
+  // Find product card image wrapper from clicked element.
   function getImageWrap(element) {
     if (!element) {
       return null;
@@ -40,6 +42,7 @@
     return element.closest('.product-card__image-wrap');
   }
 
+  // Find parent product card element.
   function getProductCard(element) {
     if (!element) {
       return null;
@@ -47,6 +50,7 @@
     return element.closest('.product-card');
   }
 
+  // Cancel pending debounce timer for one product.
   function clearWaitTimer(productIdString) {
     if (timersWaitingToSend[productIdString]) {
       clearTimeout(timersWaitingToSend[productIdString]);
@@ -54,7 +58,7 @@
     }
   }
 
-  // UI: ADD BUTTON / COMPACT BAR / STEPPER BY QTY
+  // Show add/compact/stepper controls based on quantity.
   function showCorrectButtons(imageWrap, productId, qty) {
     var addCircleBtn = imageWrap.querySelector('.js-card-cart-add[data-product-id="' + productId + '"]');
     var stepperBox = imageWrap.querySelector('.js-card-cart-control[data-product-id="' + productId + '"]');
@@ -89,7 +93,7 @@
     }
   }
 
-  // STEPPER VS COMPACT (WHEN QTY > 0)
+  // Toggle between stepper and compact controls.
   function setStepperVisible(imageWrap, productId, yes) {
     var stepperBox = imageWrap.querySelector('.js-card-cart-control[data-product-id="' + productId + '"]');
     var compactBtn = imageWrap.querySelector('.js-card-cart-compact[data-product-id="' + productId + '"]');
@@ -105,6 +109,7 @@
     }
   }
 
+  // Read quantity from stepper input.
   function readQtyFromInput(imageWrap, productId) {
     var stepperBox = imageWrap.querySelector('.js-card-cart-control[data-product-id="' + productId + '"]');
     if (!stepperBox) {
@@ -117,6 +122,7 @@
     return makeQtyValid(qtyInput.value);
   }
 
+  // Send exact quantity to backend.
   function sendQtyToServer(productId, qty) {
     var idStr = String(productId);
     var q = makeQtyValid(qty);
@@ -142,7 +148,7 @@
       });
   }
 
-  // DEBOUNCED POST TO /cart/add (QTY 0 REMOVES LINE ON SERVER)
+  // Debounced sync to backend while user is editing quantity.
   function planSendToServerLater(productId, qty) {
     var idStr = String(productId);
     var q = makeQtyValid(qty);
@@ -155,6 +161,7 @@
     }, WAIT_BEFORE_SEND_MS);
   }
 
+  // Read one product quantity from cart JSON payload.
   function readQtyFromServerCart(cartJson, productId) {
     if (!cartJson) {
       return 0;
@@ -169,7 +176,7 @@
     return makeQtyValid(row.quantity);
   }
 
-  // HOOK: AFTER loadCartPopup — UPDATE ALL .product-card CART UI FROM API JSON
+  // Hook called after drawer refresh to sync all product cards.
   window.syncProductCardCartFromServer = function (cartJson) {
     var allAnchors = document.querySelectorAll('.js-card-cart-anchor[data-product-id]');
     var i = 0;
@@ -210,11 +217,11 @@
     }
   };
 
-  // DOCUMENT: DELEGATED CLICKS
+  // Delegated click handling for card cart controls.
   document.addEventListener('click', function (ev) {
     var t = ev.target;
 
-    // CLICK OUTSIDE CARD: CLOSE STEPPER ON OTHER OPEN CARDS
+    // Close steppers on other cards when clicking outside them.
     var cardWeClickedIn = null;
     if (t.closest) {
       cardWeClickedIn = t.closest('.product-card');
@@ -245,7 +252,7 @@
       }
     }
 
-    // ADD BUTTON (FIRST ADD TO CART)
+    // Handle first add-to-cart click.
     var addBtn = null;
     if (t.closest) {
       addBtn = t.closest('.js-card-cart-add');
@@ -271,7 +278,7 @@
       return;
     }
 
-    // STEPPER: MINUS / PLUS
+    // Handle stepper plus/minus buttons.
     var pmBtn = null;
     if (t.closest) {
       pmBtn = t.closest('.product-card__cart-btn');
@@ -311,7 +318,7 @@
       return;
     }
 
-    // COMPACT BAR: OPEN STEPPER
+    // Expand compact control into stepper.
     var compactBtn = null;
     if (t.closest) {
       compactBtn = t.closest('.js-card-cart-compact');
@@ -341,7 +348,7 @@
     }
   });
 
-  // DOCUMENT: STEPPER QTY INPUT
+  // Handle direct quantity typing in stepper input.
   document.addEventListener('input', function (ev) {
     var target = ev.target;
     if (!target || !target.classList) {
@@ -376,7 +383,7 @@
     planSendToServerLater(productIdInp, qInp);
   });
 
-  // DOCUMENT: QTY INPUT ENTER BLURS
+  // Enter key commits input and blurs field.
   document.addEventListener('keydown', function (ev) {
     var target = ev.target;
     if (!target || !target.classList) {

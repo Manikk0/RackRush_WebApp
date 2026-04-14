@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// Product model with pricing and display helpers.
 class Produkt extends Model
 {
     use HasFactory;
 
+    // Database table name.
     protected $table = 'products';
 
+    // Mass-assignable columns.
     protected $fillable = [
         'category_id',
         'product_code',
@@ -28,6 +31,7 @@ class Produkt extends Model
         'allergens',
     ];
 
+    // Cast rules for numeric/boolean columns.
     protected $casts = [
         'price' => 'float',
         'quantity' => 'float',
@@ -37,21 +41,25 @@ class Produkt extends Model
         'is_plastic_free' => 'boolean',
     ];
 
+    // Category relation for this product.
     public function kategoria()
     {
         return $this->belongsTo(Kategoria::class, 'category_id');
     }
 
+    // Product images ordered by "order" field.
     public function obrazky()
     {
         return $this->hasMany(ObrazokProduktu::class, 'product_id')->orderBy('order');
     }
 
+    // Main image relation (order = 0).
     public function hlavnyObrazok()
     {
         return $this->hasOne(ObrazokProduktu::class, 'product_id')->where('order', 0)->latestOfMany();
     }
 
+    // Computed final price after discount.
     public function getCenaPoZlaveAttribute(): float
     {
         $price = (float) $this->price;
@@ -60,6 +68,7 @@ class Produkt extends Model
         return round($price * (1 - ($discount / 100)), 2);
     }
 
+    // Computed display quantity (e.g. g/ml formatting).
     public function getMnozstvoDisplayAttribute(): string
     {
         $amount = (float) $this->quantity;
@@ -80,6 +89,7 @@ class Produkt extends Model
         return rtrim(rtrim(number_format($amount, 3, '.', ''), '0'), '.') . $unit;
     }
 
+    // Computed unit price label.
     public function getCenaNaJednotkuAttribute(): ?string
     {
         $amount = (float) $this->quantity;
