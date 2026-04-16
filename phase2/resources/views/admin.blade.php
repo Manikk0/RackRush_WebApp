@@ -3,37 +3,43 @@
 @section('title', 'RackRush Administrácia')
 
 @section('content')
-    <!-- ADMIN LOGIN VIEW -->
-    <div id="admin-login-view" class="admin-login-wrapper d-flex align-items-center justify-content-center vh-100">
-        <div class="admin-login-card p-4 shadow-lg text-center mx-3">
-            <img src="{{ asset('assets/logo.png') }}" alt="RackRush Admin" class="admin-logo mb-3">
-            <h4 class="mb-4 admin-title">Administrácia</h4>
+    @guest
+        <div id="admin-login-view" class="admin-login-wrapper d-flex align-items-center justify-content-center vh-100">
+            <div class="admin-login-card p-4 shadow-lg text-center mx-3">
+                <img src="{{ asset('assets/logo.png') }}" alt="RackRush Admin" class="admin-logo mb-3">
+                <h4 class="mb-4 admin-title">Administrácia</h4>
 
-            <form id="admin-login-form">
-                <div class="mb-3 text-start">
-                    <label class="form-label small mb-1">E-mail</label>
-                    <input type="email" class="form-control" id="admin-email" required placeholder="admin@rackrush.sk">
+                <form id="admin-login-form" method="POST" action="{{ route('admin.login') }}">
+                    @csrf
+                    <div class="mb-3 text-start">
+                        <label class="form-label small mb-1" for="admin-email">E-mail</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="admin-email"
+                            name="email" value="{{ old('email') }}" required autocomplete="username"
+                            placeholder="vas@email.sk">
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label small mb-1" for="admin-password">Heslo</label>
+                        <input type="password" class="form-control" id="admin-password" name="password" required
+                            autocomplete="current-password" placeholder="Vaše heslo">
+                    </div>
+                    @error('email')
+                        <div class="text-danger small mb-3 text-start">{{ $message }}</div>
+                    @enderror
+                    <button type="submit" class="btn btn-primary w-100 mb-3 py-2 admin-btn">Prihlásiť sa</button>
+                </form>
+                <div class="mt-2 d-flex justify-content-center">
+                    <a href="{{ route('index') }}"
+                        class="text-decoration-none admin-back-link small d-flex align-items-center gap-2">
+                        <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs admin-back-icon"> Späť do
+                        obchodu
+                    </a>
                 </div>
-                <div class="mb-4 text-start">
-                    <label class="form-label small mb-1">Heslo</label>
-                    <input type="password" class="form-control" id="admin-password" required placeholder="Vaše heslo">
-                </div>
-                <!-- LOGIN ERRORS -->
-                <div id="admin-login-error" class="text-danger small mb-3 d-none">Nesprávne prihlasovacie údaje.</div>
-                <button type="submit" class="btn btn-primary w-100 mb-3 py-2 admin-btn">Prihlásiť sa</button>
-            </form>
-            <div class="mt-2 d-flex justify-content-center">
-                <a href="{{ route('index') }}"
-                    class="text-decoration-none admin-back-link small d-flex align-items-center gap-2">
-                    <img src="{{ asset('assets/chevron_right.png') }}" class="icon-xs admin-back-icon"> Späť do
-                    obchodu
-                </a>
             </div>
         </div>
-    </div>
+    @endguest
 
-    <!-- ADMIN DASHBOARD VIEW -->
-    <div id="admin-dashboard-view" class="d-none">
+    @auth
+        <div id="admin-dashboard-view">
         <!-- ADMIN HEADER -->
         <header id="admin-header" class="fixed-top shadow-sm admin-navbar">
             <div class="container-fluid px-4">
@@ -56,12 +62,16 @@
                                 class="icon-md icon-white admin-user-icon-img">
                             <span class="text-white small fw-bold">Hlavný administrátor</span>
                         </div>
-                        <button id="admin-logout-btn"
-                            class="btn btn-outline-custom btn-sm py-1 px-3 d-flex align-items-center gap-2"
-                            title="Odhlásiť sa">
-                            <img src="{{ asset('assets/logout.png') }}" class="icon-sm icon-theme">
-                            <span class="d-none d-sm-inline">Odhlásiť sa</span>
-                        </button>
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <input type="hidden" name="redirect" value="admin">
+                            <button type="submit" id="admin-logout-btn"
+                                class="btn btn-outline-custom btn-sm py-1 px-3 d-flex align-items-center gap-2"
+                                title="Odhlásiť sa">
+                                <img src="{{ asset('assets/logout.png') }}" class="icon-sm icon-theme">
+                                <span class="d-none d-sm-inline">Odhlásiť sa</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -374,8 +384,11 @@
             </div>
         </div>
     </div>
+    @endauth
 @endsection
 
-@push('scripts')
-    <script src="{{ asset('js/admin.js') }}"></script>
-@endpush
+@auth
+    @push('scripts')
+        <script src="{{ asset('js/admin.js') }}"></script>
+    @endpush
+@endauth

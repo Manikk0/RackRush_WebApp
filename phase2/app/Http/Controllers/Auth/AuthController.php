@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 // Customer authentication (login/register/logout).
 class AuthController extends Controller
 {
-    // Validate credentials and sign user in.
+    // Validate credentials and sign user in (shop navbar / modal).
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -20,20 +20,46 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            $mergedCart = CartService::mergeSessionIntoUserAndStore(
-                (int) Auth::id(),
-                $request->session()->get('cart', [])
-            );
-            $request->session()->put('cart', $mergedCart);
-
+        if ($this->signInAndMergeCart($request, $credentials)) {
             return redirect()->intended(route('index'))->with('success', 'Boli ste úspešne prihlásený.');
         }
 
         return back()->withErrors([
             'email' => 'Zadané údaje sa nezhodujú s našimi záznamami.',
         ])->onlyInput('email');
+    }
+
+    // Same credentials as shop login; redirect back to /admin dashboard.
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if ($this->signInAndMergeCart($request, $credentials)) {
+            return redirect()->route('admin')->with('success', 'Vitajte v administrácii.');
+        }
+
+        return redirect()->route('admin')->withErrors([
+            'email' => 'Zadané údaje sa nezhodujú s našimi záznamami.',
+        ])->onlyInput('email');
+    }
+
+    private function signInAndMergeCart(Request $request, array $credentials): bool
+    {
+        if (! Auth::attempt($credentials)) {
+            return false;
+        }
+
+        $request->session()->regenerate();
+        $mergedCart = CartService::mergeSessionIntoUserAndStore(
+            (int) Auth::id(),
+            $request->session()->get('cart', [])
+        );
+        $request->session()->put('cart', $mergedCart);
+
+        return true;
     }
 
     // Validate input, create account, then auto-login.
@@ -71,6 +97,10 @@ class AuthController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        if ($request->input('redirect') === 'admin') {
+            return redirect()->route('admin');
+        }
 
         return redirect('/')->with('logout_success', true);
     }

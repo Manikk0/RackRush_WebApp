@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ProductController::class, 'index'])->name('index');
 
 // Customer authentication.
+Route::get('/login', fn () => redirect()->route('index'));
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -38,7 +39,8 @@ Route::get('/order-details', [OrderController::class, 'details'])->name('order_d
 Route::post('/checkout', [OrderController::class, 'place'])->name('checkout.place');
 Route::get('/order-success/{order}', [OrderController::class, 'success'])->name('order_success');
 
-// Admin page.
+// Admin (login na mieste; dashboard len po session prihlásení).
 Route::get('/admin', function () {
     return view('admin');
-})->middleware('auth')->name('admin');
+})->name('admin');
+Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login');
