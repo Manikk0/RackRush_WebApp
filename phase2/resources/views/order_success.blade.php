@@ -21,7 +21,7 @@
             <p class="os-eyebrow">Ďakujeme</p>
             <h1 class="os-title">Vaša objednávka je potvrdená!</h1>
             <p class="os-subtitle">Potvrdenie sme vám odoslali na váš e-mail.</p>
-            <p class="os-order-number">Číslo objednávky: <strong>#ORD-2026-84512</strong></p>
+            <p class="os-order-number">Číslo objednávky: <strong>#ORD-{{ $orderRow->id }}</strong></p>
 
             <div class="os-divider"></div>
 
@@ -29,15 +29,27 @@
             <div class="os-summary">
                 <p class="os-summary-title">Zhrnutie objednávky</p>
 
-                <div class="os-summary-item">
-                    <span class="os-summary-name">Názov produktu 1</span>
-                    <span class="os-summary-qty">× 1</span>
-                    <span class="os-summary-price">€0.00</span>
+                @foreach($items as $item)
+                    <div class="os-summary-item">
+                        <span class="os-summary-name">{{ $item->product_name }}</span>
+                        <span class="os-summary-qty">× {{ (float) $item->quantity }}</span>
+                        <span class="os-summary-price">€{{ number_format($item->price_per_item * $item->quantity, 2) }}</span>
+                    </div>
+                @endforeach
+
+                <div class="os-summary-total">
+                    <span>Medzisúčet</span>
+                    <span>€{{ number_format($subtotal, 2) }}</span>
+                </div>
+
+                <div class="os-summary-total">
+                    <span>Doručenie</span>
+                    <span>€{{ number_format($shippingFee, 2) }}</span>
                 </div>
 
                 <div class="os-summary-total">
                     <span>Celková suma</span>
-                    <span>€0.00</span>
+                    <span>€{{ number_format($total, 2) }}</span>
                 </div>
             </div>
 
@@ -79,7 +91,7 @@
             <!-- DELIVERY DATE -->
             <p class="os-delivery">
                 Predpokladaný dátum doručenia:
-                <strong>20. marca 2026</strong>
+                <strong>{{ now()->addDays(2)->format('d.m.Y') }}</strong>
             </p>
 
             <!-- BACK TO HOME -->

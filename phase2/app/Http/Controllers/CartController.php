@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produkt;
+use App\Services\CartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 // Session cart operations for customer checkout.
 class CartController extends Controller
@@ -14,7 +16,13 @@ class CartController extends Controller
     // Show cart page with recommended products.
     public function index()
     {
+        $this->restorePersistentCartIfNeeded();
         $kosik = session('cart', []);
+        $shippingFee = session('checkout_shipping_fee');
+        if ($shippingFee === null) {
+            $shippingFee = rand(300, 2000) / 100;
+            session(['checkout_shipping_fee' => $shippingFee]);
+        }
         $odporucaneProdukty = Produkt::with(['hlavnyObrazok'])
             ->orderBy('sold_count', 'desc')
             ->limit(6)
@@ -22,6 +30,7 @@ class CartController extends Controller
 
         return view('cart', [
             'cart' => $kosik,
+            'shippingFee' => (float) $shippingFee,
             'odporucaneProdukty' => $odporucaneProdukty,
         ]);
     }
@@ -29,6 +38,7 @@ class CartController extends Controller
     // Add/update one cart line in session.
     public function add(Request $request, $id)
     {
+        $this->restorePersistentCartIfNeeded();
         $idProduktu = (int) $id;
         $produkt = Produkt::findOrFail($idProduktu);
         $kosik = session('cart', []);
@@ -70,6 +80,7 @@ class CartController extends Controller
         }
 
         session(['cart' => $kosik]);
+        $this->persistForAuthenticatedUser($kosik);
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -102,12 +113,14 @@ class CartController extends Controller
     // Remove one product line from cart.
     public function remove(Request $request, $id)
     {
+        $this->restorePersistentCartIfNeeded();
         $idProduktu = (int) $id;
         $kosik = session('cart', []);
 
         if (isset($kosik[$idProduktu])) {
             unset($kosik[$idProduktu]);
             session(['cart' => $kosik]);
+            $this->persistForAuthenticatedUser($kosik);
         }
 
         if ($request->wantsJson()) {
@@ -124,6 +137,7 @@ class CartController extends Controller
     public function emptyCart(Request $request)
     {
         session()->forget('cart');
+        $this->persistForAuthenticatedUser([]);
 
         if ($request->wantsJson()) {
             return response()->json([
@@ -138,6 +152,8 @@ class CartController extends Controller
     // Return current cart as JSON.
     public function getCart()
     {
+        $this->restorePersistentCartIfNeeded();
+
         return response()->json(session('cart', []));
     }
 
@@ -152,5 +168,31 @@ class CartController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    // Keep user cart in DB and restore it if local session is empty.
+    private function restorePersistentCartIfNeeded(): void
+    {
+        if (!Auth::check()) {
+            return;
+        }
+
+        $currentSession = session('cart', []);
+        if (count($currentSession) > 0) {
+            return;
+        }
+
+        $restored = CartService::restoreUserCartForSession((int) Auth::id());
+        session(['cart' => $restored]);
+    }
+
+    // Save session cart into persistent DB cart for logged users.
+    private function persistForAuthenticatedUser(array $kosik): void
+    {
+        if (!Auth::check()) {
+            return;
+        }
+
+        CartService::persistSessionForUser((int) Auth::id(), $kosik);
     }
 }

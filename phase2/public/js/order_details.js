@@ -75,7 +75,7 @@ if (saveDeliveryBtn) {
         if (cityInput) { city = cityInput.value.trim(); }
         if (addressInput) { address = addressInput.value.trim(); }
 
-        let label = 'Vyberte doručenie';
+        let label = 'Vyplňte adresu';
         if (city && address) {
             label = city + ', ' + address;
         } else if (city) {

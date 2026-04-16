@@ -1,5 +1,10 @@
 // Cart page item controls and summary sync.
 var cartUpdateTimeouts = {};
+var cartShippingFee = 0;
+
+if (typeof window.CART_SHIPPING_FEE === 'number') {
+    cartShippingFee = window.CART_SHIPPING_FEE;
+}
 
 // Discount code input visibility toggle on cart page.
 document.addEventListener('DOMContentLoaded', function () {
@@ -137,9 +142,15 @@ window.applyCartPageDomFromData = function (data) {
         summarySubtotal.innerText = subtotal.toFixed(2).replace('.', ',') + ' €';
     }
 
+    var summaryShipping = document.getElementById('summary-shipping');
+    if (summaryShipping) {
+        summaryShipping.innerText = cartShippingFee.toFixed(2).replace('.', ',') + ' €';
+    }
+
     var summaryTotal = document.getElementById('summary-total');
     if (summaryTotal) {
-        summaryTotal.innerText = subtotal.toFixed(2).replace('.', ',') + ' €';
+        var totalWithShipping = subtotal + cartShippingFee;
+        summaryTotal.innerText = totalWithShipping.toFixed(2).replace('.', ',') + ' €';
     }
 
     var summarySavings = document.getElementById('summary-savings');
@@ -147,6 +158,16 @@ window.applyCartPageDomFromData = function (data) {
     if (summarySavings && savingsContainer) {
         summarySavings.innerText = savings.toFixed(2).replace('.', ',') + ' €';
         savingsContainer.style.display = savings > 0 ? 'block' : 'none';
+    }
+
+    var proceedButton = document.getElementById('btn-proceed-checkout');
+    if (proceedButton) {
+        proceedButton.disabled = count === 0;
+        if (count === 0) {
+            proceedButton.classList.add('opacity-50');
+        } else {
+            proceedButton.classList.remove('opacity-50');
+        }
     }
 };
 

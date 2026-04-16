@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,13 +34,9 @@ Route::post('/cart/empty', [CartController::class, 'emptyCart'])->name('cart.emp
 Route::get('/cart/api', [CartController::class, 'getCart'])->name('cart.api');
 
 // Checkout pages.
-Route::get('/order-details', function () {
-    return view('order_details');
-})->name('order_details');
-
-Route::get('/order-success', function () {
-    return view('order_success');
-})->name('order_success');
+Route::get('/order-details', [OrderController::class, 'details'])->name('order_details');
+Route::post('/checkout', [OrderController::class, 'place'])->name('checkout.place');
+Route::get('/order-success/{order}', [OrderController::class, 'success'])->name('order_success');
 
 // Admin page.
 Route::get('/admin', function () {

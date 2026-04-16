@@ -48,36 +48,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 4. Lists
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('favorite_items', function (Blueprint $table) {
-            $table->foreignId('favorite_id')->constrained('favorites')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->timestamp('added_at')->useCurrent();
-            $table->primary(['favorite_id', 'product_id']);
-        });
-
-        Schema::create('shopping_lists', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->timestamp('updated_at_custom')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('shopping_list_items', function (Blueprint $table) {
-            $table->foreignId('list_id')->constrained('shopping_lists')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->decimal('quantity', 10, 3);
-            $table->timestamp('added_at')->useCurrent();
-            $table->primary(['list_id', 'product_id']);
-        });
-
-        // 5. Orders
+        // 4. Orders
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
@@ -100,7 +71,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 6. Invoices and payments
+        // 5. Invoices and payments
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
@@ -131,10 +102,6 @@ return new class extends Migration
         Schema::dropIfExists('invoices');
         Schema::dropIfExists('order_items');
         Schema::dropIfExists('orders');
-        Schema::dropIfExists('shopping_list_items');
-        Schema::dropIfExists('shopping_lists');
-        Schema::dropIfExists('favorite_items');
-        Schema::dropIfExists('favorites');
         Schema::dropIfExists('product_images');
         Schema::dropIfExists('products');
         Schema::dropIfExists('categories');

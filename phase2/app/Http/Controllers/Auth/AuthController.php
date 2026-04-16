@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +22,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $mergedCart = CartService::mergeSessionIntoUserAndStore(
+                (int) Auth::id(),
+                $request->session()->get('cart', [])
+            );
+            $request->session()->put('cart', $mergedCart);
 
             return redirect()->intended(route('index'))->with('success', 'Boli ste úspešne prihlásený.');
         }
@@ -48,6 +54,12 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        $request->session()->regenerate();
+        $mergedCart = CartService::mergeSessionIntoUserAndStore(
+            (int) $user->id,
+            $request->session()->get('cart', [])
+        );
+        $request->session()->put('cart', $mergedCart);
 
         return redirect(route('index'))->with('success', 'Váš účet bol úspešne vytvorený.');
     }

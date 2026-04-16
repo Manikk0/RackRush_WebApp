@@ -112,7 +112,7 @@
                 </div>
                 <div class="cart-summary__row">
                     <span>Doprava</span>
-                    <span id="summary-shipping">Zdarma</span>
+                    <span id="summary-shipping">{{ number_format($shippingFee, 2) }} €</span>
                 </div>
                 <div class="cart-summary__row">
                     <span>Zľava</span>
@@ -121,12 +121,21 @@
 
                 <div class="cart-summary__row cart-summary__row--total">
                     <span>Spolu</span>
-                    <span id="summary-total">{{ number_format($subtotal, 2) }} €</span>
+                    <span id="summary-total">{{ number_format($subtotal + $shippingFee, 2) }} €</span>
                 </div>
 
                 <p class="cart-summary__savings" style="{{ $savings > 0 ? 'display:block;' : 'display:none;' }}">Ušetrené: <span id="summary-savings">{{ number_format($savings, 2) }} €</span></p>
 
-                <a href="{{ route('order_details') }}" class="btn-proceed">Pokračovať k platbe a doprave</a>
+                <form action="{{ route('order_details') }}" method="GET" class="m-0">
+                    <button
+                        type="submit"
+                        id="btn-proceed-checkout"
+                        class="btn-proceed border-0 w-100 {{ count(session()->get('cart', [])) === 0 ? 'opacity-50' : '' }}"
+                        @disabled(count(session()->get('cart', [])) === 0)
+                    >
+                        Pokračovať k platbe a doprave
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -143,5 +152,8 @@
 @endsection
 
 @push('scripts')
+    <script>
+        window.CART_SHIPPING_FEE = {{ json_encode((float) $shippingFee) }};
+    </script>
     <script src="{{ asset('js/cart-page.js') }}"></script>
 @endpush
