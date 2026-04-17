@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
@@ -44,3 +45,8 @@ Route::get('/admin', function () {
     return view('admin');
 })->name('admin');
 Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login');
+
+// Admin product management routes (no authentication required)
+Route::get('/api/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+Route::post('/api/admin/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+Route::delete('/api/admin/products/{id}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');

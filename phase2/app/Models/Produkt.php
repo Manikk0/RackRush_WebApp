@@ -56,7 +56,7 @@ class Produkt extends Model
     // Main image relation (order = 0).
     public function hlavnyObrazok()
     {
-        return $this->hasOne(ObrazokProduktu::class, 'product_id')->where('order', 0)->latestOfMany();
+        return $this->hasOne(ObrazokProduktu::class, 'product_id')->where('order', 0);
     }
 
     // Computed final price after discount.

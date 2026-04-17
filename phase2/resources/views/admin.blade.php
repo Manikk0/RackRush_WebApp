@@ -183,14 +183,29 @@
 
                     <!-- PRODUCTS SECTION -->
                     <div id="section-products" class="admin-section d-none">
-                        <div
-                            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-4 border-bottom border-dusk-blue">
-                            <h1 class="h3 text-white m-0">Produkty</h1>
-                            <button class="btn btn-teal d-flex align-items-center gap-2" data-bs-toggle="modal"
-                                data-bs-target="#addProductModal">
-                                <img src="{{ asset('assets/plus.png') }}" class="icon-sm admin-btn-plus-icon"> Pridať
-                                produkt
-                            </button>
+                        <div class="pt-4 pb-2 mb-4 border-bottom border-dusk-blue">
+                            <h1 class="h3 text-white m-0 text-center">Produkty</h1>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="d-flex gap-2 align-items-center" style="max-width: 600px; width: 100%;">
+                                <!-- Search Bar -->
+                                <form class="header-search-form flex-grow-1" role="search" onsubmit="return false;">
+                                    <div class="input-group search-container">
+                                        <input type="search" id="admin-product-search" class="form-control"
+                                            placeholder="Hľadať produkty..." maxlength="120" autocomplete="off"
+                                            aria-label="Hľadať produkty">
+                                        <button type="button" class="btn btn-search-submit" id="admin-search-btn" aria-label="Hľadať">
+                                            <img src="{{ asset('assets/search.png') }}" class="icon-sm" alt="">
+                                        </button>
+                                    </div>
+                                </form>
+                                <button class="btn btn-teal d-flex align-items-center gap-2" data-bs-toggle="modal"
+                                    data-bs-target="#addProductModal" style="height: 38px; white-space: nowrap; min-width: 160px; padding: 0 16px;">
+                                    <img src="{{ asset('assets/plus.png') }}"
+                                        class="icon-sm admin-btn-plus-icon"> Pridať produkt
+                                </button>
+                            </div>
                         </div>
 
                         <div class="card bg-space-indigo border-dusk-blue shadow-sm">
@@ -317,15 +332,15 @@
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label class="form-label small mb-1 text-white-50">Cena (€)</label>
-                                            <input type="number" step="0.01" class="form-control" id="p-price"
-                                                required placeholder="0.00">
+                                            <input type="number" step="0.01" max="999.99" class="form-control" id="p-price"
+                                                required placeholder="0.00" maxlength="6">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label class="form-label small mb-1 text-white-50">Skladom (ks)</label>
-                                            <input type="number" min="0" step="1" class="form-control"
-                                                id="p-stock" required placeholder="0">
+                                            <input type="number" min="0" max="999" step="1" class="form-control"
+                                                id="p-stock" required placeholder="0" maxlength="3">
                                         </div>
                                     </div>
                                 </div>
@@ -336,15 +351,15 @@
                                 <label class="form-label small mb-1 text-white-50 d-block">Fotografie (min. 2)</label>
                                 <div id="product-images-container" class="d-flex flex-wrap gap-2 mb-3">
                                     <div
-                                        class="image-upload-wrapper p-3 border border-dashed border-dusk-blue rounded text-center d-flex align-items-center justify-content-center">
+                                        class="image-upload-wrapper p-3 border border-dashed border-dusk-blue rounded text-center d-flex align-items-center justify-content-center cursor-pointer"
+                                        onclick="document.getElementById('p-img-upload').click()">
                                         <input type="file" id="p-img-upload" class="d-none" accept="image/*"
                                             multiple>
-                                        <label for="p-img-upload"
-                                            class="m-0 cursor-pointer d-flex flex-column align-items-center gap-1">
+                                        <div class="d-flex flex-column align-items-center gap-1">
                                             <img src="{{ asset('assets/plus.png') }}"
                                                 class="icon-sm icon-white opacity-75">
                                             <span class="text-white-50 upload-label-text">Pridať</span>
-                                        </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -355,6 +370,29 @@
                             <button type="submit" class="btn btn-teal px-4 fw-bold">Uložiť produkt</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content auth-modal p-2 shadow-lg">
+                <div class="modal-header pb-3">
+                    <h4 class="modal-title m-0" id="deleteProductModalLabel">Potvrdiť vymazanie</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Zavrie"></button>
+                </div>
+                <div class="modal-body py-4 px-4">
+                    <p class="text-white mb-3">Naozaj chcete vymaza tento produkt?</p>
+                    <input type="hidden" id="delete-product-id">
+                </div>
+                <div class="modal-footer px-0 border-0">
+                    <button type="button" class="btn btn-outline-custom px-4"
+                        data-bs-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-danger px-4 fw-bold" id="confirm-delete-btn">Vymazať</button>
                 </div>
             </div>
         </div>

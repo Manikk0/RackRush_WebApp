@@ -13,11 +13,23 @@ class CartController extends Controller
     // Max quantity allowed for one cart line.
     private const MAX_KS = 99;
 
-    // Show cart page with recommended products.
+    // Show cart page with recommended products
     public function index()
     {
         $this->restorePersistentCartIfNeeded();
+        
+        // Clean cart by removing deleted products
         $kosik = session('cart', []);
+        $validCart = [];
+        
+        foreach ($kosik as $productId => $item) {
+            if (Produkt::find($productId)) {
+                $validCart[$productId] = $item;
+            }
+        }
+        
+        session(['cart' => $validCart]);
+        
         $shippingFee = session('checkout_shipping_fee');
         if ($shippingFee === null) {
             $shippingFee = rand(300, 2000) / 100;
@@ -96,7 +108,12 @@ class CartController extends Controller
     {
         $obrazok = 'assets/grapes_white_tray.png';
         if ($produkt->hlavnyObrazok !== null) {
-            $obrazok = $produkt->hlavnyObrazok->url;
+            $imageUrl = $produkt->hlavnyObrazok->url;
+            if (strpos($imageUrl, 'assets/') === 0) {
+                $obrazok = $imageUrl;
+            } else {
+                $obrazok = '/storage/' . $imageUrl;
+            }
         }
 
         return [
@@ -149,12 +166,26 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Košík bol vyprázdnený.');
     }
 
-    // Return current cart as JSON.
+    // Return current cart as JSON and remove deleted products
     public function getCart()
     {
         $this->restorePersistentCartIfNeeded();
+        
+        // Get cart from session
+        $cart = session('cart', []);
+        $validCart = [];
+        
+        // Remove products that no longer exist in database
+        foreach ($cart as $productId => $item) {
+            if (Produkt::find($productId)) {
+                $validCart[$productId] = $item;
+            }
+        }
+        
+        // Update session with clean cart
+        session(['cart' => $validCart]);
 
-        return response()->json(session('cart', []));
+        return response()->json($validCart);
     }
 
     // Return JSON or redirect response based on request type.

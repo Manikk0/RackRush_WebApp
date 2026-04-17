@@ -154,11 +154,10 @@ function loadCartPopup() {
                     '<div class="ms-3 flex-grow-1">' +
                     '<h6 class="mb-1" style="font-size: 14px;">' +
                     '<a href="' + detailUrl + '" style="text-decoration:none;color:white;">' + item.name + '</a>' +
-                    '<span style="font-style:italic; color:#ccc;">' + (item.weight ? item.weight : '') + '</span>' +
                     '</h6>' +
                     '<div class="d-flex align-items-end justify-content-between mt-2">' +
                     '<div class="d-flex align-items-center" style="border: 1px solid #444; border-radius: 5px; padding: 2px;">' +
-                    '<button class="btn btn-sm text-white p-0 m-0 fs-5" style="width: 25px;" onclick="updatePopupItem(' + id + ', -1)">−</button>' +
+                    '<button class="btn btn-sm text-white p-0 m-0 fs-5" style="width: 25px;" onclick="updatePopupItem(' + id + ', -1)">-</button>' +
                     '<span class="text-white mx-2 fw-bold" style="font-size: 14px;">' + item.quantity + '</span>' +
                     '<button class="btn btn-sm text-white p-0 m-0 fs-5" style="width: 25px;" onclick="updatePopupItem(' + id + ', 1)">+</button>' +
                     '</div>' +

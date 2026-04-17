@@ -36,3 +36,18 @@ Thumbs.db
 
 Homestead.json
 Homestead.yaml
+
+# Project-specific files to ignore
+Zadanie.md
+zadanie.md
+*.zadanie
+*.pdf
+*.docx
+*.doc
+*.txt
+*.md
+!README.md
+!.env.example
+composer.lock
+package-lock.json
+yarn.lock

@@ -199,7 +199,6 @@ function buildCartRowFromItem(id, item) {
         '<div class="d-flex justify-content-between align-items-start mb-2">' +
         '<a href="/product/' + idNumber + '" class="text-decoration-none pe-2">' +
         '<p class="cart-row__name text-wrap m-0" style="white-space: normal; line-height: 1.2;">' + nameSafe + '</p>' +
-        '<span class="text-muted small mt-1 d-block">' + weightSafe + '</span>' +
         '</a>' +
         '<button onclick="removeCartPageItem(' + idNumber + ')" class="btn p-0 d-flex align-items-center justify-content-center" style="opacity: 0.6; margin-top: 2px;">' +
         '<img src="/assets/close.png" alt="Odstrániť" class="icon-sm icon-white" style="width: 12px; height: 12px;">' +

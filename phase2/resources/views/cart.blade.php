@@ -24,7 +24,7 @@
                         <div class="cart-row position-relative" data-id="{{ $id }}">
                             <div class="cart-row__img-wrap me-2" style="align-self: flex-start;">
                                 <a href="{{ route('product-detail', $id) }}">
-                                    <img src="{{ asset($item['image'] ?? 'assets/grapes_white_tray.png') }}" alt="{{ $item['name'] }}" class="cart-row__img">
+                                    <img src="{{ $item['image'] && strpos($item['image'], '/storage/') === 0 ? $item['image'] : asset($item['image'] ?? 'assets/grapes_white_tray.png') }}" alt="{{ $item['name'] }}" class="cart-row__img">
                                 </a>
                             </div>
                             
@@ -34,7 +34,6 @@
                                     <a href="{{ route('product-detail', $id) }}" class="text-decoration-none pe-2">
                                         <!-- LONG PRODUCT NAMES: WRAP -->
                                         <p class="cart-row__name text-wrap m-0" style="white-space: normal; line-height: 1.2;">{{ $item['name'] }}</p>
-                                        <span class="text-muted small mt-1 d-block">{{ $item['weight'] ?? '' }}</span>
                                     </a>
                                     
                                     <button onclick="removeCartPageItem({{ $id }})" class="btn p-0 d-flex align-items-center justify-content-center" style="opacity: 0.6; margin-top: 2px;">

@@ -38,7 +38,7 @@
                         <div class="gallery-track-container" id="gallery-container">
                         <div class="gallery-track" id="gallery-track">
                                 @forelse($produkt->obrazky as $obrazok)
-                                    <img src="{{ asset($obrazok->url) }}" class="gallery-slide-img" alt="{{ $produkt->name }}">
+                                    <img src="{{ strpos($obrazok->url, 'assets/') === 0 ? asset($obrazok->url) : '/storage/' . $obrazok->url }}" class="gallery-slide-img" alt="{{ $produkt->name }}">
                                 @empty
                                     <img src="{{ asset('assets/grapes_white_tray.png') }}" class="gallery-slide-img" alt="{{ $produkt->name }}">
                                 @endforelse
