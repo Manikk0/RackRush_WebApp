@@ -155,7 +155,7 @@
                 <img src="{{ asset('assets/logo.png') }}" class="app-icon-large" alt="App Icon">
                 <h2 class="app-modal-title">Stiahnite si našu aplikáciu</h2>
                 <p class="app-modal-text">Nakupujte ešte rýchlejšie a pohodlnejšie s mobilnou aplikáciou RackRush.
-                    Majte svoje nákupné zoznamy a obľúbené produkty vždy po ruke (aj bez pripojenia k sieti).</p>
+                    Sledujte objednávky, zľavy a novinky aj bez pripojenia k sieti.</p>
                 <div class="app-store-container">
                     <a href="https://play.google.com/store" target="_blank">
                         <img src="{{ asset('assets/google-play.png') }}" alt="Google Play" class="app-store-badge">

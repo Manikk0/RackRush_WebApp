@@ -17,19 +17,19 @@ class CartController extends Controller
     public function index()
     {
         $this->restorePersistentCartIfNeeded();
-        
+
         // Clean cart by removing deleted products
         $kosik = session('cart', []);
         $validCart = [];
-        
+
         foreach ($kosik as $productId => $item) {
             if (Produkt::find($productId)) {
                 $validCart[$productId] = $item;
             }
         }
-        
+
         session(['cart' => $validCart]);
-        
+
         $shippingFee = session('checkout_shipping_fee');
         if ($shippingFee === null) {
             $shippingFee = rand(300, 2000) / 100;
@@ -64,6 +64,7 @@ class CartController extends Controller
                 unset($kosik[$idProduktu]);
             }
             session(['cart' => $kosik]);
+
             return $this->returnCartResponse($request, $kosik);
         }
 
@@ -76,6 +77,7 @@ class CartController extends Controller
         } else {
             if ($mnozstvo <= 0) {
                 session(['cart' => $kosik]);
+
                 return $this->returnCartResponse($request, $kosik);
             }
 
@@ -106,15 +108,10 @@ class CartController extends Controller
     // Build cart row structure from product model.
     private function polozkaKosikaZProduktu(Produkt $produkt, int $mnozstvo): array
     {
-        $obrazok = 'assets/grapes_white_tray.png';
-        if ($produkt->hlavnyObrazok !== null) {
-            $imageUrl = $produkt->hlavnyObrazok->url;
-            if (strpos($imageUrl, 'assets/') === 0) {
-                $obrazok = $imageUrl;
-            } else {
-                $obrazok = '/storage/' . $imageUrl;
-            }
-        }
+        // image_url je z modelu ObrazokProduktu (root-relative /storage/... alebo asset() pre statické assets).
+        $obrazok = $produkt->hlavnyObrazok !== null
+            ? $produkt->hlavnyObrazok->image_url
+            : asset('assets/grapes_white_tray.png');
 
         return [
             'name' => $produkt->name,
@@ -170,18 +167,18 @@ class CartController extends Controller
     public function getCart()
     {
         $this->restorePersistentCartIfNeeded();
-        
+
         // Get cart from session
         $cart = session('cart', []);
         $validCart = [];
-        
+
         // Remove products that no longer exist in database
         foreach ($cart as $productId => $item) {
             if (Produkt::find($productId)) {
                 $validCart[$productId] = $item;
             }
         }
-        
+
         // Update session with clean cart
         session(['cart' => $validCart]);
 
@@ -204,7 +201,7 @@ class CartController extends Controller
     // Keep user cart in DB and restore it if local session is empty.
     private function restorePersistentCartIfNeeded(): void
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return;
         }
 
@@ -220,7 +217,7 @@ class CartController extends Controller
     // Save session cart into persistent DB cart for logged users.
     private function persistForAuthenticatedUser(array $kosik): void
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return;
         }
 

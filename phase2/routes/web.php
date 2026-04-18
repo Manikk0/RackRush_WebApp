@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\AdminProductController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 // Homepage.
 Route::get('/', [ProductController::class, 'index'])->name('index');
@@ -40,13 +41,30 @@ Route::get('/order-details', [OrderController::class, 'details'])->name('order_d
 Route::post('/checkout', [OrderController::class, 'place'])->name('checkout.place');
 Route::get('/order-success/{order}', [OrderController::class, 'success'])->name('order_success');
 
-// Admin (login na mieste; dashboard len po session prihlásení).
+// Admin (login view for guests; dashboard only for users with is_admin).
 Route::get('/admin', function () {
     return view('admin');
 })->name('admin');
 Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login');
 
-// Admin product management routes (no authentication required)
-Route::get('/api/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');
-Route::post('/api/admin/products', [AdminProductController::class, 'store'])->name('admin.products.store');
-Route::delete('/api/admin/products/{id}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
+// Admin product API: must be logged in and is_admin (see EnsureUserIsAdmin middleware).
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/api/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/api/admin/products/{id}', [AdminProductController::class, 'show'])->name('admin.products.show');
+    Route::post('/api/admin/products', [AdminProductController::class, 'store'])->name('admin.products.store');
+    Route::post('/api/admin/products/{id}/update', [AdminProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('/api/admin/products/{id}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
+});
+
+// Ak chýba symlink public/storage, tieto URL by inak vrátili 404. Symlink rieši "php artisan storage:link".
+Route::get('/storage/{path}', function (string $path) {
+    $path = str_replace('\\', '/', $path);
+    if (str_contains($path, '..')) {
+        abort(404);
+    }
+    if (! Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    return Storage::disk('public')->response($path);
+})->where('path', '.+');

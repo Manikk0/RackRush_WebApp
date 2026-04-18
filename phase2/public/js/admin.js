@@ -1,50 +1,103 @@
-// Admin page UI interactions with backend integration for product management
-let editingRow = null;
+// Admin page UI: product list, search, add, edit, delete (calls Laravel JSON API).
 let uploadedImages = [];
+let editUploadedImages = [];
+let editPendingRemoveIds = [];
+let editProductId = null;
 
-// Initialize admin page listeners and load products
+// Build image URL for <img src> (API posiela image_url z modelu; inak skladáme z url stĺpca).
+function adminProductImageUrl(obrazokOrUrl) {
+    if (obrazokOrUrl && typeof obrazokOrUrl === "object") {
+        if (obrazokOrUrl.image_url) {
+            return obrazokOrUrl.image_url;
+        }
+        obrazokOrUrl = obrazokOrUrl.url;
+    }
+    var url = obrazokOrUrl || "";
+    if (!url) {
+        return "/assets/grapes_white_tray.png";
+    }
+    if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) {
+        return url;
+    }
+    if (url.indexOf("assets/") === 0) {
+        return "/" + url;
+    }
+    return "/storage/" + String(url).replace(/^\/+/, "");
+}
+
+// Read CSRF token from the layout meta tag.
+function getCsrfToken() {
+    var meta = document.querySelector('meta[name="csrf-token"]');
+    if (!meta) {
+        return "";
+    }
+    return meta.getAttribute("content");
+}
+
+// Run fetch with cookies so Laravel session auth works.
+function adminFetch(url, options) {
+    var opts = options || {};
+    if (!opts.credentials) {
+        opts.credentials = "same-origin";
+    }
+    if (!opts.headers) {
+        opts.headers = {};
+    }
+    if (!opts.headers["Accept"]) {
+        opts.headers["Accept"] = "application/json";
+    }
+    if (!opts.headers["X-Requested-With"]) {
+        opts.headers["X-Requested-With"] = "XMLHttpRequest";
+    }
+    if (!opts.headers["X-CSRF-TOKEN"] && !opts.headers["x-csrf-token"]) {
+        opts.headers["X-CSRF-TOKEN"] = getCsrfToken();
+    }
+    return fetch(url, opts);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-    const adminNav = document.getElementById("admin-nav");
-    const sections = document.querySelectorAll(".admin-section");
-    const addProductForm = document.getElementById("add-product-form");
-    const productList = document.getElementById("admin-product-list");
-    const imgUploadInput = document.getElementById("p-img-upload");
-    const imgPreviewContainer = document.getElementById("product-images-container");
-    const searchInput = document.getElementById("admin-product-search");
-    const searchBtn = document.getElementById("admin-search-btn");
+    var adminNav = document.getElementById("admin-nav");
+    var sections = document.querySelectorAll(".admin-section");
+    var addProductForm = document.getElementById("add-product-form");
+    var imgUploadInput = document.getElementById("p-img-upload");
+    var imgPreviewContainer = document.getElementById("product-images-container");
+    var searchInput = document.getElementById("admin-product-search");
+    var searchBtn = document.getElementById("admin-search-btn");
 
-    let uploadWrapper = null;
-    if (imgPreviewContainer) {
-        uploadWrapper = imgPreviewContainer.querySelector(".image-upload-wrapper");
+    var categoryText = document.getElementById("selected-category-text");
+    var hiddenCategoryInput = document.getElementById("p-category");
+    var categoryDropdownItems = document.querySelectorAll(".category-select-item");
+
+    var editProductForm = document.getElementById("edit-product-form");
+    var eImgUpload = document.getElementById("e-img-upload");
+    var categoryTextEdit = document.getElementById("selected-category-text-edit");
+    var hiddenCategoryEdit = document.getElementById("e-category");
+    var categoryEditItems = document.querySelectorAll(".category-select-item-edit");
+
+    if (adminNav) {
+        loadProducts();
     }
 
-    const categoryText = document.getElementById("selected-category-text");
-    const hiddenCategoryInput = document.getElementById("p-category");
-    const categoryDropdownItems = document.querySelectorAll(".category-select-item");
-
-    // Load products when products section is shown
-    loadProducts();
-
-    // Sidebar tab navigation
     if (adminNav) {
         adminNav.addEventListener("click", function (e) {
-            const link = e.target.closest(".nav-link");
-            if (!link || link.classList.contains("disabled")) { return; }
+            var link = e.target.closest(".nav-link");
+            if (!link || link.classList.contains("disabled")) {
+                return;
+            }
 
             e.preventDefault();
-            const sectionId = link.getAttribute("data-section");
+            var sectionId = link.getAttribute("data-section");
 
-            const allNavLinks = adminNav.querySelectorAll(".nav-link");
-            for (let i = 0; i < allNavLinks.length; i++) {
+            var allNavLinks = adminNav.querySelectorAll(".nav-link");
+            for (var i = 0; i < allNavLinks.length; i++) {
                 allNavLinks[i].classList.remove("active");
             }
             link.classList.add("active");
 
-            for (let i = 0; i < sections.length; i++) {
-                const section = sections[i];
+            for (var j = 0; j < sections.length; j++) {
+                var section = sections[j];
                 if (section.id === "section-" + sectionId) {
                     section.classList.remove("d-none");
-                    // Load products when switching to products section
                     if (sectionId === "products") {
                         loadProducts();
                     }
@@ -55,52 +108,119 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Category dropdown selection
-    for (let i = 0; i < categoryDropdownItems.length; i++) {
-        const item = categoryDropdownItems[i];
-        item.addEventListener("click", function (e) {
+    for (var c = 0; c < categoryDropdownItems.length; c++) {
+        categoryDropdownItems[c].addEventListener("click", function (e) {
             e.preventDefault();
-            const value = this.getAttribute("data-value");
-            if (categoryText) { categoryText.innerText = value; }
-            if (hiddenCategoryInput) { hiddenCategoryInput.value = value; }
-        });
-    }
-
-    // Image upload handling
-    if (imgUploadInput) {
-        imgUploadInput.addEventListener("change", function (e) {
-            const files = Array.from(e.target.files);
-            uploadedImages = uploadedImages.concat(files);
-            
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                if (file.type.startsWith("image/")) {
-                    const reader = new FileReader();
-                    reader.onload = function (event) {
-                        createImagePreview(event.target.result, file);
-                    };
-                    reader.readAsDataURL(file);
-                }
+            var value = this.getAttribute("data-value");
+            if (categoryText) {
+                categoryText.innerText = value;
+            }
+            if (hiddenCategoryInput) {
+                hiddenCategoryInput.value = value;
             }
         });
     }
 
-    // Search functionality
+    for (var ce = 0; ce < categoryEditItems.length; ce++) {
+        categoryEditItems[ce].addEventListener("click", function (e) {
+            e.preventDefault();
+            var val = this.getAttribute("data-value");
+            if (categoryTextEdit) {
+                categoryTextEdit.innerText = val;
+            }
+            if (hiddenCategoryEdit) {
+                hiddenCategoryEdit.value = val;
+            }
+        });
+    }
+
+    if (imgUploadInput) {
+        imgUploadInput.addEventListener("change", function (e) {
+            var files = Array.from(e.target.files);
+            uploadedImages = uploadedImages.concat(files);
+
+            files.forEach(function (file) {
+                if (file.type.indexOf("image/") !== 0) {
+                    return;
+                }
+                (function (oneFile) {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        createImagePreview(
+                            event.target.result,
+                            oneFile,
+                            "product-images-container",
+                            uploadedImages
+                        );
+                    };
+                    reader.readAsDataURL(oneFile);
+                })(file);
+            });
+            imgUploadInput.value = "";
+        });
+    }
+
+    if (eImgUpload) {
+        eImgUpload.addEventListener("change", function (e) {
+            var newFiles = Array.from(e.target.files);
+            editUploadedImages = editUploadedImages.concat(newFiles);
+            var wrap = document.getElementById("edit-new-images-container");
+            var uploadBtn = wrap ? wrap.querySelector(".image-upload-wrapper") : null;
+
+            newFiles.forEach(function (nf) {
+                if (nf.type.indexOf("image/") !== 0) {
+                    return;
+                }
+                (function (oneFile) {
+                    var r = new FileReader();
+                    r.onload = function (ev) {
+                        var previewWrapper = document.createElement("div");
+                        previewWrapper.className =
+                            "product-image-preview p-2 border border-dusk-blue rounded position-relative";
+                        var img = document.createElement("img");
+                        img.src = ev.target.result;
+                        img.className = "img-fluid";
+                        img.style.height = "80px";
+                        img.style.width = "80px";
+                        img.style.objectFit = "cover";
+                        var removeBtn = document.createElement("button");
+                        removeBtn.type = "button";
+                        removeBtn.className = "btn btn-sm btn-danger position-absolute top-0 end-0 m-1";
+                        removeBtn.innerHTML = "×";
+                        removeBtn.onclick = function () {
+                            previewWrapper.remove();
+                            var ix = editUploadedImages.indexOf(oneFile);
+                            if (ix > -1) {
+                                editUploadedImages.splice(ix, 1);
+                            }
+                        };
+                        previewWrapper.appendChild(img);
+                        previewWrapper.appendChild(removeBtn);
+                        if (wrap && uploadBtn) {
+                            wrap.insertBefore(previewWrapper, uploadBtn);
+                        }
+                    };
+                    r.readAsDataURL(oneFile);
+                })(nf);
+            });
+            eImgUpload.value = "";
+        });
+    }
+
     if (searchBtn) {
-        searchBtn.addEventListener("click", function() {
+        searchBtn.addEventListener("click", function () {
             loadProducts();
         });
     }
 
     if (searchInput) {
-        searchInput.addEventListener("keyup", function(e) {
-            if (e.key === 'Enter') {
+        searchInput.addEventListener("keyup", function (e) {
+            if (e.key === "Enter") {
                 loadProducts();
             }
         });
     }
 
-    // Add product form submission
     if (addProductForm) {
         addProductForm.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -108,409 +228,591 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Delete confirmation modal setup
+    if (editProductForm) {
+        editProductForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            handleEditProductSubmit();
+        });
+    }
+
     setupDeleteModal();
-    
-    // Setup input limits for 3-digit restriction
     setupInputLimits();
+    setupEditInputLimits();
 });
 
-// Setup input limits to prevent typing beyond 3-digit restriction
 function setupInputLimits() {
-    const priceInput = document.getElementById('p-price');
-    const stockInput = document.getElementById('p-stock');
-    
-    // Price input limit (max 999.99)
+    var priceInput = document.getElementById("p-price");
+    var stockInput = document.getElementById("p-stock");
+
     if (priceInput) {
-        priceInput.addEventListener('input', function(e) {
-            let value = e.target.value;
-            
-            // Remove any characters beyond 6 characters (999.99)
+        priceInput.addEventListener("input", function (e) {
+            var value = e.target.value;
             if (value.length > 6) {
                 e.target.value = value.substring(0, 6);
             }
-            
-            // Ensure numeric format with max 2 decimal places
-            const numericValue = parseFloat(e.target.value);
+            var numericValue = parseFloat(e.target.value);
             if (!isNaN(numericValue) && numericValue > 999.99) {
-                e.target.value = '999.99';
+                e.target.value = "999.99";
             }
         });
     }
-    
-    // Stock input limit (max 999)
+
     if (stockInput) {
-        stockInput.addEventListener('input', function(e) {
-            let value = e.target.value;
-            
-            // Remove any characters beyond 3 characters
+        stockInput.addEventListener("input", function (e) {
+            var value = e.target.value;
             if (value.length > 3) {
                 e.target.value = value.substring(0, 3);
             }
-            
-            // Ensure numeric value doesn't exceed 999
-            const numericValue = parseInt(e.target.value);
-            if (!isNaN(numericValue) && numericValue > 999) {
-                e.target.value = '999';
+            var nv = parseInt(e.target.value, 10);
+            if (!isNaN(nv) && nv > 999) {
+                e.target.value = "999";
             }
         });
     }
 }
 
-// Load products from backend and display in table
+function setupEditInputLimits() {
+    var priceInput = document.getElementById("e-price");
+    var stockInput = document.getElementById("e-stock");
+
+    if (priceInput) {
+        priceInput.addEventListener("input", function (e) {
+            var value = e.target.value;
+            if (value.length > 6) {
+                e.target.value = value.substring(0, 6);
+            }
+            var numericValue = parseFloat(e.target.value);
+            if (!isNaN(numericValue) && numericValue > 999.99) {
+                e.target.value = "999.99";
+            }
+        });
+    }
+
+    if (stockInput) {
+        stockInput.addEventListener("input", function (e) {
+            var value = e.target.value;
+            if (value.length > 3) {
+                e.target.value = value.substring(0, 3);
+            }
+            var nv = parseInt(e.target.value, 10);
+            if (!isNaN(nv) && nv > 999) {
+                e.target.value = "999";
+            }
+        });
+    }
+}
+
 function loadProducts() {
-    const searchInput = document.getElementById("admin-product-search");
-    const searchValue = searchInput ? searchInput.value : '';
-    
-    fetch(`/api/admin/products?search=${encodeURIComponent(searchValue)}`)
-        .then(response => response.json())
-        .then(data => {
+    var searchInput = document.getElementById("admin-product-search");
+    var searchValue = searchInput ? searchInput.value : "";
+
+    adminFetch("/api/admin/products?search=" + encodeURIComponent(searchValue))
+        .then(function (response) {
+            if (response.status === 403 || response.status === 401) {
+                showErrorToast("Nemáte oprávnenie načítať produkty. Prihláste sa ako administrátor.");
+                throw new Error("auth");
+            }
+            if (!response.ok) {
+                throw new Error("http");
+            }
+            return response.json();
+        })
+        .then(function (data) {
             displayProducts(data.products);
         })
-        .catch(error => {
-            console.error('Error loading products:', error);
-            showErrorToast('Nepodarilo sa načítať produkty');
+        .catch(function (error) {
+            if (error && error.message === "auth") {
+                return;
+            }
+            if (error && error.message === "http") {
+                showErrorToast("Nepodarilo sa načítať produkty (skontrolujte prihlásenie).");
+                return;
+            }
+            console.error("Error loading products:", error);
+            showErrorToast("Nepodarilo sa načítať produkty");
         });
 }
 
-// Display products in admin table
 function displayProducts(products) {
-    const productList = document.getElementById("admin-product-list");
-    if (!productList) return;
-
-    productList.innerHTML = '';
-
-    if (products.length === 0) {
-        productList.innerHTML = `
-            <tr>
-                <td colspan="6" class="text-center py-4 text-white-50">
-                    Žiadne produkty neboli nájdené
-                </td>
-            </tr>
-        `;
+    var productList = document.getElementById("admin-product-list");
+    if (!productList) {
         return;
     }
 
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i];
-        const row = createProductRow(product);
-        productList.appendChild(row);
+    productList.innerHTML = "";
+
+    if (!products || products.length === 0) {
+        productList.innerHTML =
+            '<tr><td colspan="6" class="text-center py-4 text-white-50">Žiadne produkty neboli nájdené</td></tr>';
+        return;
+    }
+
+    for (var i = 0; i < products.length; i++) {
+        productList.appendChild(createProductRow(products[i]));
     }
 }
 
-// Create product row for table
 function createProductRow(product) {
-    const row = document.createElement('tr');
-    
-    row.innerHTML = `
-        <td class="ps-4">#${product.id}</td>
-        <td>${product.name}</td>
-        <td>${product.kategoria ? product.kategoria.name : 'Neznáma'}</td>
-        <td>${parseFloat(product.price).toFixed(2)} €</td>
-        <td><span class="badge bg-success">Na sklade (${parseInt(product.quantity, 10)}ks)</span></td>
-        <td class="text-end pe-4">
-            <div class="d-flex justify-content-end gap-2">
-                <button class="btn btn-edit-icon" title="Upraviť" onclick="editProduct(${product.id})">
-                    <img src="/assets/pencil.png" class="icon-xs icon-white">
-                </button>
-                <button class="btn btn-delete-icon" title="Vymazať" onclick="confirmDelete(${product.id}, '${product.name.replace(/'/g, "\\'")}')">
-                    <img src="/assets/trash.png" class="icon-xs icon-white">
-                </button>
-            </div>
-        </td>
-    `;
-    
+    var row = document.createElement("tr");
+    row.innerHTML =
+        '<td class="ps-4">#' +
+        product.id +
+        "</td>" +
+        "<td>" +
+        product.name +
+        "</td>" +
+        "<td>" +
+        (product.kategoria ? product.kategoria.name : "Neznáma") +
+        "</td>" +
+        "<td>" +
+        parseFloat(product.price).toFixed(2) +
+        " €</td>" +
+        '<td><span class="badge bg-success">Na sklade (' +
+        parseInt(product.quantity, 10) +
+        "ks)</span></td>" +
+        '<td class="text-end pe-4">' +
+        '<div class="d-flex justify-content-end gap-2">' +
+        '<button type="button" class="btn btn-edit-icon" title="Upraviť" data-edit-id="' +
+        product.id +
+        '">' +
+        '<img src="/assets/pencil.png" class="icon-xs icon-white">' +
+        "</button>" +
+        '<button type="button" class="btn btn-delete-icon" title="Vymazať" data-delete-id="' +
+        product.id +
+        '">' +
+        '<img src="/assets/trash.png" class="icon-xs icon-white">' +
+        "</button>" +
+        "</div>" +
+        "</td>";
+
+    var editBtn = row.querySelector("[data-edit-id]");
+    if (editBtn) {
+        editBtn.addEventListener("click", function () {
+            editProduct(parseInt(editBtn.getAttribute("data-edit-id"), 10));
+        });
+    }
+    var delBtn = row.querySelector("[data-delete-id]");
+    if (delBtn) {
+        delBtn.addEventListener("click", function () {
+            var pid = delBtn.getAttribute("data-delete-id");
+            confirmDelete(pid);
+        });
+    }
+
     return row;
 }
 
-// Create image preview for uploaded files
-function createImagePreview(imageSrc, file) {
-    const imgPreviewContainer = document.getElementById("product-images-container");
-    if (!imgPreviewContainer) return;
+function createImagePreview(imageSrc, file, containerId, imagesArray) {
+    var imgPreviewContainer = document.getElementById(containerId);
+    if (!imgPreviewContainer) {
+        return;
+    }
 
-    const previewWrapper = document.createElement("div");
+    var previewWrapper = document.createElement("div");
     previewWrapper.className = "product-image-preview p-2 border border-dusk-blue rounded position-relative";
 
-    const img = document.createElement("img");
+    var img = document.createElement("img");
     img.src = imageSrc;
     img.className = "img-fluid";
     img.style.height = "80px";
     img.style.width = "80px";
     img.style.objectFit = "cover";
 
-    const removeBtn = document.createElement("button");
+    var removeBtn = document.createElement("button");
     removeBtn.type = "button";
     removeBtn.className = "btn btn-sm btn-danger position-absolute top-0 end-0 m-1";
     removeBtn.innerHTML = "×";
     removeBtn.onclick = function () {
         previewWrapper.remove();
-        const index = uploadedImages.indexOf(file);
+        var index = imagesArray.indexOf(file);
         if (index > -1) {
-            uploadedImages.splice(index, 1);
+            imagesArray.splice(index, 1);
         }
     };
 
     previewWrapper.appendChild(img);
     previewWrapper.appendChild(removeBtn);
 
-    // Insert before upload button
-    const uploadBtn = imgPreviewContainer.querySelector(".image-upload-wrapper");
+    var uploadBtn = imgPreviewContainer.querySelector(".image-upload-wrapper");
     if (uploadBtn) {
         imgPreviewContainer.insertBefore(previewWrapper, uploadBtn);
     }
 }
 
-// Handle product form submission
 function handleProductSubmit() {
-    // Get form values
-    const name = document.getElementById('p-name').value;
-    const description = document.getElementById('p-desc').value;
-    const category = document.getElementById('p-category').value;
-    const price = document.getElementById('p-price').value;
-    const stock = document.getElementById('p-stock').value;
+    var name = document.getElementById("p-name").value;
+    var description = document.getElementById("p-desc").value;
+    var category = document.getElementById("p-category").value;
+    var price = document.getElementById("p-price").value;
+    var stock = document.getElementById("p-stock").value;
 
-    // Validate required fields with specific messages
     if (!name) {
-        showErrorToast('Názov produktu je povinný');
+        showErrorToast("Názov produktu je povinný");
         return;
     }
-    
     if (!description) {
-        showErrorToast('Popis produktu je povinný');
+        showErrorToast("Popis produktu je povinný");
         return;
     }
-    
-    if (!category || category === 'Vybra kategóriu...' || category.trim() === '') {
-        showErrorToast('Prosím vyberte kategóriu');
+    if (!category || category.trim() === "") {
+        showErrorToast("Prosím vyberte kategóriu");
         return;
     }
-    
     if (!price || parseFloat(price) <= 0) {
-        showErrorToast('Cena musí by kladné íslo');
+        showErrorToast("Cena musí byť kladné číslo");
         return;
     }
-    
-    if (!stock || parseInt(stock) < 0) {
-        showErrorToast('Mnozstvo na sklade musí by nezáporné íslo');
+    if (!stock || parseInt(stock, 10) < 0) {
+        showErrorToast("Množstvo na sklade musí byť nezáporné číslo");
         return;
     }
-    
-    
     if (uploadedImages.length < 2) {
-        showErrorToast('Minimálne 2 obrázky sú povinné');
+        showErrorToast("Minimálne 2 obrázky sú povinné");
         return;
     }
 
-    // Create FormData
-    const formData = new FormData();
-    
-    // Append form data
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('category', category);
-    formData.append('price', price);
-    formData.append('stock', stock);
+    var formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("stock", stock);
 
-    // Append images
-    for (let i = 0; i < uploadedImages.length; i++) {
-        formData.append('images[]', uploadedImages[i]);
+    for (var i = 0; i < uploadedImages.length; i++) {
+        formData.append("images[]", uploadedImages[i]);
     }
 
-    // Submit to backend
-    fetch('/api/admin/products', {
-        method: 'POST',
+    adminFetch("/api/admin/products", {
+        method: "POST",
         body: formData,
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
     })
-    .then(response => {
-        console.log('Response status:', response.status);
-        
-        if (!response.ok) {
-            return response.text().then(text => {
-                console.error('Response text:', text);
-                throw new Error(`HTTP ${response.status}: ${text}`);
-            });
-        }
-        
-        // Try to parse as JSON
-        return response.text().then(text => {
-            console.log('Raw response text:', text);
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.error('JSON parse error:', e);
-                throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
+        .then(function (response) {
+            if (!response.ok) {
+                return response.text().then(function (text) {
+                    throw new Error("HTTP " + response.status + ": " + text);
+                });
             }
-        });
-    })
-    .then(data => {
-        console.log('Response data:', data);
-        if (data.success) {
-            showSuccessToast(data.message);
-            resetProductForm();
-            loadProducts(); // Reload products list
-            
-            // Close modal
-            const modalEl = document.getElementById("addProductModal");
-            if (modalEl) {
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                if (modal) { modal.hide(); }
-            }
-        } else {
-            // Handle validation errors
-            if (data.errors) {
-                let errorMessage = 'Chyby validácie:\n';
-                for (let field in data.errors) {
-                    errorMessage += data.errors[field][0] + '\n';
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.success) {
+                showSuccessToast(data.message);
+                resetProductForm();
+                loadProducts();
+                var modalEl = document.getElementById("addProductModal");
+                if (modalEl) {
+                    var modal = bootstrap.Modal.getInstance(modalEl);
+                    if (modal) {
+                        modal.hide();
+                    }
                 }
-                showErrorToast(errorMessage);
             } else {
-                showErrorToast(data.message || 'Neznáma chyba');
+                if (data.errors) {
+                    var msg = "Chyby validácie:\n";
+                    for (var field in data.errors) {
+                        msg += data.errors[field][0] + "\n";
+                    }
+                    showErrorToast(msg);
+                } else {
+                    showErrorToast(data.message || "Neznáma chyba");
+                }
             }
-        }
-    })
-    .catch(error => {
-        console.error('Error adding product:', error);
-        showErrorToast('Nastala chyba pri pridávaní produktu: ' + error.message);
-    });
+        })
+        .catch(function (error) {
+            console.error("Error adding product:", error);
+            showErrorToast("Nastala chyba pri pridávaní produktu: " + error.message);
+        });
 }
 
-// Reset product form
 function resetProductForm() {
-    const addProductForm = document.getElementById("add-product-form");
+    var addProductForm = document.getElementById("add-product-form");
     if (addProductForm) {
         addProductForm.reset();
     }
-    
-    // Reset category selection
-    const categoryText = document.getElementById("selected-category-text");
-    const hiddenCategoryInput = document.getElementById("p-category");
-    if (categoryText) { categoryText.innerText = "Vybrať kategóriu..."; }
-    if (hiddenCategoryInput) { hiddenCategoryInput.value = ""; }
-    
-    // Clear image previews
-    const imgPreviewContainer = document.getElementById("product-images-container");
+    var categoryText = document.getElementById("selected-category-text");
+    var hiddenCategoryInput = document.getElementById("p-category");
+    if (categoryText) {
+        categoryText.innerText = "Vybrať kategóriu...";
+    }
+    if (hiddenCategoryInput) {
+        hiddenCategoryInput.value = "";
+    }
+    var imgPreviewContainer = document.getElementById("product-images-container");
     if (imgPreviewContainer) {
-        const previews = imgPreviewContainer.querySelectorAll(".product-image-preview");
-        for (let i = 0; i < previews.length; i++) {
+        var previews = imgPreviewContainer.querySelectorAll(".product-image-preview");
+        for (var i = 0; i < previews.length; i++) {
             previews[i].remove();
         }
     }
-    
-    // Reset uploaded images array
     uploadedImages = [];
 }
 
-// Setup delete confirmation modal
 function setupDeleteModal() {
-    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    var confirmDeleteBtn = document.getElementById("confirm-delete-btn");
     if (confirmDeleteBtn) {
-        confirmDeleteBtn.addEventListener('click', function() {
-            const productId = document.getElementById('delete-product-id').value;
+        confirmDeleteBtn.addEventListener("click", function () {
+            var productId = document.getElementById("delete-product-id").value;
             deleteProduct(productId);
         });
     }
 }
 
-// Confirm product deletion
-function confirmDelete(productId, productName) {
-    const modalEl = document.getElementById('deleteProductModal');
-    const productIdEl = document.getElementById('delete-product-id');
-    
-    if (productIdEl) productIdEl.value = productId;
-    
+function confirmDelete(productId) {
+    var modalEl = document.getElementById("deleteProductModal");
+    var productIdEl = document.getElementById("delete-product-id");
+    if (productIdEl) {
+        productIdEl.value = productId;
+    }
     if (modalEl) {
-        const modal = new bootstrap.Modal(modalEl);
+        var modal = new bootstrap.Modal(modalEl);
         modal.show();
     }
 }
 
-// Delete product from database
 function deleteProduct(productId) {
-    fetch(`/api/admin/products/${productId}`, {
-        method: 'DELETE',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            'Content-Type': 'application/json'
-        }
+    adminFetch("/api/admin/products/" + productId, {
+        method: "DELETE",
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccessToast(data.message);
-            loadProducts(); // Reload products list
-            
-            // Close modal
-            const modalEl = document.getElementById('deleteProductModal');
-            if (modalEl) {
-                const modal = bootstrap.Modal.getInstance(modalEl);
-                if (modal) { modal.hide(); }
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.success) {
+                showSuccessToast(data.message);
+                loadProducts();
+                var modalEl = document.getElementById("deleteProductModal");
+                if (modalEl) {
+                    var modal = bootstrap.Modal.getInstance(modalEl);
+                    if (modal) {
+                        modal.hide();
+                    }
+                }
+            } else {
+                showErrorToast(data.message);
             }
-        } else {
-            showErrorToast(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error deleting product:', error);
-        showErrorToast('Nastala chyba pri mazaní produktu');
-    });
+        })
+        .catch(function (error) {
+            console.error("Error deleting product:", error);
+            showErrorToast("Nastala chyba pri mazaní produktu");
+        });
 }
 
-// Edit product (placeholder for future implementation)
+// Open edit modal and load product JSON from the server.
 function editProduct(productId) {
-    showSuccessToast('Funkcia úpravy produktu bude implementovaná neskôr');
+    editProductId = productId;
+    editPendingRemoveIds = [];
+    editUploadedImages = [];
+
+    adminFetch("/api/admin/products/" + productId)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            var p = data.product;
+            document.getElementById("edit-product-id").value = String(p.id);
+            document.getElementById("e-name").value = p.name || "";
+            document.getElementById("e-desc").value = p.description || "";
+            document.getElementById("e-price").value = p.price;
+            document.getElementById("e-stock").value = parseInt(p.quantity, 10);
+
+            var catName = p.kategoria ? p.kategoria.name : "";
+            document.getElementById("selected-category-text-edit").innerText = catName || "Vybrať kategóriu...";
+            document.getElementById("e-category").value = catName;
+
+            var existingWrap = document.getElementById("edit-existing-images");
+            existingWrap.innerHTML = "";
+            var imgs = p.obrazky || [];
+            for (var i = 0; i < imgs.length; i++) {
+                existingWrap.appendChild(createExistingImageThumb(imgs[i]));
+            }
+
+            var newWrap = document.getElementById("edit-new-images-container");
+            var previews = newWrap.querySelectorAll(".product-image-preview");
+            for (var j = 0; j < previews.length; j++) {
+                previews[j].remove();
+            }
+
+            var modalEl = document.getElementById("editProductModal");
+            if (modalEl) {
+                var modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        })
+        .catch(function (err) {
+            console.error(err);
+            showErrorToast("Nepodarilo sa načítať produkt na úpravu");
+        });
 }
 
-// Toast notification functions
+// One existing DB image row with remove toggle.
+function createExistingImageThumb(obrazok) {
+    var wrap = document.createElement("div");
+    wrap.className = "product-image-preview p-2 border border-dusk-blue rounded position-relative";
+    wrap.setAttribute("data-image-id", String(obrazok.id));
+
+    var img = document.createElement("img");
+    img.src = obrazok.image_url || adminProductImageUrl(obrazok);
+    img.className = "img-fluid";
+    img.style.height = "80px";
+    img.style.width = "80px";
+    img.style.objectFit = "cover";
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn-sm btn-danger position-absolute top-0 end-0 m-1";
+    btn.innerHTML = "×";
+    btn.onclick = function () {
+        toggleRemoveExistingImage(obrazok.id, wrap, btn);
+    };
+
+    wrap.appendChild(img);
+    wrap.appendChild(btn);
+    return wrap;
+}
+
+// Mark image for removal (or undo) before saving the edit form.
+function toggleRemoveExistingImage(imageId, wrap, btn) {
+    var id = parseInt(imageId, 10);
+    var ix = editPendingRemoveIds.indexOf(id);
+    if (ix === -1) {
+        editPendingRemoveIds.push(id);
+        wrap.style.opacity = "0.35";
+        btn.innerHTML = "↩";
+    } else {
+        editPendingRemoveIds.splice(ix, 1);
+        wrap.style.opacity = "1";
+        btn.innerHTML = "×";
+    }
+}
+
+function handleEditProductSubmit() {
+    if (!editProductId) {
+        showErrorToast("Chýba ID produktu");
+        return;
+    }
+
+    var name = document.getElementById("e-name").value;
+    var description = document.getElementById("e-desc").value;
+    var category = document.getElementById("e-category").value;
+    var price = document.getElementById("e-price").value;
+    var stock = document.getElementById("e-stock").value;
+
+    if (!name || !description) {
+        showErrorToast("Vyplňte názov a popis");
+        return;
+    }
+    if (!category || category.trim() === "") {
+        showErrorToast("Vyberte kategóriu");
+        return;
+    }
+
+    var existingCount = document.querySelectorAll("#edit-existing-images .product-image-preview").length;
+    var kept = existingCount - editPendingRemoveIds.length;
+    if (kept + editUploadedImages.length < 2) {
+        showErrorToast("Produkt musí mať aspoň 2 fotografie. Zrušte odstránenie alebo pridajte nové súbory.");
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("stock", stock);
+
+    for (var r = 0; r < editPendingRemoveIds.length; r++) {
+        formData.append("remove_image_ids[]", String(editPendingRemoveIds[r]));
+    }
+    for (var u = 0; u < editUploadedImages.length; u++) {
+        formData.append("images[]", editUploadedImages[u]);
+    }
+
+    adminFetch("/api/admin/products/" + editProductId + "/update", {
+        method: "POST",
+        body: formData,
+    })
+        .then(function (response) {
+            return response.json().then(function (data) {
+                return { ok: response.ok, status: response.status, data: data };
+            });
+        })
+        .then(function (result) {
+            if (result.ok && result.data.success) {
+                showSuccessToast(result.data.message);
+                var modalEl = document.getElementById("editProductModal");
+                if (modalEl) {
+                    var modal = bootstrap.Modal.getInstance(modalEl);
+                    if (modal) {
+                        modal.hide();
+                    }
+                }
+                editPendingRemoveIds = [];
+                editUploadedImages = [];
+                editProductId = null;
+                loadProducts();
+            } else {
+                var d = result.data;
+                if (d && d.errors) {
+                    var keys = Object.keys(d.errors);
+                    if (keys.length > 0) {
+                        showErrorToast(d.errors[keys[0]][0]);
+                    } else {
+                        showErrorToast(d.message || "Chyba pri ukladaní");
+                    }
+                } else {
+                    showErrorToast((d && d.message) || "Chyba pri ukladaní");
+                }
+            }
+        })
+        .catch(function (error) {
+            console.error(error);
+            showErrorToast("Nastala chyba pri úprave produktu");
+        });
+}
+
 function showSuccessToast(message) {
-    showToast(message, 'success');
+    showToast(message, "success");
 }
 
 function showErrorToast(message) {
-    showToast(message, 'error');
+    showToast(message, "error");
 }
 
 function showToast(message, type) {
-    // Create toast element if it doesn't exist
-    let toastEl = document.getElementById('adminNotificationToast');
+    var toastEl = document.getElementById("adminNotificationToast");
     if (!toastEl) {
-        const toastContainer = document.querySelector('.toast-container');
+        var toastContainer = document.querySelector(".toast-container");
         if (toastContainer) {
-            toastEl = document.createElement('div');
-            toastEl.id = 'adminNotificationToast';
-            toastEl.className = 'toast align-items-center border-0';
-            toastEl.setAttribute('role', 'alert');
-            toastEl.setAttribute('aria-live', 'assertive');
-            toastEl.setAttribute('aria-atomic', 'true');
-            
-            toastEl.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body"></div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            `;
-            
+            toastEl = document.createElement("div");
+            toastEl.id = "adminNotificationToast";
+            toastEl.className = "toast align-items-center border-0";
+            toastEl.setAttribute("role", "alert");
+            toastEl.setAttribute("aria-live", "assertive");
+            toastEl.setAttribute("aria-atomic", "true");
+            toastEl.innerHTML =
+                '<div class="d-flex">' +
+                '<div class="toast-body"></div>' +
+                '<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>' +
+                "</div>";
             toastContainer.appendChild(toastEl);
         }
     }
-    
+
     if (toastEl) {
-        const toastBody = toastEl.querySelector('.toast-body');
+        var toastBody = toastEl.querySelector(".toast-body");
         if (toastBody) {
             toastBody.textContent = message;
         }
-        
-        // Set toast color based on type
-        toastEl.className = 'toast align-items-center border-0';
-        if (type === 'success') {
-            toastEl.classList.add('toast-success-custom');
+        toastEl.className = "toast align-items-center border-0";
+        if (type === "success") {
+            toastEl.classList.add("toast-success-custom");
         } else {
-            toastEl.classList.add('bg-danger', 'text-white');
+            toastEl.classList.add("bg-danger", "text-white");
         }
-        
-        const toast = new bootstrap.Toast(toastEl);
+        var toast = new bootstrap.Toast(toastEl);
         toast.show();
     }
 }

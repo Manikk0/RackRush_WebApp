@@ -304,14 +304,17 @@
     border-radius: 10px;
 }
 
-.category-select-item {
+/* Pridať aj Upraviť produkt – rovnaký vzhľad položiek v dropdown-e kategórie */
+.category-select-item,
+.category-select-item-edit {
     padding: 10px 15px !important;
     color: rgba(255, 255, 255, 0.8) !important;
     font-size: 0.9rem;
     transition: all 0.2s;
 }
 
-.category-select-item:hover {
+.category-select-item:hover,
+.category-select-item-edit:hover {
     background-color: var(--tropical-teal) !important;
     color: var(--prussian-blue) !important;
     font-weight: 700;

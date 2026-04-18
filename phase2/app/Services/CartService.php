@@ -73,10 +73,10 @@ class CartService
                 continue;
             }
 
-            $image = 'assets/grapes_white_tray.png';
-            if ($produkt->hlavnyObrazok !== null) {
-                $image = $produkt->hlavnyObrazok->url;
-            }
+            // Keep the same image URL rules as CartController (asset vs storage upload).
+            $image = $produkt->hlavnyObrazok !== null
+                ? $produkt->hlavnyObrazok->image_url
+                : asset('assets/grapes_white_tray.png');
 
             $cart[$produkt->id] = [
                 'name' => $produkt->name,

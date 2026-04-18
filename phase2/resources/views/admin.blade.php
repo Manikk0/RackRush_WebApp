@@ -39,6 +39,7 @@
     @endguest
 
     @auth
+        @if (Auth::user()->is_admin)
         <div id="admin-dashboard-view">
         <!-- ADMIN HEADER -->
         <header id="admin-header" class="fixed-top shadow-sm admin-navbar">
@@ -323,9 +324,13 @@
                                             <li><a class="dropdown-item category-select-item" href="#"
                                                     data-value="Sladkosti a slané">Sladkosti a slané</a></li>
                                             <li><a class="dropdown-item category-select-item" href="#"
-                                                    data-value="Drogéria">Drogéria</a></li>
+                                                    data-value="Kozmetika a drogéria">Kozmetika a drogéria</a></li>
+                                            <li><a class="dropdown-item category-select-item" href="#"
+                                                    data-value="Pre deti">Pre deti</a></li>
                                             <li><a class="dropdown-item category-select-item" href="#"
                                                     data-value="Pre zvieratá">Pre zvieratá</a></li>
+                                            <li><a class="dropdown-item category-select-item" href="#"
+                                                    data-value="Domácnosť">Domácnosť</a></li>
                                         </ul>
                                         <input type="hidden" id="p-category" required>
                                     </div>
@@ -398,6 +403,115 @@
         </div>
     </div>
 
+    <!-- EDIT PRODUCT MODAL -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content auth-modal p-2 shadow-lg">
+                <div class="modal-header border-bottom border-dusk-blue pb-3">
+                    <h4 class="modal-title m-0" id="editProductModalLabel">Upraviť produkt</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Zavrieť"></button>
+                </div>
+                <div class="modal-body py-4 px-4">
+                    <form id="edit-product-form">
+                        <input type="hidden" id="edit-product-id" value="">
+                        <div class="row g-4">
+                            <div class="col-md-7">
+                                <div class="mb-3">
+                                    <label class="form-label small mb-1 text-white-50">Názov produktu</label>
+                                    <input type="text" class="form-control" id="e-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small mb-1 text-white-50">Popis</label>
+                                    <textarea class="form-control" id="e-desc" rows="4" required></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="dropdown custom-admin-dropdown" id="category-dropdown-container-edit">
+                                        <button
+                                            class="btn auth-modal-input w-100 d-flex justify-content-between align-items-center dropdown-toggle custom-dropdown-btn"
+                                            type="button" id="categoryDropdownBtnEdit" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <span id="selected-category-text-edit">Vybrať kategóriu...</span>
+                                            <img src="{{ asset('assets/chevron_right.png') }}"
+                                                class="icon-xs chevron-icon">
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-dark w-100 shadow-lg scrollable-menu"
+                                            aria-labelledby="categoryDropdownBtnEdit">
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Ovocie a zelenina">Ovocie a zelenina</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Mliečne a chladené">Mliečne a chladené</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Mäso a ryby">Mäso a ryby</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Pečivo">Pečivo</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Trvanlivé potraviny">Trvanlivé potraviny</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Mrazené výrobky">Mrazené výrobky</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Nápoje">Nápoje</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Sladkosti a slané">Sladkosti a slané</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Kozmetika a drogéria">Kozmetika a drogéria</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Pre deti">Pre deti</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Pre zvieratá">Pre zvieratá</a></li>
+                                            <li><a class="dropdown-item category-select-item-edit" href="#"
+                                                    data-value="Domácnosť">Domácnosť</a></li>
+                                        </ul>
+                                        <input type="hidden" id="e-category" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label small mb-1 text-white-50">Cena (€)</label>
+                                            <input type="number" step="0.01" max="999.99" class="form-control" id="e-price"
+                                                required maxlength="6">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label small mb-1 text-white-50">Skladom (ks)</label>
+                                            <input type="number" min="0" max="999" step="1" class="form-control"
+                                                id="e-stock" required maxlength="3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label small mb-1 text-white-50 d-block">Aktuálne fotografie</label>
+                                <p class="text-white-50 small">Kliknite na × pre odstránenie (u produktu musia ostať aspoň 2
+                                    obrázky).</p>
+                                <div id="edit-existing-images" class="d-flex flex-wrap gap-2 mb-3"></div>
+                                <label class="form-label small mb-1 text-white-50 d-block">Pridať nové fotografie</label>
+                                <div id="edit-new-images-container" class="d-flex flex-wrap gap-2 mb-3">
+                                    <div
+                                        class="image-upload-wrapper p-3 border border-dashed border-dusk-blue rounded text-center d-flex align-items-center justify-content-center cursor-pointer"
+                                        onclick="document.getElementById('e-img-upload').click()">
+                                        <input type="file" id="e-img-upload" class="d-none" accept="image/*" multiple>
+                                        <div class="d-flex flex-column align-items-center gap-1">
+                                            <img src="{{ asset('assets/plus.png') }}"
+                                                class="icon-sm icon-white opacity-75">
+                                            <span class="text-white-50 upload-label-text">Pridať</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-top border-dusk-blue pt-3 mt-4 px-0">
+                            <button type="button" class="btn btn-outline-custom px-4"
+                                data-bs-dismiss="modal">Zrušiť</button>
+                            <button type="submit" class="btn btn-teal px-4 fw-bold">Uložiť zmeny</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST NOTIFICATIONS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3 admin-toast-container">
         <!-- LOGOUT TOAST -->
@@ -422,11 +536,25 @@
             </div>
         </div>
     </div>
-    @endauth
-@endsection
 
-@auth
     @push('scripts')
         <script src="{{ asset('js/admin.js') }}"></script>
     @endpush
-@endauth
+        @else
+            <div class="admin-login-wrapper d-flex align-items-center justify-content-center vh-100 px-3">
+                <div class="admin-login-card p-4 shadow-lg text-center mx-3" style="max-width: 440px;">
+                    <img src="{{ asset('assets/logo.png') }}" alt="RackRush" class="admin-logo mb-3">
+                    <h4 class="mb-3 admin-title">Nepovolený prístup</h4>
+                    <p class="text-white-50 small mb-4 text-start">
+                        Ste prihlásený ako bežný zákazník. Túto časť môžu používať len účty administrátora.
+                    </p>
+                    <a href="{{ route('index') }}" class="btn btn-teal w-100 mb-2">Späť do obchodu</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-2">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-custom w-100">Odhlásiť sa</button>
+                    </form>
+                </div>
+            </div>
+        @endif
+    @endauth
+@endsection

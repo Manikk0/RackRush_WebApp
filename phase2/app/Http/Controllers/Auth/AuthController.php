@@ -29,7 +29,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    // Same credentials as shop login; redirect back to /admin dashboard.
+    // Admin-only login: same email/password check, but user must have is_admin = true.
     public function adminLogin(Request $request)
     {
         $credentials = $request->validate([
@@ -37,13 +37,31 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if ($this->signInAndMergeCart($request, $credentials)) {
-            return redirect()->route('admin')->with('success', 'Vitajte v administrácii.');
+        if (! Auth::attempt($credentials)) {
+            return redirect()->route('admin')->withErrors([
+                'email' => 'Zadané údaje sa nezhodujú s našimi záznamami.',
+            ])->onlyInput('email');
         }
 
-        return redirect()->route('admin')->withErrors([
-            'email' => 'Zadané údaje sa nezhodujú s našimi záznamami.',
-        ])->onlyInput('email');
+        $user = Auth::user();
+        if ($user === null || ! $user->is_admin) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('admin')->withErrors([
+                'email' => 'Tento účet nemá oprávnenie administrátora.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        $mergedCart = CartService::mergeSessionIntoUserAndStore(
+            (int) Auth::id(),
+            $request->session()->get('cart', [])
+        );
+        $request->session()->put('cart', $mergedCart);
+
+        return redirect()->route('admin')->with('success', 'Vitajte v administrácii.');
     }
 
     private function signInAndMergeCart(Request $request, array $credentials): bool

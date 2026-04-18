@@ -24,7 +24,13 @@
                         <div class="cart-row position-relative" data-id="{{ $id }}">
                             <div class="cart-row__img-wrap me-2" style="align-self: flex-start;">
                                 <a href="{{ route('product-detail', $id) }}">
-                                    <img src="{{ $item['image'] && strpos($item['image'], '/storage/') === 0 ? $item['image'] : asset($item['image'] ?? 'assets/grapes_white_tray.png') }}" alt="{{ $item['name'] }}" class="cart-row__img">
+                                    @php
+                                        $cartImg = $item['image'] ?? 'assets/grapes_white_tray.png';
+                                        $cartImgSrc = str_starts_with($cartImg, 'http://') || str_starts_with($cartImg, 'https://') || str_starts_with($cartImg, '//') || str_starts_with($cartImg, '/storage/') || str_starts_with($cartImg, '/assets/')
+                                            ? $cartImg
+                                            : asset($cartImg);
+                                    @endphp
+                                    <img src="{{ $cartImgSrc }}" alt="{{ $item['name'] }}" class="cart-row__img">
                                 </a>
                             </div>
                             

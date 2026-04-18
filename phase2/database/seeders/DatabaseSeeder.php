@@ -11,15 +11,21 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    // Seed base user and product catalog.
+    // Seed demo customer, admin account, and product catalog.
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
+        ]);
+
+        // Admin account for /admin (password is "password" via factory default).
+        User::factory()->create([
+            'first_name' => 'Admin',
+            'last_name' => 'RackRush',
+            'email' => 'admin@rackrush.test',
+            'is_admin' => true,
         ]);
 
         $this->call([

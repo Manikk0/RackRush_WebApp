@@ -1,7 +1,7 @@
 <div class="product-card">
     <div class="product-card__image-wrap">
         <a href="{{ route('product-detail', $produkt->id) }}">
-            <img src="{{ $produkt->hlavnyObrazok ? (strpos($produkt->hlavnyObrazok->url, 'assets/') === 0 ? asset($produkt->hlavnyObrazok->url) : '/storage/' . $produkt->hlavnyObrazok->url) : asset('assets/grapes_white_tray.png') }}"
+            <img src="{{ $produkt->hlavnyObrazok?->image_url ?? asset('assets/grapes_white_tray.png') }}"
                  alt="{{ $produkt->name }}" class="product-card__image">
         </a>
         <button class="product-card__wishlist" aria-label="Wishlist">
