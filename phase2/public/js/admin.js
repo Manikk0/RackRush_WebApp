@@ -4,7 +4,7 @@ let editUploadedImages = [];
 let editPendingRemoveIds = [];
 let editProductId = null;
 
-// Build image URL for <img src> (API posiela image_url z modelu; inak skladáme z url stĺpca).
+// Build image URL for <img src> (API may send image_url from model; otherwise build from url column).
 function adminProductImageUrl(obrazokOrUrl) {
     if (obrazokOrUrl && typeof obrazokOrUrl === "object") {
         if (obrazokOrUrl.image_url) {

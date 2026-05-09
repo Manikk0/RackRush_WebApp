@@ -38,6 +38,7 @@ Route::get('/cart/api', [CartController::class, 'getCart'])->name('cart.api');
 
 // Checkout pages.
 Route::get('/order-details', [OrderController::class, 'details'])->name('order_details');
+Route::post('/checkout/delivery-session', [OrderController::class, 'rememberDelivery'])->name('checkout.delivery');
 Route::post('/checkout', [OrderController::class, 'place'])->name('checkout.place');
 Route::get('/order-success/{order}', [OrderController::class, 'success'])->name('order_success');
 
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/api/admin/products/{id}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
 });
 
-// Ak chýba symlink public/storage, tieto URL by inak vrátili 404. Symlink rieši "php artisan storage:link".
+// Fallback file responses when public/storage is missing; normally use `php artisan storage:link`.
 Route::get('/storage/{path}', function (string $path) {
     $path = str_replace('\\', '/', $path);
     if (str_contains($path, '..')) {

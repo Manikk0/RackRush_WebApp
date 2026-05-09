@@ -80,6 +80,40 @@
                     </div>
                     <div class="od-section__divider"></div>
 
+                    <div class="od-section" id="section-shipping">
+                        <button type="button" class="od-section__header" id="btn-shipping" aria-expanded="false"
+                            aria-controls="body-shipping">
+                            <div class="od-section__icon-wrap">
+                                <img src="{{ asset('assets/box.png') }}" class="icon-sm icon-white" alt="">
+                            </div>
+                            <div class="od-section__title-wrap">
+                                <span class="od-section__title">Doprava</span>
+                                <span class="od-section__subtitle" id="subtitle-shipping">Vyberte spôsob</span>
+                            </div>
+                            <div class="od-section__chevron">
+                                <img src="{{ asset('assets/chevron_down.png') }}" class="icon-sm icon-white" alt="">
+                            </div>
+                        </button>
+                        <div class="od-section__body" id="body-shipping">
+                            <div class="od-form" id="form-shipping">
+                                <p class="small text-white-50 mb-3">Poplatok za dopravu závisí od zvolenej možnosti.</p>
+                                <div class="od-payment-options">
+                                    @foreach ($shippingMethods as $key => $meta)
+                                        <label class="od-payment-option">
+                                            <input type="radio" name="delivery_method" value="{{ $key }}"
+                                                @checked(old('delivery_method', $selectedDeliveryMethod) === $key)>
+                                            <span class="od-payment-option__box">
+                                                <span>{{ $meta['label'] }} — {{ number_format($meta['fee'], 2) }} €</span>
+                                            </span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <button type="button" class="od-btn-save" id="save-shipping">Uložiť</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="od-section__divider"></div>
+
                     <div class="od-section" id="section-who">
                         <button type="button" class="od-section__header" id="btn-who" aria-expanded="false" aria-controls="body-who">
                             <div class="od-section__icon-wrap">
@@ -216,6 +250,7 @@
                             }
                         }
                     @endphp
+                    <input type="hidden" id="od-subtotal-raw" value="{{ number_format($subtotal, 2, '.', '') }}">
                     <div class="od-summary__row">
                         <span>Hodnota košíku</span>
                         <span id="od-subtotal">{{ number_format($subtotal, 2) }}€</span>
@@ -244,6 +279,9 @@
 @endsection
 
 @push('scripts')
+    <script>
+        window.CHECKOUT_SHIPPING_FEES = @json(\App\Services\CheckoutShipping::feesMap());
+    </script>
     <script src="{{ asset('js/cart.js') }}"></script>
     <script src="{{ asset('js/order_details.js') }}"></script>
 @endpush

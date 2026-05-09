@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\CartService;
+use App\Services\CheckoutShipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,22 +14,28 @@ class OrderController extends Controller
     // Show checkout page.
     public function details()
     {
-        // Delivery fee is random in range 3.00€ - 20.00€.
-        $shippingFee = session('checkout_shipping_fee');
-        if ($shippingFee === null) {
-            $shippingFee = rand(300, 2000) / 100;
-            session(['checkout_shipping_fee' => $shippingFee]);
+        $selectedDelivery = (string) old('delivery_method', session('checkout_delivery_method', CheckoutShipping::defaultMethod()));
+        if (! CheckoutShipping::isValid($selectedDelivery)) {
+            $selectedDelivery = CheckoutShipping::defaultMethod();
         }
+        session(['checkout_delivery_method' => $selectedDelivery]);
+
+        $shippingFee = CheckoutShipping::fee($selectedDelivery);
 
         return view('order_details', [
-            'shippingFee' => (float) $shippingFee,
+            'shippingFee' => $shippingFee,
+            'shippingMethods' => CheckoutShipping::methods(),
+            'selectedDeliveryMethod' => $selectedDelivery,
         ]);
     }
 
     // Validate checkout data and create DB order.
     public function place(Request $request)
     {
+        $deliveryKeys = implode(',', array_keys(CheckoutShipping::methods()));
+
         $validated = $request->validate([
+            'delivery_method' => ['required', 'in:'.$deliveryKeys],
             'payment_method' => ['required', 'in:card,cash,transfer'],
             'delivery_city' => ['required', 'string', 'max:120', 'regex:/^[\pL0-9\s\-\.\,]+$/u'],
             'delivery_address' => ['required', 'string', 'max:180', 'min:5'],
@@ -38,6 +45,8 @@ class OrderController extends Controller
             'customer_email' => ['required', 'email', 'max:255'],
             'courier_note' => ['nullable', 'string', 'max:1200'],
         ], [
+            'delivery_method.required' => 'Vyberte spôsob dopravy.',
+            'delivery_method.in' => 'Vybraný spôsob dopravy nie je platný.',
             'payment_method.required' => 'Vyberte spôsob platby.',
             'payment_method.in' => 'Vybraný spôsob platby nie je platný.',
             'delivery_city.required' => 'Vyplňte mesto doručenia.',
@@ -54,6 +63,7 @@ class OrderController extends Controller
             'customer_email.required' => 'Vyplňte e-mail.',
             'customer_email.email' => 'Zadajte platnú e-mailovú adresu.',
         ], [
+            'delivery_method' => 'spôsob dopravy',
             'payment_method' => 'spôsob platby',
             'delivery_city' => 'mesto',
             'delivery_address' => 'adresa',
@@ -71,14 +81,14 @@ class OrderController extends Controller
             ]);
         }
 
-        $shippingFee = (float) (session('checkout_shipping_fee') ?? (rand(300, 2000) / 100));
-        $shippingFee = round(max(3, min(20, $shippingFee)), 2);
+        $shippingFee = round(CheckoutShipping::fee($validated['delivery_method']), 2);
 
         $orderId = DB::transaction(function () use ($validated, $cart, $shippingFee) {
             $orderId = DB::table('orders')->insertGetId([
                 'user_id' => Auth::id(),
                 'status' => 'confirmed',
                 'payment_method' => $validated['payment_method'],
+                'delivery_method' => $validated['delivery_method'],
                 'courier_note' => $validated['courier_note'] ?? null,
                 'discount_code' => null,
                 'created_at' => now(),
@@ -106,6 +116,7 @@ class OrderController extends Controller
             $vat = round($total * 0.2, 2);
             $invoiceNumber = 'INV-' . date('Ymd') . '-' . str_pad((string) $orderId, 6, '0', STR_PAD_LEFT);
 
+            // Invoice billing_details column: one JSON-encoded text snapshot (customer, address, fees, delivery).
             $invoiceId = DB::table('invoices')->insertGetId([
                 'order_id' => $orderId,
                 'invoice_number' => $invoiceNumber,
@@ -116,6 +127,8 @@ class OrderController extends Controller
                     'customer_phone' => $validated['customer_phone'],
                     'customer_email' => $validated['customer_email'],
                     'shipping_fee' => $shippingFee,
+                    'delivery_method' => $validated['delivery_method'],
+                    'delivery_method_label' => CheckoutShipping::label($validated['delivery_method']),
                     'delivery_city' => $validated['delivery_city'],
                     'delivery_address' => $validated['delivery_address'],
                     'delivery_floor' => $validated['delivery_floor'] ?? null,
@@ -141,9 +154,22 @@ class OrderController extends Controller
         if (Auth::check()) {
             CartService::persistSessionForUser((int) Auth::id(), []);
         }
-        session()->forget('checkout_shipping_fee');
+        session()->forget(['checkout_shipping_fee', 'checkout_delivery_method']);
 
         return redirect()->route('order_success', ['order' => $orderId]);
+    }
+
+    // Remember delivery choice in session (cart summary + back navigation).
+    public function rememberDelivery(Request $request)
+    {
+        $keys = implode(',', array_keys(CheckoutShipping::methods()));
+        $validated = $request->validate([
+            'delivery_method' => ['required', 'in:'.$keys],
+        ]);
+
+        session(['checkout_delivery_method' => $validated['delivery_method']]);
+
+        return response()->json(['success' => true]);
     }
 
     // Show success page with real order data.
@@ -167,12 +193,22 @@ class OrderController extends Controller
         $invoice = DB::table('invoices')->where('order_id', $order)->first();
         $shippingFee = 0.0;
         $total = round($subtotal, 2);
+        $deliveryMethodLabel = null;
         if ($invoice !== null) {
             $total = (float) $invoice->total_amount;
             $decoded = json_decode((string) $invoice->billing_details, true);
             if (is_array($decoded) && isset($decoded['shipping_fee'])) {
                 $shippingFee = (float) $decoded['shipping_fee'];
             }
+            if (is_array($decoded) && isset($decoded['delivery_method_label'])) {
+                $deliveryMethodLabel = (string) $decoded['delivery_method_label'];
+            }
+        }
+        if ($deliveryMethodLabel === null || $deliveryMethodLabel === '') {
+            $dm = $orderRow->delivery_method ?? null;
+            $deliveryMethodLabel = is_string($dm) && $dm !== ''
+                ? CheckoutShipping::label($dm)
+                : '—';
         }
 
         return view('order_success', [
@@ -181,6 +217,7 @@ class OrderController extends Controller
             'subtotal' => round($subtotal, 2),
             'shippingFee' => round($shippingFee, 2),
             'total' => round($total, 2),
+            'deliveryMethodLabel' => $deliveryMethodLabel,
         ]);
     }
 }

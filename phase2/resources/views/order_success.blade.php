@@ -43,6 +43,11 @@
                 </div>
 
                 <div class="os-summary-total">
+                    <span>Spôsob dopravy</span>
+                    <span>{{ $deliveryMethodLabel }}</span>
+                </div>
+
+                <div class="os-summary-total">
                     <span>Doručenie</span>
                     <span>€{{ number_format($shippingFee, 2) }}</span>
                 </div>

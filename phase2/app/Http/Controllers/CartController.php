@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produkt;
 use App\Services\CartService;
+use App\Services\CheckoutShipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,11 +31,11 @@ class CartController extends Controller
 
         session(['cart' => $validCart]);
 
-        $shippingFee = session('checkout_shipping_fee');
-        if ($shippingFee === null) {
-            $shippingFee = rand(300, 2000) / 100;
-            session(['checkout_shipping_fee' => $shippingFee]);
+        $deliveryMethod = (string) session('checkout_delivery_method', CheckoutShipping::defaultMethod());
+        if (! CheckoutShipping::isValid($deliveryMethod)) {
+            $deliveryMethod = CheckoutShipping::defaultMethod();
         }
+        $shippingFee = CheckoutShipping::fee($deliveryMethod);
         $odporucaneProdukty = Produkt::with(['hlavnyObrazok'])
             ->orderBy('sold_count', 'desc')
             ->limit(6)
@@ -108,7 +109,7 @@ class CartController extends Controller
     // Build cart row structure from product model.
     private function polozkaKosikaZProduktu(Produkt $produkt, int $mnozstvo): array
     {
-        // image_url je z modelu ObrazokProduktu (root-relative /storage/... alebo asset() pre statické assets).
+        // image_url comes from ObrazokProduktu (root-relative /storage/... or asset() for static assets).
         $obrazok = $produkt->hlavnyObrazok !== null
             ? $produkt->hlavnyObrazok->image_url
             : asset('assets/grapes_white_tray.png');

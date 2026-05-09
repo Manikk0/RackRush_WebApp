@@ -31,7 +31,7 @@ class ObrazokProduktu extends Model
         return $this->belongsTo(Produkt::class, 'product_id');
     }
 
-    // Full URL or path for <img src> (root-relative /storage/... works on 127.0.0.1 aj localhost).
+    // Full URL or path for <img src> (root-relative /storage/... works on 127.0.0.1 and localhost).
     public function getImageUrlAttribute(): string
     {
         $raw = (string) ($this->attributes['url'] ?? '');
